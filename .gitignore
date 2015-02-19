@@ -4,6 +4,7 @@
 **/nbproject
 *.mf
 *.class
+*.txt
 .idea/
 *.iml
 target
