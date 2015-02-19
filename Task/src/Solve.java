@@ -17,20 +17,42 @@ public class Solve {
 
     public void init() throws IOException {
 
-        BufferedReader bf = new BufferedReader(new InputStreamReader(new FileInputStream("input.txt")));
+        BufferedReader bf = new BufferedReader(new InputStreamReader(new FileInputStream("input.txt"))); // поменять на in
 
-        String tmp;
+        String tmp1;
         TreeSet<Fruit> allFruitsTemp = new TreeSet<Fruit>();
 
-        while ((tmp = bf.readLine()) != null) {
+        while ((tmp1 = bf.readLine()) != null) {
 
-            TreeSet<Fruit> temp;
-            Juice juice = new Juice();
-            temp = juice.tokenizer(tmp);
+            StringTokenizer st = new StringTokenizer(tmp1, " ");
 
-            allFruitsTemp.addAll(temp);
+            TreeSet<Fruit> fruitsTemp = new TreeSet<Fruit>();
+            ArrayList<Fruit> fruitsTemp2 = new ArrayList<Fruit>();
 
+            while (st.hasMoreTokens()) {
+
+                String tmp2 = st.nextToken();
+                Fruit fruit = new Fruit(tmp2);
+
+                fruitsTemp.add(fruit);
+                allFruitsTemp.add(fruit);
+            }
+
+            if (fruitsTemp.size() == 1) {
+
+                Fruit fruit = new Fruit();
+                fruit = fruitsTemp.first();
+                allFruitsTemp.remove(fruit);
+                fruit.monoFruit = true;
+                allFruitsTemp.add(fruit);
+            }
+
+            fruitsTemp2.addAll(fruitsTemp);
+            fruitsTemp.clear();
+
+            Juice juice = new Juice(fruitsTemp2);
             juices.add(juice);
+            fruitsTemp2.clear();
         }
 
         allFruits.addAll(allFruitsTemp);
@@ -45,7 +67,7 @@ public class Solve {
         });
     }
 
-    public Solve sortFruit() {
+    public Solve freqFruits() {
 
         Solve solve = new Solve();
 
@@ -71,6 +93,18 @@ public class Solve {
         }
 
         return solve;
+    }
+
+    public void sortFruits() {
+
+        /*for (Juice jus : juices) {
+
+            Collections.sort(jus.fruits, new Comparator<Fruit>() {
+                public int compare(Juice j1, Juice j2) {
+                    return j1.fruits.size() - j2.fruits.size();
+                }
+            });
+        }*/
     }
 
 

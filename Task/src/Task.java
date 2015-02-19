@@ -8,7 +8,7 @@ public class Task {
 
         solve.init();
         solve.sortJuice();
-        solve = solve.sortFruit();
+        solve = solve.freqFruits();
 
 
     }
