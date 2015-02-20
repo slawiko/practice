@@ -2,16 +2,19 @@ import java.util.*;
 
 public class Juice extends Fruit{
 
-    public List<Fruit> fruits;
+    public TreeSet<Fruit> fruits;
+    public boolean flag;
 
     public Juice () {
 
-        this.fruits = new ArrayList<Fruit>();
+        this.fruits = new TreeSet<Fruit>();
+        this.flag = false;
     }
 
-    public Juice (List<Fruit> fruits) {
+    public Juice (TreeSet<Fruit> fruits) {
 
-        ArrayList<Fruit> fruitsTemp = new ArrayList<Fruit>(fruits);
+        TreeSet<Fruit> fruitsTemp = new TreeSet<Fruit>(fruits);
         this.fruits = fruitsTemp;
+        this.flag = false;
     }
 }

@@ -1,4 +1,4 @@
-import java.io.IOException;
+import java.io.*;
 
 public class Task {
 
@@ -8,8 +8,12 @@ public class Task {
 
         solve.init();
         solve.sortJuice();
-        solve = solve.freqFruits();
+        int n = 0;
+        n = solve.washingUp();
 
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(new File("juice3.out"))));
 
+        out.print(n);
+        out.flush();
     }
 }
