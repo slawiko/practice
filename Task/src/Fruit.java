@@ -1,6 +1,6 @@
 public class Fruit implements Comparable<Fruit> {
 
-    protected String fruit;
+    private String fruit;
 
     public Fruit() {
 
@@ -16,5 +16,10 @@ public class Fruit implements Comparable<Fruit> {
     public int compareTo(Fruit fruit) {
 
         return this.fruit.compareTo(fruit.fruit);
+    }
+
+    public String getFruit() {
+
+        return this.fruit;
     }
 }

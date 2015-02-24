@@ -6,7 +6,7 @@ import java.util.*;
 
 public class Solve {
 
-    List<Juice> juices;
+    private List<Juice> juices;
 
     Solve() {
 
@@ -42,24 +42,37 @@ public class Solve {
 
         Collections.sort(juices, new Comparator<Juice>() {
             public int compare(Juice j1, Juice j2) {
-                return j2.fruits.size() - j1.fruits.size();
+
+                return j2.getSet().size() - j1.getSet().size();
             }
         });
     }
 
     public int washingUp() {
 
-        for (Juice juice : juices)
-            for (Juice juice1 : juices)
-               if (juice != juice1)
-                   if (juice.fruits.containsAll(juice1.fruits))
-                       juice1.flag = true;
+        for (Juice juice : juices) {
+
+            for (Juice juice1 : juices) {
+
+                if (juice != juice1) {
+
+                    if (juice.getSet().containsAll(juice1.getSet())) {
+
+                        juice1.setFlag(true);
+                    }
+                }
+            }
+        }
 
         int n = 0;
 
-        for (Juice juice : juices)
-            if (!juice.flag)
+        for (Juice juice : juices) {
+
+            if (!juice.getFlag()) {
+
                 n++;
+            }
+        }
 
         return n;
     }
