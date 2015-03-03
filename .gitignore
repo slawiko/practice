@@ -6,4 +6,6 @@
 *.class
 .idea/
 *.iml
+.txt
+chat/.txt
 target
