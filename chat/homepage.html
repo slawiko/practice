@@ -4,32 +4,35 @@
     <head>     
         <title>Chat v.0.1</title>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/style.css"/>
+        <script src="js/scripts.js"></script>
     </head>
     
-    <body>
+    <body onload="run()">
         <div class="header">
             <div id="chatName">
                 Chat v.0.1
             </div>
         </div>
         
-        <div class="main">     
+        <section class="main">     
             <div id="chatWindow">
                 <div id="messageBox">
                     <div>       
                     </div>
                 </div>
 
-                <div id="textBox">      
-                    <div>      
-                        <input type="text" id="message" placeholder="Type a message">
+                <div class="textAndButton">
+                    <div id="textBox">      
+                        <div>      
+                            <input type="text" id="message" placeholder="Type a message">
+                        </div>
                     </div>
-                </div>
 
-                <div id="sendButton">  
-                    <div id="buttonText">     
-                        Send
+                    <div id="sendButton">  
+                        <div id="buttonText">     
+                            Send
+                        </div>
                     </div>
                 </div>
 
@@ -38,11 +41,11 @@
                     </div>              
                 </div>
             </div>
-        </div>
+        </section>
         
         <div class="footer">
         </div>
               
-         <script src="scripts.js"></script>
+         
     </body>
 </html>
