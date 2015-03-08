@@ -51,9 +51,9 @@ html, body {
     position: absolute;
     height: 480px;
     width: 400px;
-    overflow: auto;
+    overflow: scroll;
     
-    border: 2px solid rgb(40,49,75);
+    border: 2px solid rgb(71, 150, 146);
     border-radius: 10px;
 }
 
@@ -65,7 +65,7 @@ html, body {
     overflow: auto;
     top: 482px;
     
-    border: 2px solid rgb(40,49,75);
+    border: 2px solid rgb(71, 150, 146);
     border-radius: 10px;
 }
 
@@ -110,7 +110,7 @@ html, body {
     margin-left: 402px;
     overflow: auto;
     
-    border: 2px solid rgb(40,49,75);
+    border: 2px solid rgb(71, 150, 146);
     border-radius: 10px;
 }
 
