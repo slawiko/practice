@@ -1,16 +1,35 @@
 function run() {
  
-    var appContainer = document.getElementById("textBox");
+    var appContainer = document.getElementById("textAndButton");
     
-    appContainer.addEventListener('click', delegateEvent);
-    appContainer.addEventListener('change', delegateEvent);
-    
+    appContainer.addEventListener('click', delegateEvent); //тут ошибка
 }
 
 function delegateEvent(eventObj) {
  
-    if (eventObj.type === 'click' && eventObj.target.classList.contains('')) {
+    if (eventObj.type === 'click' && eventObj.target.classList.contains('sendButton')) {
+        
+        onAddButtonClick(eventObj);
     }
-    if (eventObj.type === 'change' && eventObj.target.classList.contains(''))
+}
+
+function onAddButtonClick() {
+ 
+    var messageText = document.getElementById('textBox');
+
+	addMessage(textBox.value);
+	textBox.value = ''; 
+}
+
+function addMessage(value) {
+ 
+    if(!value){
+        
+		return;
+	}
     
+	var message = createItem(value);
+	var messages = document.getElementsByClassName('messageBox')[0];
+
+	messages.appendChild(message);
 }
