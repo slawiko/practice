@@ -5,7 +5,7 @@ html, body {
     height: 100%;
 }
 
-body #header {
+.header {
  
     position: relative;
     width: 100%;
@@ -15,7 +15,7 @@ body #header {
     background-image: url(resources/header_background.png);
 }
 
-.chatName {
+#chatName {
 
     text-align: center;
     color: rgb(255,255,255);
@@ -26,7 +26,7 @@ body #header {
     
 }
 
-body #main {
+.main {
  
     position: relative;
     width: 100%;
@@ -36,7 +36,7 @@ body #main {
     background-image: url(resources/main_background.png);
 }
 
-body #main #chatWindow {
+#chatWindow {
 
     position: relative;
     top: 50px;
@@ -46,7 +46,7 @@ body #main #chatWindow {
     margin-right: auto;
 }
 
-body #main #chatWindow .messageBox {
+#messageBox {
  
     position: absolute;
     height: 480px;
@@ -57,7 +57,7 @@ body #main #chatWindow .messageBox {
     border-radius: 10px;
 }
 
-body #main #chatWindow .textBox {
+#textBox {
 
     position: absolute;
     height: 70px;
@@ -75,7 +75,7 @@ body #main #chatWindow .textBox {
     width: 404px;
 }
 
-body #main #chatWindow .sendButton {
+#sendButton {
 
     position: absolute;
     display: block;
@@ -91,18 +91,18 @@ body #main #chatWindow .sendButton {
     
 }
 
-body #main #chatWindow .sendButton:hover {
+#sendButton:hover {
 
     box-shadow: inset 0 0 20px rgba(0,0,0,.2), 0 2px 0 rgba(255,255,255,.4), inset 0 3px 0 rgba(0,0,0,.1);
 }
 
-.textButton {
+#buttonText {
 
     text-align: center;
     margin-top: 13px;
 }
 
-body #main #chatWindow .usersBox {
+#usersBox {
 
     position: absolute;
     height: 480px;
@@ -114,7 +114,7 @@ body #main #chatWindow .usersBox {
     border-radius: 10px;
 }
 
-body #footer {
+.footer {
  
     width: 100%;
     height: 100px;
