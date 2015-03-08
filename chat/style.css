@@ -10,20 +10,23 @@ html, body {
     position: relative;
     width: 100%;
     height: 150px;
-    margin: 0;
     
     background-image: url(resources/header_background.png);
 }
 
 #chatName {
 
-    text-align: center;
+    position: absolute;
     color: rgb(255,255,255);
+    
     font-size: 60px;
     font-family: 'Arial Black', 'Arial Bold', Gadget, sans-serif;
-    margin-left: auto;
-    margin-right: auto;
     
+    line-height: 150px;
+    height: 100%;
+    
+    left: 50%;
+    margin-left: -165px;  
 }
 
 .main {
@@ -31,7 +34,7 @@ html, body {
     position: relative;
     width: 100%;
     height: 650px;
-    margin: 0;
+    max-height: none;
 
     background-image: url(resources/main_background.png);
 }
@@ -42,8 +45,7 @@ html, body {
     top: 50px;
     height: 550px;
     width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: auto;
 }
 
 #messageBox {
@@ -51,7 +53,7 @@ html, body {
     position: absolute;
     height: 480px;
     width: 400px;
-    overflow: scroll;
+    overflow: auto;
     
     border: 2px solid rgb(71, 150, 146);
     border-radius: 10px;
