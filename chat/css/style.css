@@ -94,10 +94,10 @@ html, body {
     right: 210px;
     top: 8px;
     background: url(resources/button_background.png);
-    border-radius: 60px;
+    border-radius: 10px;
     cursor: pointer;
     
-    box-shadow: 0 5px 20px rgba(38, 101, 98, 0.25), inset 0 2px 0 rgba(255,255,255,.6), 0 3px 0 rgba(38, 101, 98,.1), inset 0 0 20px rgba(38, 101, 98,.1);
+    box-shadow: 2px 5px 20px rgba(38, 101, 98, 0.25), inset 0 2px 0 rgba(255,255,255,.6), 0 3px 0 rgba(38, 101, 98,.1), inset 0 0 20px rgba(38, 101, 98,.1);
     
 }
 
@@ -106,10 +106,9 @@ html, body {
     box-shadow: inset 0 0 20px rgba(38, 101, 98,.2), 0 2px 0 rgba(255,255,255,.4), inset 0 3px 0 rgba(38, 101, 98,.1);
 }
 
-#buttonText {
-
-    text-align: center;
-    margin-top: 8px;
+#sendButton:active {
+     
+    box-shadow: inset 3px 3px 20px rgba(33, 88, 86, 0.15), 3px 3px 20px rgba(255,255,255,.42), inset 4px 4px 20px rgba(31, 88, 86, 0.12);
 }
 
 #usersBox {
