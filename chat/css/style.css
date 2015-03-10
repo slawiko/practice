@@ -33,22 +33,22 @@ html, body {
  
     position: relative;
     width: 100%;
-    height: 700px;
+    height: 710px;
     max-height: none;
 
-    background-image: url(resources/main_background.png);
+    background-color: #e2e2e2;
 }
 
-#chatWindow {
+.chatWindow {
 
     position: relative;
     top: 50px;
-    height: 556px;
+    height: 606px;
     width: 606px;
     margin: auto;
 }
 
-#messageBox {
+.messageBox {
  
     position: absolute;
     height: 480px;
@@ -56,17 +56,26 @@ html, body {
     overflow: auto;
     background-color: #F2F2F2;
     
-    border: 2px solid rgb(71, 150, 146);
-    border-radius: 8px;
+    border: 1px solid rgb(71, 150, 146);
+    border-right: 0px;
+    border-radius: 6px;
 }
 
-.editBox /*добавить логин*/{
+.editBox{
     
     position: absolute;
     height: 74px;
     width: 606px;
     top: 482px;
     
+}
+
+.buttonBox {
+ 
+    position: absolute;
+    width: 606px;
+    height: 50px;
+    top: 555px;
 }
 
 #textBox {
@@ -79,14 +88,55 @@ html, body {
     outline: 0;
     background-color: #F2F2F2;
     
-    border: 2px solid rgb(71, 150, 146);
-    border-radius: 8px;
+    border: 1px solid rgb(71, 150, 146);
+    border-top: 0px;
+    border-radius: 6px;
 }
 
-#message {
+.loginBox {
+    
+    position: absolute;
+    height: 70px;
+    width: 200px;
+    top: 2px;
+    left: 404px;
+}
 
-    height: 64px;
-    width: 394px;
+#login {
+    
+    position: absolute;
+    height: 24px;
+    line-height: 150%;
+    outline: 0;
+    width: 120px;
+    background-color: #F2F2F2;
+    border: 1px solid rgb(71, 150, 146);
+    border-radius: 5px;
+}
+
+#confirmLoginButton {
+ 
+    top: 3px;
+    height: 20px;
+    width: 65px;
+    left: 128px;
+    position: absolute;
+    background-color: #58a8a4;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: 0;
+    border: 0;
+}
+
+#confirmLoginButton:hover {
+
+    background-color: #58b9b4;
+}
+
+#confirmLoginButton:active {
+     
+    background-color: #4a9591;
 }
 
 #sendButton {
@@ -95,11 +145,10 @@ html, body {
     display: block;
     height: 28px;
     width: 85px;
-    right: 210px;
-    top: 8px;
+    top: 5px;
     background-color: #58a8a4;
     color: white;
-    border-radius: 8px;
+    border-radius: 6px;
     cursor: pointer;
     outline: 0;
     border: 0;
@@ -116,7 +165,7 @@ html, body {
     background-color: #4a9591;
 }
 
-#usersBox {
+.usersBox {
 
     position: absolute;
     height: 480px;
@@ -125,8 +174,8 @@ html, body {
     overflow: auto;
     background-color: #F2F2F2;
     
-    border: 2px solid rgb(71, 150, 146);
-    border-radius: 8px;
+    border: 1px solid rgb(71, 150, 146);
+    border-radius: 6px;
 }
 
 .footer {
