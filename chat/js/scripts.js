@@ -3,9 +3,6 @@ function run() {
     var editBox = document.getElementsByClassName("editBox")[0];
     var sendButton = document.getElementById("sendButton");
     
-    console.log(editBox);
-    console.log(sendButton);
-    
     sendButton.addEventListener("click", delegateEvent);
     
     console.log("runAfterListener");
