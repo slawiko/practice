@@ -64,7 +64,7 @@ html, body {
 .editBox{
     
     position: absolute;
-    height: 74px;
+    height: 72px;
     width: 606px;
     top: 482px;
     
@@ -96,7 +96,7 @@ html, body {
 .loginBox {
     
     position: absolute;
-    height: 70px;
+    height: 67px;
     width: 200px;
     top: 2px;
     left: 404px;

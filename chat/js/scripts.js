@@ -1,15 +1,20 @@
 function run() {
  
-    var appContainer = document.getElementsByClassName("editBox")[0];
-    console.log("run");
-    appContainer.addEventListener("click", delegateEvent);
+    var editBox = document.getElementsByClassName("editBox")[0];
+    var sendButton = document.getElementById("sendButton");
+    
+    console.log(editBox);
+    console.log(sendButton);
+    
+    sendButton.addEventListener("click", delegateEvent);
+    
     console.log("runAfterListener");
 }
 
 function delegateEvent(eventObj) {
  
     console.log("delegateEvent");
-    if (eventObj.type === "click" && eventObj.target.getAttribute("id") === "sendButton") {
+    if (eventObj.type === "click") {
         console.log("delegateEventIF");
         onAddButtonClick(eventObj);
     }
@@ -17,10 +22,9 @@ function delegateEvent(eventObj) {
 
 function onAddButtonClick() {
  
-    var messageText = document.getElementById("message");
+    var messageText = document.getElementById("textBox");
     console.log("onAddButtonClick");
-	addMessage(message.value);
-	textBox.value = ''; 
+	addMessage(messageText.innerHTML);
 }
 
 function addMessage(value) {
@@ -31,8 +35,12 @@ function addMessage(value) {
 	}
     console.log("value");
     
-	var message = createItem(value);
+	var newMessage = document.createElement("div");
+    var content = document.createTextNode(value);
+    
+    newMessage.appendChild(content);
+    
 	var messages = document.getElementsByClassName("messageBox")[0];
 
-	messages.appendChild(message);
+	messages.appendChild(newMessage);
 }
