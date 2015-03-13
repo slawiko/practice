@@ -9,7 +9,7 @@ html, body {
  
     position: relative;
     width: 100%;
-    height: 150px;
+    height: 15%;
     
     background-image: url(resources/header_background.png);
 }
@@ -33,59 +33,66 @@ html, body {
  
     position: relative;
     width: 100%;
-    height: 710px;
+    height: 75%;
     max-height: none;
 
-    background-color: #e2e2e2;
+    background-color: #d8d8d8;
 }
 
 .chatWindow {
 
     position: relative;
-    top: 50px;
-    height: 606px;
-    width: 606px;
-    margin: auto;
+    top: 7%;
+    height: 86%;
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
 }
 
 .messageBox {
  
     position: absolute;
-    height: 480px;
-    width: 400px;
+    height: 82%;
+    width: 74%;
     overflow: auto;
-    background-color: #F2F2F2;
+    background-color: #e3e3e3;
     
     border: 1px solid rgb(71, 150, 146);
     border-radius: 6px;
 }
 
-.editBox{
-    
+.usersBox {
+
     position: absolute;
-    height: 72px;
-    width: 606px;
-    top: 484px;
+    height: 82%;
+    width: 25%;
+    overflow: auto;
+    background-color: #e3e3e3;
+    margin-left: 75%;
     
+    border: 1px solid rgb(71, 150, 146);
+    border-radius: 6px;
 }
 
 .buttonBox {
  
     position: absolute;
-    width: 606px;
-    height: 39px;
-    top: 558px;
+    width: 100%;
+    height: 6%;
+    margin-top: %;
 }
 
 #textBox {
 
+    padding: 4px;
     position: absolute;
-    height: 70px;
-    width: 400px;
+    height: 10%;
+    width: 74%;
+    display: block;
     overflow: auto;
-    line-height: 150%;
-    outline: 0;
+    margin-top: 70%;
     background-color: #F2F2F2;
+    margin-left: 1%;
     
     border: 1px solid rgb(71, 150, 146);
     border-radius: 6px;
@@ -94,9 +101,10 @@ html, body {
 .loginBox {
     
     position: absolute;
-    height: 26px;
-    width: 202px;
-    left: 404px;
+    height: 5%;
+    width: 25%;
+    margin-left: 75%;
+    margin-top: 70%;
 }
 
 #login {
@@ -105,7 +113,7 @@ html, body {
     height: 24px;
     line-height: 150%;
     outline: 0;
-    width: 128px;
+    width: 68%;
     background-color: #F2F2F2;
     border: 1px solid rgb(71, 150, 146);
     border-radius: 6px;
@@ -114,8 +122,8 @@ html, body {
 #confirmLoginButton {
  
     height: 26px;
-    width: 69px;
-    left: 133px;
+    width: 30%;
+    margin-left: 71%; 
     position: absolute;
     background-color: #58a8a4;
     color: white;
@@ -161,25 +169,11 @@ html, body {
     background-color: #4a9591;
 }
 
-.usersBox {
-
-    position: absolute;
-    height: 480px;
-    width: 200px;
-    margin-left: 402px;
-    left: 2px;
-    overflow: auto;
-    background-color: #F2F2F2;
-    
-    border: 1px solid rgb(71, 150, 146);
-    border-radius: 6px;
-}
-
 .footer {
  
     position: relative;
     width: 100%;
-    height: 100px;
+    height: 10%;
     
     background-image: url(resources/footer_background.png);
 }
