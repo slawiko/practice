@@ -50,9 +50,12 @@ html, body {
 
 .messageBox {
  
+    padding-right: 40px;
+    padding-left: 40px;
+    padding-top: 20px;
     position: absolute;
-    height: 480px;
-    width: 400px;
+    height: 460px;
+    width: 320px;
     overflow: auto;
     background-color: #F2F2F2;
     
@@ -61,6 +64,7 @@ html, body {
 }
 
 .editBox{
+    
     
     position: absolute;
     height: 72px;
@@ -79,11 +83,12 @@ html, body {
 
 #textBox {
 
+    padding-top: 3px;
+    padding-left: 4px;
     position: absolute;
-    height: 70px;
-    width: 400px;
+    height: 67px;
+    width: 396px;
     overflow: auto;
-    line-height: 150%;
     outline: 0;
     background-color: #F2F2F2;
     
@@ -94,18 +99,21 @@ html, body {
 .loginBox {
     
     position: absolute;
-    height: 26px;
+    height: 30px;
     width: 202px;
     left: 404px;
 }
 
 #login {
     
+    padding-top: 3px;
+    padding-left: 4px;
+    padding-bottom: 2px;
     position: absolute;
     height: 24px;
     line-height: 150%;
     outline: 0;
-    width: 128px;
+    width: 121px;
     background-color: #F2F2F2;
     border: 1px solid rgb(71, 150, 146);
     border-radius: 6px;
@@ -113,9 +121,9 @@ html, body {
 
 #confirmLoginButton {
  
-    height: 26px;
-    width: 69px;
-    left: 133px;
+    height: 30px;
+    width: 73px;
+    left: 130px;
     position: absolute;
     background-color: #58a8a4;
     color: white;
@@ -141,7 +149,6 @@ html, body {
     display: block;
     height: 28px;
     width: 85px;
-    top: 2px;
     background-color: #58a8a4;
     color: white;
     border-radius: 6px;
@@ -163,9 +170,12 @@ html, body {
 
 .usersBox {
 
+    padding-right: 30px;
+    padding-left: 30px;
+    padding-top: 20px;
     position: absolute;
-    height: 480px;
-    width: 200px;
+    height: 460px;
+    width: 140px;
     margin-left: 402px;
     left: 2px;
     overflow: auto;
