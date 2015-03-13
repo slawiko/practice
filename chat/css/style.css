@@ -42,11 +42,14 @@ html, body {
 .chatWindow {
 
     position: absolute;
-    top: 7%;
-    height: 86%;
-    width: 70%;
-    left: 15%;
-    right: 15%;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    margin: auto;
+    height: 600px;
+    width: 606px;
+    
 }
 
 .messageBox {
@@ -75,7 +78,7 @@ html, body {
     margin-left: 402px;
     left: 2px;
     overflow: auto;
-    background-color: #F2F2F2;
+    background-color: #e3e3e3;
     
     border: 1px solid rgb(71, 150, 146);
     border-radius: 6px;
@@ -93,6 +96,7 @@ html, body {
 
     padding-top: 3px;
     padding-left: 4px;
+    top: 484px;
     position: absolute;
     height: 67px;
     width: 396px;
@@ -107,6 +111,7 @@ html, body {
 
 .loginBox {
     
+    top: 484px;
     position: absolute;
     height: 30px;
     width: 202px;
