@@ -9,7 +9,7 @@ html, body {
  
     position: relative;
     width: 100%;
-    height: 15%;
+    height: 150px;
     
     background-image: url(resources/header_background.png);
 }
@@ -41,11 +41,8 @@ html, body {
 
 .chatWindow {
 
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
+    position: relative;
+    top: 40px;
     margin: auto;
     height: 600px;
     width: 606px;
@@ -88,8 +85,8 @@ html, body {
  
     position: absolute;
     width: 100%;
-    height: 6%;
-    top: 95%;
+    height: 30px;
+    top: 558px;
 }
 
 #textBox {
@@ -186,7 +183,7 @@ html, body {
  
     position: relative;
     width: 100%;
-    height: 10%;
+    height: 100px;
     
     background-image: url(resources/footer_background.png);
 }
