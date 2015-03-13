@@ -1,24 +1,34 @@
 function run() {
  
-    var editBox = document.getElementsByClassName("editBox")[0];
-    var sendButton = document.getElementById("sendButton");
+    var chatWindow = document.getElementsByClassName("chatWindow")[0];
     
-    sendButton.addEventListener("click", delegateEvent);
+    chatWindow.addEventListener("click", delegateEvent);
 }
 
 function delegateEvent(eventObj) {
  
-    if (eventObj.type === "click") {
+    if ((eventObj.type === "click") && (eventObj.target.getAttribute("id") == "sendButton")) {
 
-        onAddButtonClick(eventObj);
+        onSendButtonClick(eventObj);
+    }
+    if ((eventObj.type === "click") && (eventObj.target.getAttribute("id") == "confirmLoginButton")) {
+
+        onConfirmLoginButtonClick(eventObj);
     }
 }
 
-function onAddButtonClick() {
+function onSendButtonClick() {
  
     var messageText = document.getElementById("textBox");
 	addMessage(messageText.innerHTML);
-    messageText.innerHTML = '';
+    messageText.innerHTML = "";
+}
+
+function onConfirmLoginButtonClick() {
+ 
+    var login = document.getElementById("login");
+    addLogin(login.innerHTML);
+    login.innerHTML = "";
 }
 
 function addMessage(value) {
@@ -36,4 +46,21 @@ function addMessage(value) {
 	var messages = document.getElementsByClassName("messageBox")[0];
 
 	messages.appendChild(newMessage);
+}
+
+function addLogin(value) {
+ 
+    if(!value){
+
+		return;
+	}
+    
+    var username = document.createElement("div");
+    var content = document.createTextNode(value);
+    
+    username.appendChild(content);
+    
+    var userBox = document.getElementsByClassName("userBox")[0];
+    
+    userBox.appendChild(username);
 }
