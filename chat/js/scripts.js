@@ -20,6 +20,11 @@ function delegateEvent(eventObj) {
      
         onEditLoginButtonClick();
     }
+    
+    if (eventObj.target.getAttribute("id") === "logoutButton") {
+        
+        onLogoutButtonClick();   
+    }
 }
 
 function onSendButtonClickOrEnter() {
@@ -29,14 +34,9 @@ function onSendButtonClickOrEnter() {
     messageText.innerHTML = "";
 }
 
-function onConfirmLoginButtonClick() { //Shit 
+function onLogoutButtonClick() {
  
-    var login = document.getElementById("login");
-    var username = document.getElementById("username");
-    
-    if (username.innerHTML)
-    addLogin(login.innerHTML);
-    login.innerHTML = "";
+    login();
 }
 
 function onEditLoginButtonClick() {
@@ -77,16 +77,22 @@ function addLogin(value) {
 
 function login(username) {
  
+    var hiddenUserBox = document.getElementsByClassName("hiddenUserBox")[0];
+    hiddenUserBox.style.display = "block";
+    var hiddenMessageBox = document.getElementsByClassName("hiddenMessageBox")[0];
+    hiddenMessageBox.style.display =  "block";
     var promptBackground = document.getElementsByClassName("promt")[0];
     promptBackground.style.display = "block";
-    promptBackground.style.background = "rgba(0, 0, 0, 0.5)";
+    
     var login;
     
     while (!login) {
      
-        login = prompt("Enter username", username);
+        login = prompt("Enter username", "user");
     }
     
     addLogin(login);
     promptBackground.style.display = "none";
+    hiddenUserBox.style.display = "none";
+    hiddenMessageBox.style.display =  "none";
 }

@@ -8,7 +8,7 @@ html, body {
 
 .promt {
     
-    display: block;
+    display: none;
     position: fixed;
     
     height: 100%;
@@ -19,6 +19,8 @@ html, body {
     right: 0;
     bottom: 0;
     background: 0;
+    
+    background: rgba(0, 0, 0, 0.5);
 }
 
 .header {
@@ -86,6 +88,23 @@ html, body {
     border-radius: 6px;
 }
 
+.hiddenMessageBox {
+ 
+    position: absolute;
+    display: block;
+    
+    height: 480px;
+    width: 400px;
+    
+    color: grey;
+    
+    background-color: #d8d8d8;
+    
+    border: 1px solid rgb(71, 150, 146);
+    border-radius: 6px;
+}
+
+
 .userBox {
 
     padding-right: 25px;
@@ -102,6 +121,25 @@ html, body {
     overflow: auto;
     
     background-color: #e3e3e3;
+    
+    border: 1px solid rgb(71, 150, 146);
+    border-radius: 6px;
+}
+
+.hiddenUserBox {
+ 
+    display: block;
+    position: absolute;
+    
+    height: 480px;
+    width: 200px;
+    
+    margin-left: 402px;
+    left: 2px;
+    
+    color: grey;
+    
+    background-color: #d8d8d8;
     
     border: 1px solid rgb(71, 150, 146);
     border-radius: 6px;
