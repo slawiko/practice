@@ -2,23 +2,36 @@ function run() {
  
     var promptBackground = document.getElementsByClassName("promt")[0];
     promptBackground.style.background = "rgba(0, 0, 0, 0.5)";
-    var login = prompt("Enter username");
+    var login;
+    
+    while (!login) {
+     
+        login = prompt("Enter username");
+    }
+    
     addLogin(login);
     promptBackground.style.display = "none";
     
     var chatWindow = document.getElementsByClassName("chatWindow")[0];
     chatWindow.addEventListener("click", delegateEvent);
+    var textBox = document.getElementById("textBox");
+    textBox.addEventListener("keydown", delegateEvent);
 }
 
 function delegateEvent(eventObj) {
  
-    if ((eventObj.type === "click") && (eventObj.target.getAttribute("id") == "sendButton")) {
+    if (eventObj.target.getAttribute("id") === "sendButton") {
 
-        onSendButtonClick(eventObj);
+        onSendButtonClickOrEnter(eventObj);
+    }
+    
+    if (eventObj.keyCode === 13) {
+        
+        onSendButtonClickOrEnter(eventObj);
     }
 }
 
-function onSendButtonClick() {
+function onSendButtonClickOrEnter() {
  
     var messageText = document.getElementById("textBox");
 	addMessage(messageText.innerHTML);
