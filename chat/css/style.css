@@ -80,12 +80,49 @@ html, body {
     height: 460px;
     width: 340px;
     
-    overflow: auto;
+    overflow-x: hidden;
     
     background-color: #e3e3e3;
     
     border: 1px solid rgb(71, 150, 146);
     border-radius: 6px;
+}
+
+.message {
+
+    display: block;
+    
+    height: auto;
+    width: 340px;
+}
+
+.user {
+
+    color: rgb(61, 134, 130);
+}
+
+.text {
+
+}
+
+.editMessageButton {
+ 
+    position: absolute;
+    
+    height: 20px;
+    width: 20px;
+    
+    left: 299px;
+}
+
+.deleteMessageButton {
+ 
+    position: absolute;
+    
+    height: 20px;
+    width: 20px;
+    
+    left: 320px;
 }
 
 .hiddenMessageBox {
@@ -118,7 +155,7 @@ html, body {
     margin-left: 402px;
     left: 2px;
     
-    overflow: auto;
+    overflow-x: hidden;
     
     background-color: #e3e3e3;
     
@@ -147,14 +184,15 @@ html, body {
 
 #username {
  
+    padding: 2px;
     display: none;
     
     width: auto;
     height: auto;
     
-    color: rgb(71, 150, 146);
+    color: rgb(61, 134, 130);
     
-    background-color: #e3e3e3;
+    background-color: #d9d9d9;
     
     border: 1px solid rgb(71, 150, 146);
     border-radius: 6px;

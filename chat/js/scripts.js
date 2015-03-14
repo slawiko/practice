@@ -7,6 +7,8 @@ function run() {
     
     var textBox = document.getElementById("textBox");
     textBox.addEventListener("keydown", delegateEvent);
+    
+    
 }
 
 function delegateEvent(eventObj) {
@@ -30,7 +32,8 @@ function delegateEvent(eventObj) {
 function onSendButtonClickOrEnter() {
  
     var messageText = document.getElementById("textBox");
-	addMessage(messageText.innerHTML);
+    var username = document.getElementById("username");
+	addMessage(messageText.innerHTML, username.innerHTML + ": ");
     messageText.innerHTML = "";
 }
 
@@ -46,7 +49,7 @@ function onEditLoginButtonClick() {
     login(value);
 }
 
-function addMessage(value) {
+function addMessage(value, username) {
  
     if(!value){
 
@@ -54,25 +57,36 @@ function addMessage(value) {
 	}
     
 	var newMessage = document.createElement("div");
-    var content = document.createTextNode(value);
+    newMessage.setAttribute("class", "message");
     
-    newMessage.appendChild(content);
+    var user = document.createElement("span");
+    user.setAttribute("class", "user");
+    
+    var text = document.createElement("span");
+    text.setAttribute("class", "text");
+    
+    var editMessageButton = document.createElement("img");
+    editMessageButton.setAttribute("class", "editMessageButton");
+    editMessageButton.setAttribute("src", "css/resources/edit.png");
+    
+    var deleteMessageButton = document.createElement("img");
+    deleteMessageButton.setAttribute("class", "deleteMessageButton");
+    deleteMessageButton.setAttribute("src", "css/resources/trash.png");
+    
+    var contentUsername = document.createTextNode(username);
+    var contentMessage = document.createTextNode(value);
+    
+    user.appendChild(contentUsername);
+    text.appendChild(contentMessage);
+    
+    newMessage.appendChild(user);
+    newMessage.appendChild(text);
+    newMessage.appendChild(editMessageButton);
+    newMessage.appendChild(deleteMessageButton);
     
 	var messages = document.getElementsByClassName("messageBox")[0];
 
 	messages.appendChild(newMessage);
-}
-
-function addLogin(value) {
- 
-    if(!value){
-
-		return;
-	}
-    
-    var username = document.getElementById("username");
-    username.innerHTML = value;
-    username.style.display = "block";
 }
 
 function login(username) {
@@ -95,4 +109,16 @@ function login(username) {
     promptBackground.style.display = "none";
     hiddenUserBox.style.display = "none";
     hiddenMessageBox.style.display =  "none";
+}
+
+function addLogin(value) {
+ 
+    if(!value){
+
+		return;
+	}
+    
+    var username = document.getElementById("username");
+    username.innerHTML = value;
+    username.style.display = "block";
 }
