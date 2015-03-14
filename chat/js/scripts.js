@@ -1,33 +1,24 @@
 function run() {
  
-    var promptBackground = document.getElementsByClassName("promt")[0];
-    promptBackground.style.background = "rgba(0, 0, 0, 0.5)";
-    var login;
-    
-    while (!login) {
-     
-        login = prompt("Enter username");
-    }
-    
-    addLogin(login);
-    promptBackground.style.display = "none";
+    login();
     
     var chatWindow = document.getElementsByClassName("chatWindow")[0];
     chatWindow.addEventListener("click", delegateEvent);
+    
     var textBox = document.getElementById("textBox");
     textBox.addEventListener("keydown", delegateEvent);
 }
 
 function delegateEvent(eventObj) {
  
-    if (eventObj.target.getAttribute("id") === "sendButton") {
+    if ((eventObj.target.getAttribute("id") === "sendButton") || (eventObj.keyCode === 13)) {
 
-        onSendButtonClickOrEnter(eventObj);
+        onSendButtonClickOrEnter();
     }
     
-    if (eventObj.keyCode === 13) {
-        
-        onSendButtonClickOrEnter(eventObj);
+    if (eventObj.target.getAttribute("id") === "editLoginButton") {
+     
+        onEditLoginButtonClick();
     }
 }
 
@@ -46,6 +37,13 @@ function onConfirmLoginButtonClick() { //Shit
     if (username.innerHTML)
     addLogin(login.innerHTML);
     login.innerHTML = "";
+}
+
+function onEditLoginButtonClick() {
+    
+    var username = document.getElementById("username");
+    var value = username.innerHTML;
+    login(value);
 }
 
 function addMessage(value) {
@@ -75,4 +73,20 @@ function addLogin(value) {
     var username = document.getElementById("username");
     username.innerHTML = value;
     username.style.display = "block";
+}
+
+function login(username) {
+ 
+    var promptBackground = document.getElementsByClassName("promt")[0];
+    promptBackground.style.display = "block";
+    promptBackground.style.background = "rgba(0, 0, 0, 0.5)";
+    var login;
+    
+    while (!login) {
+     
+        login = prompt("Enter username", username);
+    }
+    
+    addLogin(login);
+    promptBackground.style.display = "none";
 }
