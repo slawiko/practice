@@ -55,12 +55,14 @@ function addLogin(value) {
 		return;
 	}
     
-    var username = document.createElement("div");
-    var content = document.createTextNode(value);
+    var username = document.getElementById("username");
+    username.innerHTML = value;
+    username.style.display = "block";
+    /*var content = document.createTextNode(value);
     
     username.appendChild(content);
     
     var userBox = document.getElementsByClassName("userBox")[0];
     
-    userBox.appendChild(username);
+    userBox.appendChild(username);*/
 }
