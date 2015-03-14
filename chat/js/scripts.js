@@ -1,7 +1,12 @@
 function run() {
  
-    var chatWindow = document.getElementsByClassName("chatWindow")[0];
+    var promptBackground = document.getElementsByClassName("promt")[0];
+    promptBackground.style.background = "rgba(0, 0, 0, 0.5)";
+    var login = prompt("Enter username");
+    addLogin(login);
+    promptBackground.style.display = "none";
     
+    var chatWindow = document.getElementsByClassName("chatWindow")[0];
     chatWindow.addEventListener("click", delegateEvent);
 }
 
@@ -10,10 +15,6 @@ function delegateEvent(eventObj) {
     if ((eventObj.type === "click") && (eventObj.target.getAttribute("id") == "sendButton")) {
 
         onSendButtonClick(eventObj);
-    }
-    if ((eventObj.type === "click") && (eventObj.target.getAttribute("id") == "confirmLoginButton")) {
-
-        onConfirmLoginButtonClick(eventObj);
     }
 }
 
@@ -24,9 +25,12 @@ function onSendButtonClick() {
     messageText.innerHTML = "";
 }
 
-function onConfirmLoginButtonClick() {
+function onConfirmLoginButtonClick() { //Shit 
  
     var login = document.getElementById("login");
+    var username = document.getElementById("username");
+    
+    if (username.innerHTML)
     addLogin(login.innerHTML);
     login.innerHTML = "";
 }
@@ -58,11 +62,4 @@ function addLogin(value) {
     var username = document.getElementById("username");
     username.innerHTML = value;
     username.style.display = "block";
-    /*var content = document.createTextNode(value);
-    
-    username.appendChild(content);
-    
-    var userBox = document.getElementsByClassName("userBox")[0];
-    
-    userBox.appendChild(username);*/
 }
