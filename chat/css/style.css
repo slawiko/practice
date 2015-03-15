@@ -2,7 +2,6 @@ html, body {
 
     margin: 0;
     padding: 0;
-    
     height: 100%;
 }
 
@@ -10,26 +9,21 @@ html, body {
     
     display: none;
     position: fixed;
-    
     height: 100%;
     width: 100%;
-    
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     background: 0;
-    
     background: rgba(0, 0, 0, 0.5);
 }
 
 .header {
  
     position: relative;
-    
     height: 150px;
     width: 100%;
-    
     background-image: url(resources/header_background.png);
 }
 
@@ -37,13 +31,11 @@ html, body {
 
     position: absolute;
     color: rgb(255,255,255);
-    
     left: 50%;
     margin-left: -165px; 
-    
     font-size: 60px;
     font-family: 'Arial Black', 'Arial Bold', Gadget, sans-serif;
-      
+
     height: 100%;
     line-height: 150px;
 }
@@ -51,11 +43,9 @@ html, body {
 .main {
  
     position: relative;
-    
     height: 75%;
     width: 100%;
     max-height: none;
-
     background-color: #d8d8d8;
 }
 
@@ -63,9 +53,7 @@ html, body {
 
     position: relative;
     margin: auto;
-    
     top: 40px;
-    
     height: 600px;
     width: 606px;
 }
@@ -76,14 +64,10 @@ html, body {
     padding-left: 30px;
     padding-top: 20px;
     position: absolute;
-    
     height: 460px;
     width: 340px;
-    
     overflow-x: hidden;
-    
     background-color: #e3e3e3;
-    
     border: 1px solid rgb(71, 150, 146);
     border-radius: 6px;
 }
@@ -93,7 +77,6 @@ html, body {
     padding-top: 1px;
     padding-bottom: 3px;
     display: block;
-    
     height: auto;
     width: 340px;
 }
@@ -102,16 +85,12 @@ html, body {
  
     position: absolute;
     display: block;
-    
     height: 480px;
     width: 400px;
     text-align: center;
     line-height: 460px;
-    
     color: grey;
-    
     background-color: #d8d8d8;
-    
     border: 1px solid rgb(71, 150, 146);
     border-radius: 6px;
 }
@@ -129,20 +108,16 @@ html, body {
 #editMessageButton {
  
     position: absolute;
-    
     height: 20px;
     width: 20px;
-    
     left: 329px;
 }
 
 #deleteMessageButton {
  
     position: absolute;
-    
     height: 20px;
     width: 20px;
-    
     left: 350px;
 }
 
@@ -152,17 +127,12 @@ html, body {
     padding-left: 25px;
     padding-top: 20px;
     position: absolute;
-    
     height: 460px;
     width: 150px;
-    
     margin-left: 402px;
     left: 2px;
-    
     overflow-x: hidden;
-    
     background-color: #e3e3e3;
-    
     border: 1px solid rgb(71, 150, 146);
     border-radius: 6px;
 }
@@ -171,19 +141,14 @@ html, body {
  
     display: block;
     position: absolute;
-    
     height: 480px;
     width: 200px;
     text-align: center;
     line-height: 460px;
-    
     margin-left: 402px;
     left: 2px;
-    
     color: grey;
-    
     background-color: #d8d8d8;
-    
     border: 1px solid rgb(71, 150, 146);
     border-radius: 6px;
 }
@@ -192,14 +157,10 @@ html, body {
  
     padding: 2px;
     display: none;
-    
     width: auto;
     height: auto;
-    
     color: rgb(61, 134, 130);
-    
     background-color: #d9d9d9;
-    
     border: 1px solid rgb(71, 150, 146);
     border-radius: 6px;
 }
@@ -207,10 +168,8 @@ html, body {
 .buttonBox {
  
     position: absolute;
-    
     height: 30px;
     width: 100%;
-
     top: 558px;
 }
 
@@ -218,19 +177,13 @@ html, body {
 
     padding-top: 3px;
     padding-left: 4px;
-  
     position: absolute;
-    
     height: 67px;
     width: 396px;
-    
     top: 484px;
-    
     overflow: auto;
     outline: 0;
-    
     background-color: #F2F2F2;
-    
     border: 1px solid rgb(71, 150, 146);
     border-radius: 6px;
 }
@@ -238,10 +191,8 @@ html, body {
 .loginBox {
     
     position: absolute;
-    
     height: 30px;
     width: 202px;
-    
     top: 484px;
     left: 404px;
 }
@@ -249,18 +200,13 @@ html, body {
 #editLoginButton {
  
     position: absolute;
-    
     height: 30px;
     width: 100px;
-    
     left: 102px;
-
     cursor: pointer;
     outline: 0;
-    
     color: white;
     background-color: #58a8a4;
-    
     border-radius: 6px;
     border: 0;
 }
@@ -278,16 +224,12 @@ html, body {
 #logoutButton {
 
     position: absolute;
-    
     height: 30px;
     width: 100px;
-    
     cursor: pointer;
     outline: 0;
-    
     color: white;
     background-color: #58a8a4;
-    
     border: 0;
     border-radius: 6px;
 }
@@ -306,17 +248,12 @@ html, body {
 
     position: absolute;
     display: block;
-    
     height: 28px;
     width: 85px;
-    
     color: white;
-    
     cursor: pointer;
     outline: 0;
-    
     background-color: #58a8a4;
-    
     border-radius: 6px;
     border: 0;
     
@@ -335,9 +272,7 @@ html, body {
 .footer {
  
     position: relative;
-  
     height: 100px;
     width: 100%;
-    
     background-image: url(resources/footer_background.png);
 }

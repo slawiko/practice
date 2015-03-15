@@ -1,4 +1,5 @@
 var uniqueId = function() {
+    
 	var date = Date.now();
 	var random = Math.random() * Math.random();
 
@@ -27,7 +28,7 @@ function run() {
     createAllMessages(allMessages);
     
     var textBox = document.getElementById("textBox");
-    textBox.addEventListener("keydown", delegateEvent);   
+    textBox.addEventListener("keydown", delegateEvent);
 }
 
 function createAllMessages(allMessages) {
@@ -38,6 +39,8 @@ function createAllMessages(allMessages) {
             addMessage(allMessages[i]);
         }
     }
+    
+    return;
 }
 
 function delegateEvent(eventObj) {
@@ -46,26 +49,24 @@ function delegateEvent(eventObj) {
 
         onSendButtonClickOrEnter();
     }
-    
-    if (eventObj.target.getAttribute("id") === "editLoginButton") {
+    else if (eventObj.target.getAttribute("id") === "editLoginButton") {
      
         onEditLoginButtonClick();
     }
-    
-    if (eventObj.target.getAttribute("id") === "logoutButton") {
+    else if (eventObj.target.getAttribute("id") === "logoutButton") {
         
         onLogoutButtonClick();   
     }
-    
-    if (eventObj.target.getAttribute("id") === "editMessageButton") {
+    else if (eventObj.target.getAttribute("id") === "editMessageButton") {
     
         onEditMessageButtonClick(eventObj);
     }
-    
-    if (eventObj.target.getAttribute("id") === "deleteMessageButton") {
+    else if (eventObj.target.getAttribute("id") === "deleteMessageButton") {
     
         onDeleteMessageButtonClick(eventObj);
     }
+    
+    return;
 }
 
 function onSendButtonClickOrEnter(value) {
@@ -85,18 +86,25 @@ function onSendButtonClickOrEnter(value) {
     }
     
     store(messageList);
+    
+    return;
 }
 
 function onLogoutButtonClick() {
  
     login();
+    
+    return;
 }
 
 function onEditLoginButtonClick() {
     
     var username = document.getElementById("username");
     var value = username.innerHTML;
+    
     login(value);
+    
+    return;
 }
 
 function onEditMessageButtonClick(eventObj) {
@@ -112,7 +120,7 @@ function onEditMessageButtonClick(eventObj) {
         
         var parentMessage = eventObj.target.parentNode;
         var oldMessage = parentMessage.getElementsByClassName("text")[0];
-
+        
         var newMessage = prompt("Edit message", oldMessage.innerHTML);
 
         while (!newMessage) {
@@ -121,6 +129,7 @@ function onEditMessageButtonClick(eventObj) {
         }
 
         oldMessage.innerHTML = newMessage;
+        
         updateMessageList(newMessage, messageList[i]);
         store(messageList);
         
@@ -131,6 +140,8 @@ function onEditMessageButtonClick(eventObj) {
 function updateMessageList(_newMessage, _messageList) {
 
     _messageList.textMessage = _newMessage;
+    
+    return;
 }
 
 function onDeleteMessageButtonClick(eventObj) {
@@ -197,6 +208,8 @@ function addMessage(message) {
 
 	messages.appendChild(newMessage);
     messageList.push(message);
+    
+    return;
 }
 
 function login(username) {
@@ -216,9 +229,12 @@ function login(username) {
     }
     
     addLogin(login);
+    
     promptBackground.style.display = "none";
     hiddenUserBox.style.display = "none";
     hiddenMessageBox.style.display =  "none";
+    
+    return;
 }
 
 function addLogin(value) {
@@ -231,6 +247,8 @@ function addLogin(value) {
     var username = document.getElementById("username");
     username.innerHTML = value;
     username.style.display = "block";
+    
+    return;
 }
 
 function store(listToSave) {
@@ -242,6 +260,8 @@ function store(listToSave) {
 	}
 
 	localStorage.setItem("messages list", JSON.stringify(listToSave));
+    
+    return;
 }
 
 function restore(msName) {
