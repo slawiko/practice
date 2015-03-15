@@ -27,14 +27,34 @@ function delegateEvent(eventObj) {
         
         onLogoutButtonClick();   
     }
+    
+    if (eventObj.target.getAttribute("id") === "editMessageButton") {
+    
+        onEditMessageButtonClick(eventObj);
+    }
+    
+    if (eventObj.target.getAttribute("id") === "deleteMessageButton") {
+    
+        onDeleteMessageButtonClick(eventObj);
+    }
 }
 
-function onSendButtonClickOrEnter() {
+function onSendButtonClickOrEnter(value) {
  
     var messageText = document.getElementById("textBox");
     var username = document.getElementById("username");
-	addMessage(messageText.innerHTML, username.innerHTML + ": ");
-    messageText.innerHTML = "";
+    
+    if (value) {
+    
+        addMessage(value, username.innerHTML + ": ");
+        messageText.innerHTML = "";
+    }
+    else {
+    
+        addMessage(messageText.innerHTML, username.innerHTML + ": ");
+        messageText.innerHTML = "";
+    }
+	
 }
 
 function onLogoutButtonClick() {
@@ -47,6 +67,23 @@ function onEditLoginButtonClick() {
     var username = document.getElementById("username");
     var value = username.innerHTML;
     login(value);
+}
+
+function onEditMessageButtonClick(eventObj) {
+
+    var parentMessage = eventObj.target.parentNode;
+    var oldMessage = parentMessage.getElementsByClassName("text")[0];
+    
+    var newMessage = prompt("Edit message", oldMessage.innerHTML);
+    oldMessage.innerHTML = newMessage;
+}
+
+function onDeleteMessageButtonClick(eventObj) {
+
+    var parentMessage = eventObj.target.parentNode;
+    var messageBox = document.getElementsByClassName("messageBox")[0];
+    
+    messageBox.removeChild(parentMessage);
 }
 
 function addMessage(value, username) {
@@ -66,11 +103,11 @@ function addMessage(value, username) {
     text.setAttribute("class", "text");
     
     var editMessageButton = document.createElement("img");
-    editMessageButton.setAttribute("class", "editMessageButton");
+    editMessageButton.setAttribute("id", "editMessageButton");
     editMessageButton.setAttribute("src", "css/resources/edit.png");
     
     var deleteMessageButton = document.createElement("img");
-    deleteMessageButton.setAttribute("class", "deleteMessageButton");
+    deleteMessageButton.setAttribute("id", "deleteMessageButton");
     deleteMessageButton.setAttribute("src", "css/resources/trash.png");
     
     var contentUsername = document.createTextNode(username);
