@@ -5,6 +5,17 @@ var uniqueId = function() {
 	return Math.floor(date * random).toString();
 };
 
+var theMessage = function(text, username) {
+    
+	return {
+		textMessage: text,
+		user: username,
+		id: uniqueId()
+	};
+};
+
+var messageList = [];
+
 function run() {
  
     login();
@@ -12,10 +23,21 @@ function run() {
     var chatWindow = document.getElementsByClassName("chatWindow")[0];
     chatWindow.addEventListener("click", delegateEvent);
     
+    var allMessages = restore("messages list");
+    createAllMessages(allMessages);
+    
     var textBox = document.getElementById("textBox");
-    textBox.addEventListener("keydown", delegateEvent);
+    textBox.addEventListener("keydown", delegateEvent);   
+}
+
+function createAllMessages(allMessages) {
     
-    
+    if (allMessages.length) {
+        for(var i = 0; i < allMessages.length; i++) {
+
+            addMessage(allMessages[i]);
+        }
+    }
 }
 
 function delegateEvent(eventObj) {
@@ -53,15 +75,16 @@ function onSendButtonClickOrEnter(value) {
     
     if (value) {
     
-        addMessage(value, username.innerHTML + ": ");
+        addMessage(theMessage(value, username.innerHTML + ": "));
         messageText.innerHTML = "";
     }
     else {
     
-        addMessage(messageText.innerHTML, username.innerHTML + ": ");
+        addMessage(theMessage(messageText.innerHTML, username.innerHTML + ": "));
         messageText.innerHTML = "";
     }
-	
+    
+    store(messageList);
 }
 
 function onLogoutButtonClick() {
@@ -78,11 +101,36 @@ function onEditLoginButtonClick() {
 
 function onEditMessageButtonClick(eventObj) {
 
-    var parentMessage = eventObj.target.parentNode;
-    var oldMessage = parentMessage.getElementsByClassName("text")[0];
+    var id = eventObj.target.parentElement.attributes["id"].value;
     
-    var newMessage = prompt("Edit message", oldMessage.innerHTML);
-    oldMessage.innerHTML = newMessage;
+    for (var i = 0; i < messageList.length; i++) {
+        
+        if (messageList[i].id != id) {
+            
+            continue;
+        }
+        
+        var parentMessage = eventObj.target.parentNode;
+        var oldMessage = parentMessage.getElementsByClassName("text")[0];
+
+        var newMessage = prompt("Edit message", oldMessage.innerHTML);
+
+        while (!newMessage) {
+
+            newMessage = prompt("Your message is empty! Please, edit message", oldMessage.innerHTML);
+        }
+
+        oldMessage.innerHTML = newMessage;
+        updateMessageList(newMessage, messageList[i]);
+        store(messageList);
+        
+        return;
+    }
+}
+
+function updateMessageList(_newMessage, _messageList) {
+
+    _messageList.textMessage = _newMessage;
 }
 
 function onDeleteMessageButtonClick(eventObj) {
@@ -91,11 +139,26 @@ function onDeleteMessageButtonClick(eventObj) {
     var messageBox = document.getElementsByClassName("messageBox")[0];
     
     messageBox.removeChild(parentMessage);
+    
+    var id = parentMessage.attributes["id"].value;
+    
+    for (var i = 0; i < messageList.length; i++) {
+    
+        if (messageList[i].id != id) {
+        
+            continue;
+        }
+    
+        messageList.splice(i, 1);
+        store(messageList);
+        
+        return;
+    }
 }
 
-function addMessage(value, username) {
+function addMessage(message) {
  
-    if(!value){
+    if(!message.textMessage){
 
 		return;
 	}
@@ -117,12 +180,14 @@ function addMessage(value, username) {
     deleteMessageButton.setAttribute("id", "deleteMessageButton");
     deleteMessageButton.setAttribute("src", "css/resources/trash.png");
     
-    var contentUsername = document.createTextNode(username);
-    var contentMessage = document.createTextNode(value);
+    var contentUsername = document.createTextNode(message.user);
+    var contentMessage = document.createTextNode(message.textMessage);
     
     user.appendChild(contentUsername);
     text.appendChild(contentMessage);
     
+    newMessage.id = message.id;
+
     newMessage.appendChild(user);
     newMessage.appendChild(text);
     newMessage.appendChild(editMessageButton);
@@ -131,6 +196,7 @@ function addMessage(value, username) {
 	var messages = document.getElementsByClassName("messageBox")[0];
 
 	messages.appendChild(newMessage);
+    messageList.push(message);
 }
 
 function login(username) {
@@ -146,7 +212,7 @@ function login(username) {
     
     while (!login) {
      
-        login = prompt("Enter username", "user");
+        login = prompt("Enter username", username);
     }
     
     addLogin(login);
@@ -165,4 +231,28 @@ function addLogin(value) {
     var username = document.getElementById("username");
     username.innerHTML = value;
     username.style.display = "block";
+}
+
+function store(listToSave) {
+
+	if(typeof(Storage) == "undefined") {
+        
+		alert('localStorage is not accessible');
+		return;
+	}
+
+	localStorage.setItem("messages list", JSON.stringify(listToSave));
+}
+
+function restore(msName) {
+    
+	if(typeof(Storage) == "undefined") {
+        
+		alert('localStorage is not accessible');
+		return;
+	}
+
+	var item = localStorage.getItem(msName);
+
+	return item && JSON.parse(item);
 }
