@@ -1,3 +1,10 @@
+var uniqueId = function() {
+	var date = Date.now();
+	var random = Math.random() * Math.random();
+
+	return Math.floor(date * random).toString();
+};
+
 function run() {
  
     login();
