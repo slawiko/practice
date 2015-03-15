@@ -123,6 +123,7 @@ html, body {
 
 .text {
 
+    word-wrap: break-word;
 }
 
 #editMessageButton {
