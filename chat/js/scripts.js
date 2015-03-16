@@ -142,12 +142,12 @@ function onSendButtonClickOrEnter(value) {
     
     if (value) {
     
-        addMessage(theMessage(value, username.innerHTML + ": "));
+        addMessage(theMessage(value, username.innerText + ": "));
         messageText.innerHTML = "";
     }
     else {
     
-        addMessage(theMessage(messageText.innerHTML, username.innerHTML + ": "));
+        addMessage(theMessage(messageText.innerText, username.innerText + ": "));
         messageText.innerHTML = "";
     }
     
@@ -166,7 +166,7 @@ function onLogoutButtonClick() {
 function onEditLoginButtonClick() {
     
     var username = document.getElementById("username"),
-        value = username.innerHTML;
+        value = username.innerText;
     
     logIn(value);
     
@@ -201,7 +201,7 @@ function onEditMessageButtonClick(eventObj) {
             newMessage = prompt("Your message is empty! Please, edit message", oldMessage.innerHTML);
         }
 
-        oldMessage.innerHTML = newMessage;
+        oldMessage.innerText = newMessage;
         
         updateMessageList(newMessage, messageList[i]);
         store(messageList);
