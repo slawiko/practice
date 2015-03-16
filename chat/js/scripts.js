@@ -1,12 +1,14 @@
-var uniqueId = function() {
+"use strict";
+
+var uniqueId = function () {
     
-	var date = Date.now();
-	var random = Math.random() * Math.random();
+	var date = Date.now(),
+        random = Math.random() * Math.random();
 
 	return Math.floor(date * random).toString();
 };
 
-var theMessage = function(text, username) {
+var theMessage = function (text, username) {
     
 	return {
 		textMessage: text,
@@ -17,30 +19,69 @@ var theMessage = function(text, username) {
 
 var messageList = [];
 
-function run() {
+function addLogin(value) {
  
-    login();
-    
-    var chatWindow = document.getElementsByClassName("chatWindow")[0];
-    chatWindow.addEventListener("click", delegateEvent);
-    
-    var allMessages = restore("messages list");
-    createAllMessages(allMessages);
-    
-    var textBox = document.getElementById("textBox");
-    textBox.addEventListener("keydown", delegateEvent);
-}
+    if (!value) {
 
-function createAllMessages(allMessages) {
+		return;
+	}
     
-    if (allMessages.length) {
-        for(var i = 0; i < allMessages.length; i++) {
-
-            addMessage(allMessages[i]);
-        }
-    }
+    var username = document.getElementById("username");
+    username.innerHTML = value;
+    username.style.display = "block";
     
     return;
+}
+
+function logIn(username) {
+ 
+    var hiddenUserBox = document.getElementsByClassName("hiddenUserBox")[0],
+        hiddenMessageBox = document.getElementsByClassName("hiddenMessageBox")[0],
+        promptBackground = document.getElementsByClassName("promt")[0],
+        login;
+    
+    hiddenUserBox.style.display = "block";
+    hiddenMessageBox.style.display =  "block";
+    promptBackground.style.display = "block";
+    
+    while (!login) {
+     
+        login = prompt("Enter username", username);
+    }
+    
+    addLogin(login);
+    
+    promptBackground.style.display = "none";
+    hiddenUserBox.style.display = "none";
+    hiddenMessageBox.style.display =  "none";
+    
+    return;
+}
+
+function store(listToSave) {
+
+	if (typeof(Storage) === "undefined") {
+        
+		alert('localStorage is not accessible');
+		return;
+	}
+
+	localStorage.setItem("messages list", JSON.stringify(listToSave));
+    
+    return;
+}
+
+function restore(msName) {
+    
+	if (typeof(Storage) === "undefined") {
+        
+		alert('localStorage is not accessible');
+		return;
+	}
+
+	var item = localStorage.getItem(msName);
+
+	return item && JSON.parse(item);
 }
 
 function delegateEvent(eventObj) {
@@ -65,14 +106,39 @@ function delegateEvent(eventObj) {
     
         onDeleteMessageButtonClick(eventObj);
     }
+}
+
+function run() {
+ 
+    logIn();
+    
+    var chatWindow = document.getElementsByClassName("chatWindow")[0],
+        allMessages = restore("messages list"),
+        textBox = document.getElementById("textBox");
+    
+    chatWindow.addEventListener("click", delegateEvent);
+    createAllMessages(allMessages);
+    textBox.addEventListener("keydown", delegateEvent);
+}
+
+function createAllMessages(allMessages) {
+    
+    var i;
+    
+    if (allMessages.length) {
+        for (i = 0; i < allMessages.length; i++) {
+
+            addMessage(allMessages[i]);
+        }
+    }
     
     return;
 }
 
 function onSendButtonClickOrEnter(value) {
  
-    var messageText = document.getElementById("textBox");
-    var username = document.getElementById("username");
+    var messageText = document.getElementById("textBox"),
+        username = document.getElementById("username");
     
     if (value) {
     
@@ -92,36 +158,43 @@ function onSendButtonClickOrEnter(value) {
 
 function onLogoutButtonClick() {
  
-    login();
+    logIn();
     
     return;
 }
 
 function onEditLoginButtonClick() {
     
-    var username = document.getElementById("username");
-    var value = username.innerHTML;
+    var username = document.getElementById("username"),
+        value = username.innerHTML;
     
-    login(value);
+    logIn(value);
+    
+    return;
+}
+
+function updateMessageList(newMessage, messageList) {
+
+    messageList.textMessage = newMessage;
     
     return;
 }
 
 function onEditMessageButtonClick(eventObj) {
 
-    var id = eventObj.target.parentElement.attributes["id"].value;
+    var id = eventObj.target.parentElement.attributes["id"].value,
+        i;
     
-    for (var i = 0; i < messageList.length; i++) {
+    for (i = 0; i < messageList.length; i++) {
         
         if (messageList[i].id != id) {
             
             continue;
         }
         
-        var parentMessage = eventObj.target.parentNode;
-        var oldMessage = parentMessage.getElementsByClassName("text")[0];
-        
-        var newMessage = prompt("Edit message", oldMessage.innerHTML);
+        var parentMessage = eventObj.target.parentNode,
+            oldMessage = parentMessage.getElementsByClassName("text")[0],
+            newMessage = prompt("Edit message", oldMessage.innerHTML);
 
         while (!newMessage) {
 
@@ -137,23 +210,16 @@ function onEditMessageButtonClick(eventObj) {
     }
 }
 
-function updateMessageList(_newMessage, _messageList) {
-
-    _messageList.textMessage = _newMessage;
-    
-    return;
-}
-
 function onDeleteMessageButtonClick(eventObj) {
 
-    var parentMessage = eventObj.target.parentNode;
-    var messageBox = document.getElementsByClassName("messageBox")[0];
+    var parentMessage = eventObj.target.parentNode,
+        messageBox = document.getElementsByClassName("messageBox")[0],
+        id = parentMessage.attributes["id"].value,
+        i;
     
     messageBox.removeChild(parentMessage);
     
-    var id = parentMessage.attributes["id"].value;
-    
-    for (var i = 0; i < messageList.length; i++) {
+    for (i = 0; i < messageList.length; i++) {
     
         if (messageList[i].id != id) {
         
@@ -167,112 +233,53 @@ function onDeleteMessageButtonClick(eventObj) {
     }
 }
 
-function addMessage(message) {
- 
-    if(!message.textMessage){
-
-		return;
-	}
+function createMessage(username, textMessage) {
     
-	var newMessage = document.createElement("div");
+    var newMessage = document.createElement("div"),
+        user = document.createElement("span"),
+        text = document.createElement("span"),
+        editMessageButton = document.createElement("img"),
+        deleteMessageButton = document.createElement("img"),
+        contentUsername = document.createTextNode(username),
+        contentMessage = document.createTextNode(textMessage);
+        
     newMessage.setAttribute("class", "message");
-    
-    var user = document.createElement("span");
+
     user.setAttribute("class", "user");
-    
-    var text = document.createElement("span");
+
     text.setAttribute("class", "text");
-    
-    var editMessageButton = document.createElement("img");
+
     editMessageButton.setAttribute("id", "editMessageButton");
     editMessageButton.setAttribute("src", "css/resources/edit.png");
-    
-    var deleteMessageButton = document.createElement("img");
+
     deleteMessageButton.setAttribute("id", "deleteMessageButton");
     deleteMessageButton.setAttribute("src", "css/resources/trash.png");
-    
-    var contentUsername = document.createTextNode(message.user);
-    var contentMessage = document.createTextNode(message.textMessage);
-    
+
     user.appendChild(contentUsername);
     text.appendChild(contentMessage);
-    
-    newMessage.id = message.id;
 
     newMessage.appendChild(user);
     newMessage.appendChild(text);
     newMessage.appendChild(editMessageButton);
     newMessage.appendChild(deleteMessageButton);
     
-	var messages = document.getElementsByClassName("messageBox")[0];
+    return newMessage;
+}
 
+function addMessage(message) {
+ 
+    if (!message.textMessage) {
+
+		return;
+	}
+    
+    var newMessage = createMessage(message.user, message.textMessage),
+        messages = document.getElementsByClassName("messageBox")[0];
+
+    newMessage.id = message.id;
+    
 	messages.appendChild(newMessage);
     messageList.push(message);
     
     return;
-}
-
-function login(username) {
- 
-    var hiddenUserBox = document.getElementsByClassName("hiddenUserBox")[0];
-    hiddenUserBox.style.display = "block";
-    var hiddenMessageBox = document.getElementsByClassName("hiddenMessageBox")[0];
-    hiddenMessageBox.style.display =  "block";
-    var promptBackground = document.getElementsByClassName("promt")[0];
-    promptBackground.style.display = "block";
-    
-    var login;
-    
-    while (!login) {
-     
-        login = prompt("Enter username", username);
-    }
-    
-    addLogin(login);
-    
-    promptBackground.style.display = "none";
-    hiddenUserBox.style.display = "none";
-    hiddenMessageBox.style.display =  "none";
-    
-    return;
-}
-
-function addLogin(value) {
- 
-    if(!value){
-
-		return;
-	}
-    
-    var username = document.getElementById("username");
-    username.innerHTML = value;
-    username.style.display = "block";
-    
-    return;
-}
-
-function store(listToSave) {
-
-	if(typeof(Storage) == "undefined") {
-        
-		alert('localStorage is not accessible');
-		return;
-	}
-
-	localStorage.setItem("messages list", JSON.stringify(listToSave));
-    
-    return;
-}
-
-function restore(msName) {
-    
-	if(typeof(Storage) == "undefined") {
-        
-		alert('localStorage is not accessible');
-		return;
-	}
-
-	var item = localStorage.getItem(msName);
-
-	return item && JSON.parse(item);
 }
