@@ -116,8 +116,8 @@ function run() {
         allMessages = restore("messages list"),
         textBox = document.getElementById("textBox");
     
-    chatWindow.addEventListener("click", delegateEvent);
     createAllMessages(allMessages);
+    chatWindow.addEventListener("click", delegateEvent);
     textBox.addEventListener("keydown", delegateEvent);
 }
 

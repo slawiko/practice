@@ -271,7 +271,6 @@ html, body {
 
 .footer {
  
-    position: relative;
     height: 100px;
     width: 100%;
     background-image: url(resources/footer_background.png);
