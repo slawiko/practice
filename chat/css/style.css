@@ -5,7 +5,7 @@ html, body {
     height: 100%;
 }
 
-.promt {
+.loginWindowBackground {
     
     display: none;
     position: fixed;
@@ -17,6 +17,94 @@ html, body {
     bottom: 0;
     background: 0;
     background: rgba(0, 0, 0, 0.5);
+}
+
+#loginWindow {
+
+    position: absolute;
+    margin: auto;
+    height: 140px;
+    width: 350px;
+    margin: -70px 0 0 -175px;
+    top: 50%;
+    left: 50%;
+    background-color: #c1c1c1;
+    border: 1px solid rgb(71, 150, 146);
+    border-radius: 10px;
+}
+
+#loginWindowAlert {
+    
+    text-align: center;
+    margin-top: 16px;
+    color: rgb(64, 181, 176);
+    font-size: 20px;
+    font-family: 'Arial Black', 'Arial Bold', sans-serif;
+}
+
+#loginWindowInput {
+
+    padding-left: 6px;
+    position: absolute;
+    line-height: 27px;
+    height: 30px;
+    width: 80%;
+    outline: 0;
+    margin-top: 12px;
+    margin-left: 30px;
+    background-color: #F2F2F2;
+    border: 1px solid rgb(71, 150, 146);
+    border-radius: 10px;
+}
+
+#loginWindowButton {
+
+    position: absolute;
+    height: 30px;
+    width: 130px;
+    margin-top: 53px;
+    margin-left: 36px;
+    cursor: pointer;
+    outline: 0;
+    color: white;
+    background-color: #58a8a4;
+    border: 0;
+    border-radius: 10px;
+}
+
+#loginWindowButton:hover {
+
+    background-color: #58b9b4;
+}
+
+#loginWindowButton:active {
+     
+    background-color: #4a9591;
+}
+
+#dismissLoginWindowButton {
+
+    position: absolute;
+    height: 30px;
+    width: 130px;
+    margin-top: 53px;
+    margin-left: 176px;
+    cursor: pointer;
+    outline: 0;
+    color: white;
+    background-color: #a85858;
+    border: 0;
+    border-radius: 10px;
+}
+
+#dismissLoginWindowButton:hover {
+
+    background-color: #b95858;
+}
+
+#dismissLoginWindowButton:active {
+     
+    background-color: #954a4a;
 }
 
 .header {
@@ -32,10 +120,9 @@ html, body {
     position: absolute;
     color: rgb(255,255,255);
     left: 50%;
-    margin-left: -165px; 
+    margin-left: -165px;
     font-size: 60px;
-    font-family: 'Arial Black', 'Arial Bold', Gadget, sans-serif;
-
+    font-family: 'Arial Black', 'Arial Bold', sans-serif;
     height: 100%;
     line-height: 150px;
 }
@@ -76,7 +163,6 @@ html, body {
 
     padding-top: 1px;
     padding-bottom: 3px;
-    display: block;
     height: auto;
     width: 340px;
 }
@@ -88,21 +174,22 @@ html, body {
     height: 480px;
     width: 400px;
     text-align: center;
-    line-height: 460px;
+    line-height: 480px;
     color: grey;
     background-color: #d8d8d8;
     border: 1px solid rgb(71, 150, 146);
     border-radius: 6px;
 }
 
+.text {
+
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
 .user {
 
     color: rgb(61, 134, 130);
-}
-
-.text {
-
-    word-wrap: break-word;
 }
 
 #editMessageButton {
@@ -144,7 +231,7 @@ html, body {
     height: 480px;
     width: 200px;
     text-align: center;
-    line-height: 460px;
+    line-height: 480px;
     margin-left: 402px;
     left: 2px;
     color: grey;
@@ -188,6 +275,21 @@ html, body {
     border-radius: 6px;
 }
 
+.hiddenTextBox {
+
+    position: absolute;
+    top: 484px;
+    height: 70px;
+    width: 400px;
+    text-align: center;
+    line-height: 70px;
+    display: block;
+    color: grey;
+    background-color: #d8d8d8;
+    border: 1px solid rgb(71, 150, 146);
+    border-radius: 6px;
+}
+
 .loginBox {
     
     position: absolute;
@@ -200,6 +302,7 @@ html, body {
 #editLoginButton {
  
     position: absolute;
+    display: none;
     height: 30px;
     width: 100px;
     left: 102px;
@@ -221,9 +324,34 @@ html, body {
     background-color: #4a9591;
 }
 
+#loginButton {
+
+    position: absolute;
+    display: block;
+    height: 30px;
+    width: 100px;
+    cursor: pointer;
+    outline: 0;
+    color: white;
+    background-color: #58a8a4;
+    border: 0;
+    border-radius: 6px;
+}
+
+#loginButton:hover {
+
+    background-color: #58b9b4;
+}
+
+#loginButton:active {
+     
+    background-color: #4a9591;
+}
+
 #logoutButton {
 
     position: absolute;
+    display: none;
     height: 30px;
     width: 100px;
     cursor: pointer;
@@ -256,7 +384,6 @@ html, body {
     background-color: #58a8a4;
     border-radius: 6px;
     border: 0;
-    
 }
 
 #sendButton:hover {

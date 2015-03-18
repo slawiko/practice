@@ -10,16 +10,17 @@
     <body onload="run()"> 
         <div class="header">
             <div id="chatName">
-                Chat v.1.0
+                Chat v.1.1
             </div>
         </div>
         
         <section class="main">     
             <div class="chatWindow">
-                <div class="messageBox">                  
+                <div class="messageBox">  
+                    
                 </div>
                 
-                <div class="hiddenMessageBox">Login, please.</div>
+                <div class="hiddenMessageBox">You can`t read messages. Login, please.</div>
                 
                 <div class="userBox">
                     <span id="username">
@@ -31,7 +32,10 @@
                 <div id="textBox" contenteditable="true">
                 </div>
                 
+                <div class="hiddenTextBox">You can`t write messages. Login, please.</div>
+                
                 <div class="loginBox">
+                    <button id="loginButton" type="button">Login</button>
                     <button id="logoutButton" type="button">Logout</button>
                     <button id="editLoginButton" type="button">Edit</button>
                 </div>
@@ -44,6 +48,20 @@
         
         <div class="footer"></div>
     
-        <div class="promt"></div>
+        <div class="loginWindowBackground">
+            <div id="loginWindow">
+                <div id="loginWindowAlert">
+                    Enter your login, please.
+                </div>
+                <div id="loginWindowInput" contenteditable="true">
+                </div>
+                <button id="loginWindowButton">
+                    Login
+                </button>
+                <button id="dismissLoginWindowButton">
+                    Dismiss
+                </button>
+            </div>
+        </div>
     </body>
 </html>
