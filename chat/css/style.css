@@ -115,6 +115,29 @@ html, body {
     background-image: url(resources/header_background.png);
 }
 
+#serverIndicator {
+
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    font-family: "Arial Black", "Arial Bold", "Gadget";
+    color: #c2ffe3;
+    background-color: #58b98c;
+    
+    transition-property: "backgroung-color";
+    transition-duration: .25s;
+    transition-timing-function: ease-in-out;
+}
+
+#serverIndicator:hover {
+
+    background-color: #b95c58;
+    
+    transition-property: "backgroung-color";
+    transition-duration: .25s;
+    transition-timing-function: ease-in-out;
+}
+
 #chatName {
 
     position: absolute;
@@ -140,7 +163,7 @@ html, body {
 
     position: relative;
     margin: auto;
-    top: 40px;
+    top: 30px;
     height: 600px;
     width: 606px;
 }
