@@ -75,11 +75,19 @@ html, body {
 #loginWindowButton:hover {
 
     background-color: #58b9b4;
+    
+    transition-property: "backgroung-color";
+    transition-duration: .1s;
+    transition-timing-function: ease-in-out;
 }
 
 #loginWindowButton:active {
      
     background-color: #4a9591;
+    
+    transition-property: "backgroung-color";
+    transition-duration: .1s;
+    transition-timing-function: ease-in-out;
 }
 
 #dismissLoginWindowButton {
@@ -95,16 +103,28 @@ html, body {
     background-color: #a85858;
     border: 0;
     border-radius: 10px;
+    
+    transition-property: "backgroung-color";
+    transition-duration: .1s;
+    transition-timing-function: ease-in-out;
 }
 
 #dismissLoginWindowButton:hover {
 
     background-color: #b95858;
+    
+    transition-property: "backgroung-color";
+    transition-duration: .1s;
+    transition-timing-function: ease-in-out;
 }
 
 #dismissLoginWindowButton:active {
      
     background-color: #954a4a;
+    
+    transition-property: "backgroung-color";
+    transition-duration: .1s;
+    transition-timing-function: ease-in-out;
 }
 
 .header {
@@ -335,16 +355,28 @@ html, body {
     background-color: #58a8a4;
     border-radius: 6px;
     border: 0;
+    
+    transition-property: "backgroung-color";
+    transition-duration: .1s;
+    transition-timing-function: ease-in-out;
 }
 
 #editLoginButton:hover {
 
     background-color: #58b9b4;
+    
+    transition-property: "backgroung-color";
+    transition-duration: .1s;
+    transition-timing-function: ease-in-out;
 }
 
 #editLoginButton:active {
      
     background-color: #4a9591;
+    
+    transition-property: "backgroung-color";
+    transition-duration: .1s;
+    transition-timing-function: ease-in-out;
 }
 
 #loginButton {
@@ -359,16 +391,28 @@ html, body {
     background-color: #58a8a4;
     border: 0;
     border-radius: 6px;
+    
+    transition-property: "backgroung-color";
+    transition-duration: .1s;
+    transition-timing-function: ease-in-out;
 }
 
 #loginButton:hover {
 
     background-color: #58b9b4;
+    
+    transition-property: "backgroung-color";
+    transition-duration: .1s;
+    transition-timing-function: ease-in-out;
 }
 
 #loginButton:active {
      
     background-color: #4a9591;
+    
+    transition-property: "backgroung-color";
+    transition-duration: .1s;
+    transition-timing-function: ease-in-out;
 }
 
 #logoutButton {
@@ -383,16 +427,28 @@ html, body {
     background-color: #58a8a4;
     border: 0;
     border-radius: 6px;
+    
+    transition-property: "backgroung-color";
+    transition-duration: .1s;
+    transition-timing-function: ease-in-out;
 }
 
 #logoutButton:hover {
 
     background-color: #58b9b4;
+    
+    transition-property: "backgroung-color";
+    transition-duration: .1s;
+    transition-timing-function: ease-in-out;
 }
 
 #logoutButton:active {
      
     background-color: #4a9591;
+    
+    transition-property: "backgroung-color";
+    transition-duration: .1s;
+    transition-timing-function: ease-in-out;
 }
 
 #sendButton {
@@ -407,16 +463,28 @@ html, body {
     background-color: #58a8a4;
     border-radius: 6px;
     border: 0;
+    
+    transition-property: "backgroung-color";
+    transition-duration: .1s;
+    transition-timing-function: ease-in-out;
 }
 
 #sendButton:hover {
 
     background-color: #58b9b4;
+    
+    transition-property: "backgroung-color";
+    transition-duration: .1s;
+    transition-timing-function: ease-in-out;
 }
 
 #sendButton:active {
      
     background-color: #4a9591;
+    
+    transition-property: "backgroung-color";
+    transition-duration: .1s;
+    transition-timing-function: ease-in-out;
 }
 
 .footer {
