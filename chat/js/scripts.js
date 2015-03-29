@@ -19,9 +19,9 @@ var messageStruct = function (text, user) {
 
 var messageList = [];
 
-function updateMessageList(newMessage, messageList) {
+function updateMessageList(newMessage, messageListI) {
 
-    messageList.textMessage = newMessage;
+    messageListI.textMessage = newMessage;
     
     return;
 }
@@ -121,24 +121,6 @@ function delegateEvent(eventObj) {
     }
 }
 
-function visibleButton(eventObj) {
-
-    if (eventObj.target.getAttribute("class") === "message") {
-        
-        eventObj.target.childNodes[2].style.visibility = "visible";
-        eventObj.target.childNodes[3].style.visibility = "visible";
-    }
-}
-
-function hiddenButton(eventObj) {
-    
-    if (eventObj.target.getAttribute("class") === "message") {
-        
-        eventObj.target.childNodes[2].style.visibility = "hidden";
-        eventObj.target.childNodes[3].style.visibility = "hidden";
-    }
-}
-
 function createAllMessages(allMessages) {
     
     var i;
@@ -156,26 +138,58 @@ function createAllMessages(allMessages) {
 function onSendButtonClick(value) {
  
     var messageText = document.getElementById("textBox"),
+        sendButton = document.getElementById("sendButton"),
+        i,
         username = document.getElementById("username");
     
-    if (value) {
-    
-        addMessage(theMessage(value, username.innerText));
-        messageText.innerHTML = "";
-    }
-    else {
-    
+    if (sendButton.innerHTML == "Send") {
+        
         addMessage(messageStruct(messageText.innerText, username.innerText));
         messageText.innerHTML = "";
+
+        store(messageList);
+        
+        return;
     }
-    
-    store(messageList);
-    
-    return;
+    else {
+        
+        var id = editingMessage.attributes["id"].value;
+        
+        for (i = 0; i < messageList.length; i++) {
+
+            if (messageList[i].id != id) {
+
+                continue;
+            }    
+            
+            editingMessage.childNodes[1].innerText = messageText.innerText;
+        
+            updateMessageList(messageText.innerText, messageList[i]);
+            messageText.innerHTML = "";
+
+            sendButton.innerHTML = "Send";
+            store(messageList);
+
+            return;
+        }
+
+        return;
+    }
 }
+
+var editingMessage;
 
 function onEditMessageButtonClick(eventObj) {
 
+    var user = document.getElementById("username");
+    
+    if (user.innerText + ": " != eventObj.target.parentNode.childNodes[0].innerText) {
+     
+        alert("This is not your message.")
+        
+        return;
+    }
+        
     var id = eventObj.target.parentElement.attributes["id"].value,
         i;
     
@@ -188,14 +202,14 @@ function onEditMessageButtonClick(eventObj) {
         
         var parentMessage = eventObj.target.parentNode,
             oldMessage = parentMessage.getElementsByClassName("text")[0],
-            newMessage = document.getElementById("textBox");
+            editButton = document.getElementById("sendButton"),
+            messageArea = document.getElementById("textBox");
         
-        newMessage.innerText = oldMessage.innerText;
+        editingMessage = parentMessage;
         
-        contentMessage = document.createTextNode(newMessage);
+        messageArea.innerText = oldMessage.innerText;
         
-        updateMessageList(newMessage, messageList[i]);
-        store(messageList);
+        editButton.innerHTML = "Edit";
         
         return;
     }

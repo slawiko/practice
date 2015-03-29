@@ -122,7 +122,7 @@ html, body {
     left: 50%;
     margin-left: -165px;
     font-size: 60px;
-    font-family: 'Arial Black', 'Arial Bold', sans-serif;
+    font-family: "Arial Black", "Arial Bold", "Gadget";
     height: 100%;
     line-height: 150px;
 }
@@ -396,33 +396,11 @@ html, body {
     background-color: #4a9591;
 }
 
-#editButton {
-
-    position: absolute;
-    display: none;
-    height: 28px;
-    width: 85px;
-    color: white;
-    cursor: pointer;
-    outline: 0;
-    background-color: #58a8a4;
-    border-radius: 6px;
-    border: 0;
-}
-
-#editButton:hover {
-
-    background-color: #58b9b4;
-}
-
-#editButton:active {
-     
-    background-color: #4a9591;
-}
-
 .footer {
  
-    height: 100px;
+    position: fixed;
+    display: block;
+    height: 10%;
     width: 100%;
     background-image: url(resources/footer_background.png);
 }
