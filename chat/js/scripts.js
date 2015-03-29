@@ -222,6 +222,15 @@ function onDeleteMessageButtonClick(eventObj) {
         id = parentMessage.attributes["id"].value,
         i;
     
+    var user = document.getElementById("username");
+    
+    if (user.innerText + ": " != eventObj.target.parentNode.childNodes[0].innerText) {
+     
+        alert("This is not your message.")
+        
+        return;
+    }
+    
     messageBox.removeChild(parentMessage);
     
     for (i = 0; i < messageList.length; i++) {
