@@ -78,7 +78,7 @@ function run() {
     createAllMessages(allMessages);
     chatWindow.addEventListener("click", delegateEvent);
     loginWindowBackground.addEventListener("click", delegateEvent);
-    loginWindowBackground/*Input*/.addEventListener("keydown", delegateEvent); //does not work
+    loginWindowInput.addEventListener("keydown", delegateEvent); //does not work
     textBox.addEventListener("keydown", delegateEvent);
 }
 
@@ -280,6 +280,7 @@ function onLogoutButtonClick() {
         hiddenTextBox = document.getElementsByClassName("hiddenTextBox")[0],
         username = document.getElementById("username"),
         loginButton = document.getElementById("loginButton"),
+        editLoginButton = document.getElementById("editLoginButton"),
         logoutButton = document.getElementById("logoutButton"),
         loginWindowInput = document.getElementById("loginWindowInput");
     
@@ -289,6 +290,7 @@ function onLogoutButtonClick() {
     hiddenTextBox.style.display = "block";
     
     loginButton.style.display = "block";
+    editLoginButton.style.display = "none";
     logoutButton.style.display = "none";
     loginWindowInput.innerText = "";
 }
