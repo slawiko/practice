@@ -27,8 +27,10 @@ public class Server implements HttpHandler {
                 HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
                 System.out.println("Server started.");
                 String serverHost = InetAddress.getLocalHost().getHostAddress();
-                System.out.println("Get list of messages: GET http://" + serverHost + ":" + port + "/chat?token={token}");
-                System.out.println("Send message: POST http://" + serverHost + ":" + port + "/chat provide body json in format {\"message\" : \"{message}\"} ");
+                System.out.println("Get list of messages: GET http://" + serverHost + ":" + port + "/chat?token={token} ");
+                System.out.println("Send message: POST http://" + serverHost + ":" + port + "/chat provide body json in format {\"username\" : \"{username}\", \"message\" : \"{message}\"} ");
+                System.out.println("Delete message: DELETE http://" + serverHost + ":" + port + "/chat provided body json in format {\"id\" : \"{id}\"} ");
+                System.out.println("Editing message: PUT http://" + serverHost + ":" + port + "/chat provided body json in format {\"id\" : \"{id}\", \"message\" : \"{message}\"} ");
 
                 server.createContext("/chat", new Server());
                 server.setExecutor(null);
