@@ -4,6 +4,10 @@ public class Message {
     private String username;
     private String message;
 
+    public Message() {
+
+
+    }
     public Message(int id, String username, String message) {
 
         this.id = id;
