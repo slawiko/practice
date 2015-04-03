@@ -1,4 +1,3 @@
-import javafx.util.Pair;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -7,57 +6,53 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import java.util.TreeMap;
 
 public class Client implements Runnable {
 
-    private List<String> history = new ArrayList<String>();
+    private TreeMap<Integer, Message> history = new TreeMap<Integer, Message>();
     private MessageExchange messageExchange = new MessageExchange();
     private String host;
     private Integer port;
     private String currentUser;
 
-    public Client(String host, Integer port) {
-
+    public Client(String host, Integer port, String currentUser) {
         this.host = host;
         this.port = port;
+        this.currentUser = currentUser;
     }
 
     public static void main(String[] args) {
-
         if (args.length != 2) {
-
             System.out.println("Usage: java ChatClient host port");
         }
         else {
-
             System.out.println("Connection to server...");
             String serverHost = args[0];
             Integer serverPort = Integer.parseInt(args[1]);
-            Client client = new Client(serverHost, serverPort);
+            System.out.print("Enter username: ");
+            Scanner scanner = new Scanner(System.in);
+            String currentUser = scanner.nextLine();
+            Client client = new Client(serverHost, serverPort, currentUser);
             new Thread(client).start();
-            System.out.println("Connected to server: " + serverHost + ":" + serverPort);
+            System.out.println("Connected to server " + serverHost + ":" + serverPort + " with username \"" + currentUser + "\"");
+
             client.listen();
         }
     }
 
     private HttpURLConnection getHttpURLConnection() throws IOException {
-
         URL url = new URL("http://" + host + ":" + port + "/chat?token=" + messageExchange.getToken(history.size()));
 
         return (HttpURLConnection) url.openConnection();
     }
 
     public TreeMap<Integer, Message> getMessages() {
-
         TreeMap<Integer, Message> map = new TreeMap<Integer, Message>();
         HttpURLConnection connection = null;
 
         try {
-
             connection = getHttpURLConnection();
             connection.connect();
             String response = messageExchange.inputStreamToString(connection.getInputStream());
@@ -66,31 +61,27 @@ public class Client implements Runnable {
             JSONArray jsonArray = (JSONArray) jsonObject.get("messages");
 
             for (Object o : jsonArray) {
-
                 Message message = JSONObjectToMessage((JSONObject)o);
-                list.add(o.toString());
+                if (currentUser.equals(message.getUsername())) {
+                    System.out.println(message.getUsername() + ": " + message.getMessage());
+                }
+                map.put(message.getId(), message);
             }
         } catch (IOException e) {
-
             System.err.println("ERROR: " + e.getMessage());
         } catch (ParseException e) {
-
             System.err.println("ERROR: " + e.getMessage());
         } finally {
-
             if (connection != null) {
-
                 connection.disconnect();
             }
         }
 
-        return list;
+        return map;
     }
 
     public void sendMessage(String message) {
-
         HttpURLConnection connection = null;
-
         try {
             connection = getHttpURLConnection();
             connection.setDoOutput(true);
@@ -106,41 +97,30 @@ public class Client implements Runnable {
 
             connection.getInputStream();
         } catch (IOException e) {
-
             System.err.println("ERROR: " + e.getMessage());
         } finally {
-
             if (connection != null) {
-
                 connection.disconnect();
             }
         }
     }
 
     public void listen() {
-
         while (true) {
+            TreeMap<Integer, Message> map = getMessages();
 
-            List<String> list = getMessages();
-
-            if (list.size() > 0) {
-
-                history.addAll(list);
+            if (map.size() > 0) {
+                history.putAll(map);
             }
-
-
             try {
-
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-
                 System.err.println("ERROR: " + e.getMessage());
             }
         }
     }
 
     private Message JSONObjectToMessage(JSONObject o) {
-
         Message message = new Message();
 
         message.setId(Integer.parseInt(o.get("id").toString()));
@@ -152,11 +132,9 @@ public class Client implements Runnable {
 
     @Override
     public void run() {
-
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-
             String message = scanner.nextLine();
             sendMessage(message);
         }
