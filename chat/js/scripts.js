@@ -1,7 +1,6 @@
 "use strict";
 
 var uniqueId = function () {
-    
 	var date = Date.now(),
         random = Math.random() * Math.random();
 
@@ -9,7 +8,6 @@ var uniqueId = function () {
 };
 
 var messageStruct = function (text, user) {
-    
 	return {
 		textMessage: text,
 		username: user,
@@ -20,16 +18,13 @@ var messageStruct = function (text, user) {
 var messageList = [];
 
 function updateMessageList(newMessage, messageListI) {
-
     messageListI.textMessage = newMessage;
     
     return;
 }
 
 function addLogin(value) {
- 
     if (!value) {
-
 		return;
 	}
     
@@ -41,9 +36,7 @@ function addLogin(value) {
 }
 
 function store(listToSave) {
-
 	if (typeof(Storage) === "undefined") {
-        
 		alert('localStorage is not accessible');
 		return;
 	}
@@ -54,9 +47,7 @@ function store(listToSave) {
 }
 
 function restore(msName) {
-    
 	if (typeof(Storage) === "undefined") {
-        
 		alert('localStorage is not accessible');
 		return;
 	}
@@ -67,7 +58,6 @@ function restore(msName) {
 }
 
 function run() {
-
     var chatWindow = document.getElementsByClassName("chatWindow")[0],
         allMessages = restore("messages list"),
         textBox = document.getElementById("textBox"),
@@ -83,51 +73,39 @@ function run() {
 }
 
 function delegateEvent(eventObj) {
- 
     if ((eventObj.target.getAttribute("id") === "sendButton") || (eventObj.keyCode === 13)) {
-
         onSendButtonClick();
     }
     else if (eventObj.target.getAttribute("id") === "editMessageButton") {
-    
         onEditMessageButtonClick(eventObj);
     }
     else if (eventObj.target.getAttribute("id") === "editButton") {
-        
     }
     else if (eventObj.target.getAttribute("id") === "deleteMessageButton") {
-    
         onDeleteMessageButtonClick(eventObj);
     }
     else if (eventObj.target.getAttribute("id") === "loginButton") {
-        
         onLoginButtonClick();   
     }
     else if (eventObj.target.getAttribute("id") === "editLoginButton") {
-     
         onEditLoginButtonClick();
     }
     else if (eventObj.target.getAttribute("id") === "logoutButton") {
-    
         onLogoutButtonClick();
     }
     else if ((eventObj.target.getAttribute("id") === "loginWindowButton") || (eventObj.keyCode === 13)) { // does not work 13
-        
         onLoginWindowButtonClick();
     }
     else if (eventObj.target.getAttribute("id") === "dismissLoginWindowButton") {
-    
         onDismissLoginWindowButtonClick();
     }
 }
 
 function createAllMessages(allMessages) {
-    
     var i;
     
     if (allMessages && allMessages.length) {
         for (i = 0; i < allMessages.length; i++) {
-
             addMessage(allMessages[i]);
         }
     }
@@ -136,14 +114,12 @@ function createAllMessages(allMessages) {
 }
 
 function onSendButtonClick(value) {
- 
     var messageText = document.getElementById("textBox"),
         sendButton = document.getElementById("sendButton"),
         i,
         username = document.getElementById("username");
-    
+
     if (sendButton.innerHTML == "Send") {
-        
         addMessage(messageStruct(messageText.innerText, username.innerText));
         messageText.innerHTML = "";
 
@@ -152,21 +128,16 @@ function onSendButtonClick(value) {
         return;
     }
     else {
-        
         var id = editingMessage.attributes["id"].value;
         
         for (i = 0; i < messageList.length; i++) {
-
             if (messageList[i].id != id) {
-
                 continue;
             }    
             
             editingMessage.childNodes[1].innerText = messageText.innerText;
-        
             updateMessageList(messageText.innerText, messageList[i]);
             messageText.innerHTML = "";
-
             sendButton.innerHTML = "Send";
             store(messageList);
 
@@ -180,13 +151,10 @@ function onSendButtonClick(value) {
 var editingMessage;
 
 function onEditMessageButtonClick(eventObj) {
-
     var user = document.getElementById("username");
     
     if (user.innerText + ": " != eventObj.target.parentNode.childNodes[0].innerText) {
-     
         alert("This is not your message.")
-        
         return;
     }
         
@@ -194,9 +162,7 @@ function onEditMessageButtonClick(eventObj) {
         i;
     
     for (i = 0; i < messageList.length; i++) {
-        
         if (messageList[i].id != id) {
-            
             continue;
         }
         
@@ -206,9 +172,7 @@ function onEditMessageButtonClick(eventObj) {
             messageArea = document.getElementById("textBox");
         
         editingMessage = parentMessage;
-        
         messageArea.innerText = oldMessage.innerText;
-        
         editButton.innerHTML = "Edit";
         
         return;
@@ -216,27 +180,21 @@ function onEditMessageButtonClick(eventObj) {
 }
 
 function onDeleteMessageButtonClick(eventObj) {
-
     var parentMessage = eventObj.target.parentNode,
         messageBox = document.getElementsByClassName("messageBox")[0],
         id = parentMessage.attributes["id"].value,
-        i;
-    
-    var user = document.getElementById("username");
+        i,
+        user = document.getElementById("username");
     
     if (user.innerText + ": " != eventObj.target.parentNode.childNodes[0].innerText) {
-     
         alert("This is not your message.")
-        
         return;
     }
     
     messageBox.removeChild(parentMessage);
     
     for (i = 0; i < messageList.length; i++) {
-    
         if (messageList[i].id != id) {
-        
             continue;
         }
     
@@ -248,7 +206,6 @@ function onDeleteMessageButtonClick(eventObj) {
 }
 
 function onLoginButtonClick() {
- 
     var hiddenUserBox = document.getElementsByClassName("hiddenUserBox")[0],
         hiddenMessageBox = document.getElementsByClassName("hiddenMessageBox")[0],
         hiddenTextBox = document.getElementsByClassName("hiddenTextBox")[0],
@@ -263,7 +220,6 @@ function onLoginButtonClick() {
 }
 
 function onEditLoginButtonClick() {
-
     var loginWindowBackground = document.getElementsByClassName("loginWindowBackground")[0],
         loginWindowButton = document.getElementById("loginWindowButton");
 
@@ -274,7 +230,6 @@ function onEditLoginButtonClick() {
 }
 
 function onLogoutButtonClick() {
-
     var hiddenUserBox = document.getElementsByClassName("hiddenUserBox")[0],
         hiddenMessageBox = document.getElementsByClassName("hiddenMessageBox")[0],
         hiddenTextBox = document.getElementsByClassName("hiddenTextBox")[0],
@@ -296,7 +251,6 @@ function onLogoutButtonClick() {
 }
 
 function onLoginWindowButtonClick() {
- 
     var loginWindowInput = document.getElementById("loginWindowInput"),
         loginWindowAlert = document.getElementById("loginWindowAlert"),
         hiddenUserBox = document.getElementsByClassName("hiddenUserBox")[0],
@@ -311,7 +265,6 @@ function onLoginWindowButtonClick() {
     login = loginWindowInput.innerText;
     
     if (!login) {
-     
         loginWindowAlert.style.color = "rgb(181, 64, 64)";
         onLoginWindowButtonClick();
     }
@@ -331,7 +284,6 @@ function onLoginWindowButtonClick() {
 }
 
 function onDismissLoginWindowButtonClick () {
-
     var loginWindowBackground = document.getElementsByClassName("loginWindowBackground")[0];
     
     loginWindowBackground.style.display = "none";
@@ -340,7 +292,6 @@ function onDismissLoginWindowButtonClick () {
 }
 
 function createMessage(username, textMessage) {
-    
     var newMessage = document.createElement("div"),
         user = document.createElement("span"),
         text = document.createElement("span"),
@@ -355,7 +306,6 @@ function createMessage(username, textMessage) {
 
     editMessageButton.setAttribute("id", "editMessageButton");
     editMessageButton.setAttribute("src", "css/resources/edit.png");
-
     deleteMessageButton.setAttribute("id", "deleteMessageButton");
     deleteMessageButton.setAttribute("src", "css/resources/trash.png");
 
@@ -371,9 +321,7 @@ function createMessage(username, textMessage) {
 }
 
 function addMessage(message) {
- 
     if (!message.textMessage) {
-
 		return;
 	}
     
@@ -381,7 +329,6 @@ function addMessage(message) {
         messages = document.getElementsByClassName("messageBox")[0];
 
     newMessage.id = message.id;
-    
 	messages.appendChild(newMessage);
     messageList.push(message);
     
