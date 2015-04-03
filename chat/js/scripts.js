@@ -16,7 +16,6 @@ var messageStruct = function (text, user) {
 };
 
 var messageList = [];
-
 function updateMessageList(newMessage, messageListI) {
     messageListI.textMessage = newMessage;
     
