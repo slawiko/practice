@@ -102,6 +102,14 @@ public class Server implements HttpHandler {
         }
     }
 
+    /*private void doPut(HttpExchange httpExchange) {
+        try {
+            Message oldMessage = messageExchange.getClientMessage(httpExchange.getRequestBody());
+        } catch (ParseException e){
+            System.err.println("Invalid id message: " + httpExchange.getRequestBody() + " " + e.getMessage());
+        }
+    }*/
+
     private void sendResponse(HttpExchange httpExchange, String response) {
         try {
             byte[] bytes = response.getBytes();
