@@ -58,11 +58,11 @@ public class Client implements Runnable {
             String response = messageExchange.inputStreamToString(connection.getInputStream());
             JSONObject jsonObject = messageExchange.getJSONObject(response);
 
-            JSONArray jsonArray = (JSONArray) jsonObject.get("messages");
+            JSONArray jsonArray = (JSONArray)jsonObject.get("messages");
 
             for (Object o : jsonArray) {
                 Message message = JSONObjectToMessage((JSONObject)o);
-                if (currentUser.equals(message.getUsername())) {
+                if (!currentUser.equals(message.getUsername())) {
                     System.out.println(message.getUsername() + ": " + message.getMessage());
                 }
                 map.put(message.getId(), message);
@@ -90,7 +90,7 @@ public class Client implements Runnable {
 
             DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
 
-            byte[] bytes = messageExchange.getClientSendMessageRequest(message).getBytes();
+            byte[] bytes = messageExchange.getClientSendMessageRequest(message, currentUser).getBytes();
             wr.write(bytes, 0, bytes.length);
             wr.flush();
             wr.close();
@@ -125,7 +125,7 @@ public class Client implements Runnable {
 
         message.setId(Integer.parseInt(o.get("id").toString()));
         message.setUsername(o.get("username").toString());
-        message.setMessage(o.get("messages").toString());
+        message.setMessage(o.get("message").toString());
 
         return message;
     }

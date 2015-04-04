@@ -1,8 +1,10 @@
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.*;
+import java.util.Map;
 import java.util.TreeMap;
 
 public class MessageExchange {
@@ -14,32 +16,47 @@ public class MessageExchange {
         return "TN" + number + "EN";
     }
 
+    public JSONArray mapToJSONArray(TreeMap<Integer, Message> messages) {
+        JSONArray jsonArray = new JSONArray();
+        for (Map.Entry o : messages.entrySet()) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", ((Message)o.getValue()).getId());
+            jsonObject.put("username", ((Message)o.getValue()).getUsername());
+            jsonObject.put("message", ((Message)o.getValue()).getMessage());
+            jsonArray.add(jsonObject);
+        }
+        return jsonArray;
+    }
+
     public int getIndex(String token) {
         return (Integer.valueOf(token.substring(2, token.length() - 2)) - 11) / 8;
     }
 
     public String getServerResponse(TreeMap<Integer, Message> messages) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("messages", messages);
+        jsonObject.put("messages", mapToJSONArray(messages));
         jsonObject.put("token", getToken(messages.size()));
         return jsonObject.toJSONString();
     }
 
-    /*public String getClientSendMessageRequest(String message) {
+    public String getClientSendMessageRequest(String message, String username) {
         JSONObject jsonObject = new JSONObject();
-
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.add(message);
         jsonObject.put("message", message);
-        //jsonObject.put("username", username);//!!!!!!!!
+        jsonObject.put("username", username);
         return jsonObject.toJSONString();
-    }*/
+    }
 
-    /*public String getClientMessage(InputStream inputStream) throws ParseException {
-        return (String) getJSONObject(inputStreamToString(inputStream)).get("message");
-    }*/
+    public Message getClientMessage(InputStream inputStream) throws ParseException {
+        JSONObject jsonObject = getJSONObject(inputStreamToString(inputStream));
+        Message message = new Message(jsonObject.get("username").toString(), jsonObject.get("message").toString());
+        return message;
+    }
 
-    /*public JSONObject getJSONObject(String json) throws ParseException {
+    public JSONObject getJSONObject(String json) throws ParseException {
         return (JSONObject) jsonParser.parse(json.trim());
-    }*/
+    }
 
     public String inputStreamToString(InputStream in) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

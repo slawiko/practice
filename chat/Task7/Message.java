@@ -1,3 +1,5 @@
+import java.util.Date;
+
 public class Message {
 
     private int id;
@@ -7,8 +9,21 @@ public class Message {
     public Message() {
 
     }
+
+    public int uniqueId() {
+        Date date = new Date();
+        int random = (int)Math.random() * (int)Math.random();
+
+        return date.getSeconds() * random;
+    }
+
     public Message(int id, String username, String message) {
         this.id = id;
+        this.message = message;
+        this.username = username;
+    }
+
+    public Message(String username, String message) {
         this.message = message;
         this.username = username;
     }

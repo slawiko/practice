@@ -27,7 +27,7 @@ public class Server implements HttpHandler {
                 System.out.println("Server started.\n");
                 String serverHost = InetAddress.getLocalHost().getHostAddress();
                 System.out.println("Get list of messages: \nGET http://" + serverHost + ":" + port + "/chat?token={token} \n");
-                //System.out.println("Send message: \nPOST http://" + serverHost + ":" + port + "/chat provide body json in format {\"username\" : \"{username}\", \"message\" : \"{message}\"} \n");
+                System.out.println("Send message: \nPOST http://" + serverHost + ":" + port + "/chat provide body json in format {\"username\" : \"{username}\", \"message\" : \"{message}\"} \n");
                 //System.out.println("Delete message: \nDELETE http://" + serverHost + ":" + port + "/chat provided body json in format {\"id\" : \"{id}\"} \n");
                 //System.out.println("Edit message: \nPUT http://" + serverHost + ":" + port + "/chat provided body json in format {\"id\" : \"{id}\", \"message\" : \"{message}\"} \n");
 
@@ -48,7 +48,7 @@ public class Server implements HttpHandler {
             response = doGet(httpExchange);
         }
         else if ("POST".equals(httpExchange.getRequestMethod())) {
-            //doPost(httpExchange);
+            doPost(httpExchange);
         }
         else if ("DELETE".equals(httpExchange.getRequestMethod())) {
             //doDelete(httpExchange);
@@ -82,16 +82,16 @@ public class Server implements HttpHandler {
         return  "Absent query in url";
     }
 
-    /*private void doPost(HttpExchange httpExchange) {
+    private void doPost(HttpExchange httpExchange) {
         try {
-            String message = messageExchange.getClientMessage(httpExchange.getRequestBody());
-            //String username = messageExchange.getClientName(httpExchange.getRequestBody());
-            System.out.println("Get Message from : " + message);//!!!!!!!!!!!!!!!!!!
-            history.add(message);
+            Message message = messageExchange.getClientMessage(httpExchange.getRequestBody());
+            message.setId(history.size());
+            System.out.println("Get Message from " + message.getUsername() + ": " + message.getMessage());
+            history.put(message.getId(), message);
         } catch (ParseException e) {
             System.err.println("Invalid user message: " + httpExchange.getRequestBody() + " " + e.getMessage());
         }
-    }*/
+    }
 
     private void sendResponse(HttpExchange httpExchange, String response) {
         try {
@@ -100,7 +100,7 @@ public class Server implements HttpHandler {
             headers.add("Access-Control-Allow-Origin","*");
             httpExchange.sendResponseHeaders(200, bytes.length);
             OutputStream os = httpExchange.getResponseBody();
-            os.write( bytes);
+            os.write(bytes);
             os.flush();
             os.close();
         } catch (IOException e) {
