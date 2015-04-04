@@ -27,9 +27,9 @@ public class Server implements HttpHandler {
                 System.out.println("Server started.\n");
                 String serverHost = InetAddress.getLocalHost().getHostAddress();
                 System.out.println("Get list of messages: \nGET http://" + serverHost + ":" + port + "/chat?token={token} \n");
-                System.out.println("Send message: \nPOST http://" + serverHost + ":" + port + "/chat provide body json in format {\"username\" : \"{username}\", \"message\" : \"{message}\"} \n");
-                //System.out.println("Delete message: \nDELETE http://" + serverHost + ":" + port + "/chat provided body json in format {\"id\" : \"{id}\"} \n");
-                //System.out.println("Edit message: \nPUT http://" + serverHost + ":" + port + "/chat provided body json in format {\"id\" : \"{id}\", \"message\" : \"{message}\"} \n");
+                System.out.println("Send message: \nPOST http://" + serverHost + ":" + port + "/chat provide body json in format {\"username\" : \"username\", \"message\" : \"message\"} \n");
+                System.out.println("Delete message: \nDELETE http://" + serverHost + ":" + port + "/chat provided body json in format {\"id\" : \"id\"} \n");
+                //System.out.println("Edit message: \nPUT http://" + serverHost + ":" + port + "/chat provided body json in format {\"id\" : \"id\", \"message\" : \"message\"} \n");
 
                 server.createContext("/chat", new Server());
                 server.setExecutor(null);
@@ -51,7 +51,7 @@ public class Server implements HttpHandler {
             doPost(httpExchange);
         }
         else if ("DELETE".equals(httpExchange.getRequestMethod())) {
-            //doDelete(httpExchange);
+            doDelete(httpExchange);
         }
         else if ("PUT".equals(httpExchange.getRequestMethod())) {
             //doPut(httpExchange);
@@ -59,13 +59,11 @@ public class Server implements HttpHandler {
         else {
             response = "Unsupported http method: " + httpExchange.getRequestMethod();
         }
-
         sendResponse(httpExchange, response);
     }
 
     private String doGet(HttpExchange httpExchange) {
         String query = httpExchange.getRequestURI().getQuery();
-
         if (query != null) {
             Map<String, String> map = queryToMap(query);
             String token = map.get("token");
@@ -78,7 +76,6 @@ public class Server implements HttpHandler {
                 return "Token query parameter is absent in url: " + query;
             }
         }
-
         return  "Absent query in url";
     }
 
@@ -90,6 +87,18 @@ public class Server implements HttpHandler {
             history.put(message.getId(), message);
         } catch (ParseException e) {
             System.err.println("Invalid user message: " + httpExchange.getRequestBody() + " " + e.getMessage());
+        }
+    }
+
+    private void doDelete(HttpExchange httpExchange) {
+        try {
+            Message deleteId = messageExchange.getClientMessageId(httpExchange.getRequestBody());
+            Message newMessage = new Message(deleteId.getId(), "Deleted", "Deleted");
+            Message oldMessage = new Message(history.get(deleteId.getId()));
+            history.replace(deleteId.getId(), newMessage);
+            System.out.println("Message \"" + oldMessage.getMessage() + "\" of user \"" + oldMessage.getUsername() + "\" was deleted.");
+        } catch (ParseException e) {
+            System.err.println("Invalid id message: " + httpExchange.getRequestBody() + " " + e.getMessage());
         }
     }
 
@@ -120,7 +129,6 @@ public class Server implements HttpHandler {
                 result.put(pair[0], "");
             }
         }
-
         return result;
     }
 }

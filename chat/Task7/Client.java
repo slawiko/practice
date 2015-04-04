@@ -44,7 +44,6 @@ public class Client implements Runnable {
 
     private HttpURLConnection getHttpURLConnection() throws IOException {
         URL url = new URL("http://" + host + ":" + port + "/chat?token=" + messageExchange.getToken(history.size()));
-
         return (HttpURLConnection) url.openConnection();
     }
 
@@ -68,7 +67,7 @@ public class Client implements Runnable {
                 map.put(message.getId(), message);
             }
         } catch (IOException e) {
-            System.err.println("ERROR: " + e.getMessage());
+            System.err.println("ERROR: FUCK1" + e.getMessage());
         } catch (ParseException e) {
             System.err.println("ERROR: " + e.getMessage());
         } finally {
@@ -76,31 +75,32 @@ public class Client implements Runnable {
                 connection.disconnect();
             }
         }
-
         return map;
     }
 
     public void sendMessage(String message) {
-        HttpURLConnection connection = null;
-        try {
-            connection = getHttpURLConnection();
-            connection.setDoOutput(true);
+        if (!"".equals(message)) {
+            HttpURLConnection connection = null;
+            try {
+                connection = getHttpURLConnection();
+                connection.setDoOutput(true);
 
-            connection.setRequestMethod("POST");
+                connection.setRequestMethod("POST");
 
-            DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
+                DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
 
-            byte[] bytes = messageExchange.getClientSendMessageRequest(message, currentUser).getBytes();
-            wr.write(bytes, 0, bytes.length);
-            wr.flush();
-            wr.close();
+                byte[] bytes = messageExchange.getClientSendMessageRequest(message, currentUser).getBytes();
+                wr.write(bytes, 0, bytes.length);
+                wr.flush();
+                wr.close();
 
-            connection.getInputStream();
-        } catch (IOException e) {
-            System.err.println("ERROR: " + e.getMessage());
-        } finally {
-            if (connection != null) {
-                connection.disconnect();
+                connection.getInputStream();
+            } catch (IOException e) {
+                System.err.println("ERROR: " + e.getMessage());
+            } finally {
+                if (connection != null) {
+                    connection.disconnect();
+                }
             }
         }
     }

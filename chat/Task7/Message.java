@@ -10,13 +10,6 @@ public class Message {
 
     }
 
-    public int uniqueId() {
-        Date date = new Date();
-        int random = (int)Math.random() * (int)Math.random();
-
-        return date.getSeconds() * random;
-    }
-
     public Message(int id, String username, String message) {
         this.id = id;
         this.message = message;
@@ -28,8 +21,25 @@ public class Message {
         this.username = username;
     }
 
+    public Message(int id) {
+        this.id = id;
+    }
+
+    public Message(Message message) {
+        this.id = message.getId();
+        this.username = message.getUsername();
+        this.message = message.getMessage();
+    }
+
     public int getId() {
         return this.id;
+    }
+
+    public int uniqueId() {
+        Date date = new Date();
+        int random = (int)Math.random() * (int)Math.random();
+
+        return date.getSeconds() * random;
     }
 
     public String getUsername() {
