@@ -48,9 +48,15 @@ public class MessageExchange {
         return jsonObject.toJSONString();
     }
 
-    public Message getClientMessage(InputStream inputStream) throws ParseException {
+    public Message getClientMessageAndUsername(InputStream inputStream) throws ParseException {
         JSONObject jsonObject = getJSONObject(inputStreamToString(inputStream));
         Message message = new Message(jsonObject.get("username").toString(), jsonObject.get("message").toString());
+        return message;
+    }
+
+    public Message getClientMessageAndId(InputStream inputStream) throws ParseException {
+        JSONObject jsonObject = getJSONObject(inputStreamToString(inputStream));
+        Message message = new Message(Integer.parseInt(jsonObject.get("id").toString()), jsonObject.get("message").toString());
         return message;
     }
 

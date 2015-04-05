@@ -21,6 +21,11 @@ public class Message {
         this.username = username;
     }
 
+    public Message(int id, String message) {
+        this.id = id;
+        this.message = message;
+    }
+
     public Message(int id) {
         this.id = id;
     }

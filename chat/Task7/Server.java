@@ -29,7 +29,7 @@ public class Server implements HttpHandler {
                 System.out.println("Get list of messages: \nGET http://" + serverHost + ":" + port + "/chat?token={token} \n");
                 System.out.println("Send message: \nPOST http://" + serverHost + ":" + port + "/chat provide body json in format {\"username\" : \"username\", \"message\" : \"message\"} \n");
                 System.out.println("Delete message: \nDELETE http://" + serverHost + ":" + port + "/chat provided body json in format {\"id\" : \"id\"} \n");
-                //System.out.println("Edit message: \nPUT http://" + serverHost + ":" + port + "/chat provided body json in format {\"id\" : \"id\", \"message\" : \"message\"} \n");
+                System.out.println("Edit message: \nPUT http://" + serverHost + ":" + port + "/chat provided body json in format {\"id\" : \"id\", \"message\" : \"message\"} \n");
 
                 server.createContext("/chat", new Server());
                 server.setExecutor(null);
@@ -54,7 +54,7 @@ public class Server implements HttpHandler {
             doDelete(httpExchange);
         }
         else if ("PUT".equals(httpExchange.getRequestMethod())) {
-            //doPut(httpExchange);
+            doPut(httpExchange);
         }
         else {
             response = "Unsupported http method: " + httpExchange.getRequestMethod();
@@ -81,7 +81,7 @@ public class Server implements HttpHandler {
 
     private void doPost(HttpExchange httpExchange) {
         try {
-            Message message = messageExchange.getClientMessage(httpExchange.getRequestBody());
+            Message message = messageExchange.getClientMessageAndUsername(httpExchange.getRequestBody());
             message.setId(history.size());
             System.out.println("Get Message from " + message.getUsername() + ": " + message.getMessage());
             history.put(message.getId(), message);
@@ -102,13 +102,17 @@ public class Server implements HttpHandler {
         }
     }
 
-    /*private void doPut(HttpExchange httpExchange) {
+    private void doPut(HttpExchange httpExchange) {
         try {
-            Message oldMessage = messageExchange.getClientMessage(httpExchange.getRequestBody());
+            Message newMessage = messageExchange.getClientMessageAndId(httpExchange.getRequestBody());
+            Message oldMessage = history.get(newMessage.getId());
+            System.out.println("Message \"" + oldMessage.getMessage() + "\" of user \"" + oldMessage.getUsername() + "\" was replaced by message \"" + newMessage.getMessage() + "\".");
+            newMessage.setUsername(oldMessage.getUsername());
+            history.replace(oldMessage.getId(), newMessage);
         } catch (ParseException e){
-            System.err.println("Invalid id message: " + httpExchange.getRequestBody() + " " + e.getMessage());
+            System.err.println("Invalid message: " + httpExchange.getRequestBody() + " " + e.getMessage());
         }
-    }*/
+    }
 
     private void sendResponse(HttpExchange httpExchange, String response) {
         try {
