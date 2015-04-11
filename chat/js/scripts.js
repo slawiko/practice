@@ -63,10 +63,10 @@ function delegateEvent(eventObj) {
     if ((eventObj.target.getAttribute("id") === "sendButton") || (eventObj.keyCode === 13)) {
         onSendButtonClick();
     }
-    else if (eventObj.target.getAttribute("id") === "editMessageButton") {
+    else if (eventObj.target.getAttribute("class") === "editMessageButton icon") {
         onEditMessageButtonClick(eventObj);
     }
-    else if (eventObj.target.getAttribute("id") === "deleteMessageButton") {
+    else if (eventObj.target.getAttribute("class") === "deleteMessageButton icon") {
         onDeleteMessageButtonClick(eventObj);
     }
     else if (eventObj.target.getAttribute("id") === "loginButton") {
@@ -111,9 +111,9 @@ function onSendButtonClick(value) {
         var id = editingMessage.attributes["id"].value;
         
         for (i = 0; i < messageList.length; i++) {
-            if (messageList[i].id != id) {
-                editingMessage.childNodes[1].innerText = messageText.innerText;
-                updateMessageList(messageText.innerText, messageList[i]);
+            if (messageList[i].id === id) {
+                editingMessage.childNodes[0].childNodes[1].innerHTML = messageText.innerHTML;
+                updateMessageList(messageText.innerHTML, messageList[i]);
                 messageText.innerHTML = "";
                 sendButton.innerHTML = "Send";
                 store(messageList);
@@ -128,7 +128,7 @@ var editingMessage;
 function onEditMessageButtonClick(eventObj) {
     var user = document.getElementById("username");
     
-    if (user.innerText + ": " != eventObj.target.parentNode.childNodes[0].innerText) {
+    if (user.innerHTML + ":&nbsp;" != eventObj.target.parentNode.childNodes[0].childNodes[0].innerHTML) {
         alert("This is not your message.")
         return;
     }
@@ -158,7 +158,7 @@ function onDeleteMessageButtonClick(eventObj) {
         i,
         user = document.getElementById("username");
     
-    if (user.innerText + ": " != eventObj.target.parentNode.childNodes[0].innerText) {
+    if (user.innerHTML + ":&nbsp;" != eventObj.target.parentNode.childNodes[0].childNodes[0].innerHTML) {
         alert("This is not your message.")
         return;
     }
@@ -251,27 +251,29 @@ function onDismissLoginWindowButtonClick () {
 
 function createMessage(username, textMessage) {
     var newMessage = document.createElement("div"),
+        message = document.createElement("div"),
         user = document.createElement("span"),
         text = document.createElement("span"),
         editMessageButton = document.createElement("img"),
         deleteMessageButton = document.createElement("img"),
-        contentUsername = document.createTextNode(username + ": "),
-        contentMessage = document.createTextNode(textMessage);
-        
+        contentUsername = document.createElement("span"),
+        contentMessage = document.createElement("span");
+
+    user.innerHTML = username + ":&nbsp";
+    text.innerHTML = textMessage;
+    
     newMessage.setAttribute("class", "message");
     user.setAttribute("class", "user");
     text.setAttribute("class", "text");
 
-    editMessageButton.setAttribute  ("id", "editMessageButton");
+    editMessageButton.setAttribute  ("class", "editMessageButton icon");
     editMessageButton.setAttribute  ("src", "css/resources/edit.png");
-    deleteMessageButton.setAttribute("id", "deleteMessageButton");
+    deleteMessageButton.setAttribute("class", "deleteMessageButton icon");
     deleteMessageButton.setAttribute("src", "css/resources/trash.png");
 
-    user.appendChild(contentUsername);
-    text.appendChild(contentMessage);
-
-    newMessage.appendChild(user);
-    newMessage.appendChild(text);
+    message.appendChild(user);
+    message.appendChild(text);
+    newMessage.appendChild(message);
     newMessage.appendChild(editMessageButton);
     newMessage.appendChild(deleteMessageButton);
     

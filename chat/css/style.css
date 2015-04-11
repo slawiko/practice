@@ -28,40 +28,40 @@ html, body {
     border-radius: 6px;
     border: 0;
     transition-property: "backgroung-color";
-    transition-duration: .1s;
+    transition-duration: .15s;
     transition-timing-function: ease-in-out;
 }
 
 .button:hover {
     background-color: #58b9b4;
     transition-property: "backgroung-color";
-    transition-duration: .1s;
+    transition-duration: .15s;
     transition-timing-function: ease-in-out;
 }
 
 .button:active {
     background-color: #4a9591;
     transition-property: "backgroung-color";
-    transition-duration: .1s;
+    transition-duration: .15s;
     transition-timing-function: ease-in-out;
 }
 
 #editLoginButton {
     display: none;
     height: 30px;
-    width: 100px;
-    left: 102px;
+    width: 90px;
+    left: 92px;
 }
 
 #loginButton {
     height: 30px;
-    width: 100px;
+    width: 90px;
 }
 
 #logoutButton {
     display: none;
     height: 30px;
-    width: 100px;
+    width: 90px;
 }
 
 #sendButton {
@@ -76,16 +76,46 @@ html, body {
     margin-left: 36px;
 }
 
-#editMessageButton {
-    height: 20px;
-    width: 20px;
-    left: 329px;
+.icon {
+    position: absolute;
+    height: 24px;
+    width: 24px;
+    cursor: pointer;
 }
 
-#deleteMessageButton {
-    height: 20px;
-    width: 20px;
-    left: 350px;
+.editMessageButton {
+    top: 0px;
+    left: 310px;
+}
+
+.deleteMessageButton {
+    top: 0px;
+    left: 336px;
+}
+
+.message {
+    display: block;
+    position: relative;
+    left: 0px;
+    padding-bottom: 3px;
+    width: 360px;
+    word-wrap: break-word;
+}
+
+.message div {
+    display: block;
+    position: relative;
+    width: 309px;
+    line-height: 24px;
+}
+
+.message span {
+    white-space: pre-wrap;
+}
+
+.user {
+    white-space: pre-wrap;
+    color: rgb(61, 134, 130);
 }
 
 .buttonNegative {
@@ -183,7 +213,7 @@ html, body {
 
 #messageBox {
     height: 460px;
-    width: 340px;
+    width: 360px;
     padding-right: 30px;
     padding-left: 30px;
     padding-top: 20px;
@@ -193,11 +223,11 @@ html, body {
 
 #userBox {
     height: 460px;
-    width: 150px;
+    width: 130px;
     padding-right: 25px;
     padding-left: 25px;
     padding-top: 20px;
-    margin-left: 402px;
+    margin-left: 422px;
     left: 2px;
     overflow-x: hidden;
     background-color: #e3e3e3;
@@ -205,7 +235,7 @@ html, body {
 
 #textBox {
     height: 67px;
-    width: 396px;
+    width: 416px;
     padding-left: 4px;
     padding-top: 3px;
     top: 484px;
@@ -251,39 +281,23 @@ html, body {
 
 #hiddenMessageBox {
     height: 480px;
-    width: 400px;
+    width: 420px;
     line-height: 480px;
 }
 
 #hiddenUserBox {
     height: 480px;
-    width: 200px;
+    width: 210px;
     line-height: 480px;
-    margin-left: 402px;
+    margin-left: 422px;
     left: 2px;
 }
 
 #hiddenTextBox {
     height: 70px;
-    width: 400px;
+    width: 420px;
     line-height: 70px;
     top: 484px;
-}
-
-.message {
-    padding-top: 1px;
-    padding-bottom: 3px;
-    height: auto;
-    width: 340px;
-}
-
-.text {
-    white-space: pre-wrap;
-    word-wrap: break-word;
-}
-
-.user {
-    color: rgb(61, 134, 130);
 }
 
 #username {
@@ -307,9 +321,9 @@ html, body {
 .loginBox {
     position: absolute;
     height: 30px;
-    width: 202px;
+    width: 182px;
     top: 484px;
-    left: 404px;
+    left: 424px;
 }
 
 .footer {
