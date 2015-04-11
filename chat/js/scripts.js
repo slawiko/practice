@@ -61,8 +61,8 @@ function run() {
     var chatWindow = document.getElementsByClassName("chatWindow")[0],
         allMessages = restore("messages list"),
         textBox = document.getElementById("textBox"),
-        message = document.getElementsByClassName("messageBox")[0],
-        loginWindowBackground = document.getElementsByClassName("loginWindowBackground")[0],
+        message = document.getElementById("messageBox"),
+        loginWindowBackground = document.getElementById("loginWindowBackground"),
         loginWindowInput = document.getElementById("loginWindowInput");
     
     createAllMessages(allMessages);
@@ -181,7 +181,7 @@ function onEditMessageButtonClick(eventObj) {
 
 function onDeleteMessageButtonClick(eventObj) {
     var parentMessage = eventObj.target.parentNode,
-        messageBox = document.getElementsByClassName("messageBox")[0],
+        messageBox = document.getElementById("messageBox"),
         id = parentMessage.attributes["id"].value,
         i,
         user = document.getElementById("username");
@@ -206,10 +206,10 @@ function onDeleteMessageButtonClick(eventObj) {
 }
 
 function onLoginButtonClick() {
-    var hiddenUserBox = document.getElementsByClassName("hiddenUserBox")[0],
-        hiddenMessageBox = document.getElementsByClassName("hiddenMessageBox")[0],
-        hiddenTextBox = document.getElementsByClassName("hiddenTextBox")[0],
-        loginWindowBackground = document.getElementsByClassName("loginWindowBackground")[0];
+    var hiddenUserBox = document.getElementById("hiddenUserBox"),
+        hiddenMessageBox = document.getElementById("hiddenMessageBox"),
+        hiddenTextBox = document.getElementById("hiddenTextBox"),
+        loginWindowBackground = document.getElementById("loginWindowBackground");
     
     hiddenUserBox.style.display = "block";
     hiddenMessageBox.style.display = "block";
@@ -220,7 +220,7 @@ function onLoginButtonClick() {
 }
 
 function onEditLoginButtonClick() {
-    var loginWindowBackground = document.getElementsByClassName("loginWindowBackground")[0],
+    var loginWindowBackground = document.getElementById("loginWindowBackground"),
         loginWindowButton = document.getElementById("loginWindowButton");
 
     loginWindowButton.innerText = "Confirm";
@@ -230,9 +230,9 @@ function onEditLoginButtonClick() {
 }
 
 function onLogoutButtonClick() {
-    var hiddenUserBox = document.getElementsByClassName("hiddenUserBox")[0],
-        hiddenMessageBox = document.getElementsByClassName("hiddenMessageBox")[0],
-        hiddenTextBox = document.getElementsByClassName("hiddenTextBox")[0],
+    var hiddenUserBox = document.getElementById("hiddenUserBox"),
+        hiddenMessageBox = document.getElementById("hiddenMessageBox"),
+        hiddenTextBox = document.getElementById("hiddenTextBox"),
         username = document.getElementById("username"),
         loginButton = document.getElementById("loginButton"),
         editLoginButton = document.getElementById("editLoginButton"),
@@ -253,10 +253,10 @@ function onLogoutButtonClick() {
 function onLoginWindowButtonClick() {
     var loginWindowInput = document.getElementById("loginWindowInput"),
         loginWindowAlert = document.getElementById("loginWindowAlert"),
-        hiddenUserBox = document.getElementsByClassName("hiddenUserBox")[0],
-        hiddenMessageBox = document.getElementsByClassName("hiddenMessageBox")[0],
-        hiddenTextBox = document.getElementsByClassName("hiddenTextBox")[0],
-        loginWindowBackground = document.getElementsByClassName("loginWindowBackground")[0],
+        hiddenUserBox = document.getElementById("hiddenUserBox"),
+        hiddenMessageBox = document.getElementById("hiddenMessageBox"),
+        hiddenTextBox = document.getElementById("hiddenTextBox"),
+        loginWindowBackground = document.getElementById("loginWindowBackground"),
         loginButton = document.getElementById("loginButton"),
         logoutButton = document.getElementById("logoutButton"),
         editLoginButton = document.getElementById("editLoginButton"),
@@ -284,7 +284,7 @@ function onLoginWindowButtonClick() {
 }
 
 function onDismissLoginWindowButtonClick () {
-    var loginWindowBackground = document.getElementsByClassName("loginWindowBackground")[0];
+    var loginWindowBackground = document.getElementById("loginWindowBackground");
     
     loginWindowBackground.style.display = "none";
     
@@ -304,8 +304,8 @@ function createMessage(username, textMessage) {
     user.setAttribute("class", "user");
     text.setAttribute("class", "text");
 
-    editMessageButton.setAttribute("id", "editMessageButton");
-    editMessageButton.setAttribute("src", "css/resources/edit.png");
+    editMessageButton.setAttribute  ("id", "editMessageButton");
+    editMessageButton.setAttribute  ("src", "css/resources/edit.png");
     deleteMessageButton.setAttribute("id", "deleteMessageButton");
     deleteMessageButton.setAttribute("src", "css/resources/trash.png");
 
@@ -326,7 +326,7 @@ function addMessage(message) {
 	}
     
     var newMessage = createMessage(message.username, message.textMessage),
-        messages = document.getElementsByClassName("messageBox")[0];
+        messages = document.getElementById("messageBox");
 
     newMessage.id = message.id;
 	messages.appendChild(newMessage);

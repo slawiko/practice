@@ -16,41 +16,41 @@
         <section class="main"> 
             <div id="serverIndicator">Server status</div>   
             <div class="chatWindow">
-                <div class="messageBox"></div>
+                <div class="box" id="messageBox"></div>
                 
-                <div class="hiddenMessageBox">You can`t read messages. Login, please.</div>
+                <div class="box hidden" id="hiddenMessageBox">You can`t read messages. Login, please.</div>
                 
-                <div class="userBox">
+                <div class="box" id="userBox">
                     <span id="username">
                     </span>
                 </div>
             
-                <div class="hiddenUserBox">Login, please.</div>
+                <div class="box hidden" id="hiddenUserBox">Login, please.</div>
                 
-                <div id="textBox" contenteditable="true"></div>
+                <div class="box" id="textBox" contenteditable="true"></div>
                 
-                <div class="hiddenTextBox">You can`t write messages. Login, please.</div>
+                <div class="box hidden" id="hiddenTextBox">You can`t write messages. Login, please.</div>
                 
                 <div class="loginBox">
-                    <button id="loginButton" type="button">Login</button>
-                    <button id="logoutButton" type="button">Logout</button>
-                    <button id="editLoginButton" type="button">Edit</button>
+                    <button class="button" id="loginButton" type="button">Login</button>
+                    <button class="button" id="logoutButton" type="button">Logout</button>
+                    <button class="button" id="editLoginButton" type="button">Edit</button>
                 </div>
                 
                 <div class="buttonBox">
-                    <button id="sendButton" type="button">Send</button> 
+                    <button class="button" id="sendButton" type="button">Send</button> 
                 </div>
             </div>
         </section>
         
         <div class="footer"></div>
     
-        <div class="loginWindowBackground">
-            <div id="loginWindow">
+        <div class="windowBackground" id="loginWindowBackground">
+            <div class="box" id="loginWindow">
                 <div id="loginWindowAlert">Enter your login, please.</div>
                 <div id="loginWindowInput" contenteditable="true"></div>
-                <button id="loginWindowButton">Login</button>
-                <button id="dismissLoginWindowButton">Dismiss</button>
+                <button class="button" id="loginWindowButton" type="button">Login</button>
+                <button class="buttonNegative" id="dismissLoginWindowButton" type="button">Dismiss</button>
             </div>
         </div>
     </body>

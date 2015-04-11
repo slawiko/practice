@@ -2,9 +2,10 @@ html, body {
     margin: 0;
     padding: 0;
     height: 100%;
+    font-family: 'Arial Black', 'Arial Bold', sans-serif;
 }
 
-.loginWindowBackground {
+.windowBackground {
     display: none;
     position: fixed;
     height: 100%;
@@ -17,98 +18,107 @@ html, body {
     background: rgba(0, 0, 0, 0.5);
 }
 
-#loginWindow {
+.button {
     position: absolute;
-    margin: auto;
-    height: 140px;
-    width: 350px;
-    margin: -70px 0 0 -175px;
-    top: 50%;
-    left: 50%;
-    background-color: #c1c1c1;
-    border: 1px solid rgb(71, 150, 146);
-    border-radius: 10px;
-}
-
-#loginWindowAlert {
-    text-align: center;
-    margin-top: 16px;
-    color: rgb(64, 181, 176);
-    font-size: 20px;
-    font-family: 'Arial Black', 'Arial Bold', sans-serif;
-}
-
-#loginWindowInput {
-    padding-left: 6px;
-    position: absolute;
-    line-height: 27px;
-    height: 30px;
-    width: 80%;
-    outline: 0;
-    margin-top: 12px;
-    margin-left: 30px;
-    background-color: #F2F2F2;
-    border: 1px solid rgb(71, 150, 146);
-    border-radius: 10px;
-}
-
-#loginWindowButton {
-    position: absolute;
-    height: 30px;
-    width: 130px;
-    margin-top: 53px;
-    margin-left: 36px;
+    display: block;
+    color: white;
     cursor: pointer;
     outline: 0;
-    color: white;
     background-color: #58a8a4;
+    border-radius: 6px;
     border: 0;
-    border-radius: 10px;
+    transition-property: "backgroung-color";
+    transition-duration: .1s;
+    transition-timing-function: ease-in-out;
 }
 
-#loginWindowButton:hover {
+.button:hover {
     background-color: #58b9b4;
     transition-property: "backgroung-color";
     transition-duration: .1s;
     transition-timing-function: ease-in-out;
 }
 
-#loginWindowButton:active {
+.button:active {
     background-color: #4a9591;
     transition-property: "backgroung-color";
     transition-duration: .1s;
     transition-timing-function: ease-in-out;
 }
 
-#dismissLoginWindowButton {
-    position: absolute;
+#editLoginButton {
+    display: none;
+    height: 30px;
+    width: 100px;
+    left: 102px;
+}
+
+#loginButton {
+    height: 30px;
+    width: 100px;
+}
+
+#logoutButton {
+    display: none;
+    height: 30px;
+    width: 100px;
+}
+
+#sendButton {
+    height: 28px;
+    width: 85px;
+}
+
+#loginWindowButton {
     height: 30px;
     width: 130px;
     margin-top: 53px;
-    margin-left: 176px;
+    margin-left: 36px;
+}
+
+#editMessageButton {
+    height: 20px;
+    width: 20px;
+    left: 329px;
+}
+
+#deleteMessageButton {
+    height: 20px;
+    width: 20px;
+    left: 350px;
+}
+
+.buttonNegative {
     cursor: pointer;
     outline: 0;
     color: white;
     background-color: #a85858;
     border: 0;
-    border-radius: 10px;
+    border-radius: 6px;
     transition-property: "backgroung-color";
     transition-duration: .1s;
     transition-timing-function: ease-in-out;
 }
 
-#dismissLoginWindowButton:hover {
+.buttonNegative:hover {
     background-color: #b95858;
     transition-property: "backgroung-color";
     transition-duration: .1s;
     transition-timing-function: ease-in-out;
 }
 
-#dismissLoginWindowButton:active {
+.buttonNegative:active {
     background-color: #954a4a;
     transition-property: "backgroung-color";
     transition-duration: .1s;
     transition-timing-function: ease-in-out;
+}
+
+#dismissLoginWindowButton {
+    height: 30px;
+    width: 130px;
+    margin-top: 53px;
+    margin-left: 176px;
 }
 
 .header {
@@ -122,7 +132,6 @@ html, body {
     text-align: center;
     height: 30px;
     line-height: 30px;
-    font-family: "Arial Black", "Arial Bold", "Gadget";
     color: #c2ffe3;
     background-color: #58b98c;
     transition-property: "backgroung-color", "color";
@@ -144,7 +153,6 @@ html, body {
     left: 50%;
     margin-left: -165px;
     font-size: 60px;
-    font-family: "Arial Black", "Arial Bold", "Gadget";
     height: 100%;
     line-height: 150px;
 }
@@ -165,17 +173,104 @@ html, body {
     width: 606px;
 }
 
-.messageBox {
+.box {
+    position: absolute;
+    display: block;
+    font-family: 'Times New Roman';
+    border: 1px solid rgb(71, 150, 146);
+    border-radius: 6px;
+}
+
+#messageBox {
+    height: 460px;
+    width: 340px;
     padding-right: 30px;
     padding-left: 30px;
     padding-top: 20px;
-    position: absolute;
-    height: 460px;
-    width: 340px;
     overflow-x: hidden;
     background-color: #e3e3e3;
+}
+
+#userBox {
+    height: 460px;
+    width: 150px;
+    padding-right: 25px;
+    padding-left: 25px;
+    padding-top: 20px;
+    margin-left: 402px;
+    left: 2px;
+    overflow-x: hidden;
+    background-color: #e3e3e3;
+}
+
+#textBox {
+    height: 67px;
+    width: 396px;
+    padding-left: 4px;
+    padding-top: 3px;
+    top: 484px;
+    overflow: auto;
+    outline: 0;
+    background-color: #F2F2F2;
+}
+
+.hidden {
+    text-align: center;
+    color: grey;
+    background-color: #d8d8d8;
+}
+
+#loginWindow {
+    position: absolute;
+    margin: auto;
+    height: 140px;
+    width: 350px;
+    margin: -70px 0 0 -175px;
+    top: 50%;
+    left: 50%;
+    background-color: #d8d8d8;
+}
+
+#loginWindowAlert {
+    text-align: center;
+    margin-top: 16px;
+    color: rgb(64, 181, 176);
+    font-size: 20px;
+}
+
+#loginWindowInput {
+    padding-left: 6px;
+    position: absolute;
+    line-height: 27px;
+    height: 30px;
+    width: 80%;
+    outline: 0;
+    margin-top: 12px;
+    margin-left: 30px;
+    background-color: #F2F2F2;
     border: 1px solid rgb(71, 150, 146);
     border-radius: 6px;
+}
+
+#hiddenMessageBox {
+    height: 480px;
+    width: 400px;
+    line-height: 480px;
+}
+
+#hiddenUserBox {
+    height: 480px;
+    width: 200px;
+    line-height: 480px;
+    margin-left: 402px;
+    left: 2px;
+}
+
+#hiddenTextBox {
+    height: 70px;
+    width: 400px;
+    line-height: 70px;
+    top: 484px;
 }
 
 .message {
@@ -185,19 +280,6 @@ html, body {
     width: 340px;
 }
 
-.hiddenMessageBox {
-    position: absolute;
-    display: block;
-    height: 480px;
-    width: 400px;
-    text-align: center;
-    line-height: 480px;
-    color: grey;
-    background-color: #d8d8d8;
-    border: 1px solid rgb(71, 150, 146);
-    border-radius: 6px;
-}
-
 .text {
     white-space: pre-wrap;
     word-wrap: break-word;
@@ -205,50 +287,6 @@ html, body {
 
 .user {
     color: rgb(61, 134, 130);
-}
-
-#editMessageButton {
-    position: absolute;
-    height: 20px;
-    width: 20px;
-    left: 329px;
-}
-
-#deleteMessageButton {
-    position: absolute;
-    height: 20px;
-    width: 20px;
-    left: 350px;
-}
-
-.userBox {
-    padding-right: 25px;
-    padding-left: 25px;
-    padding-top: 20px;
-    position: absolute;
-    height: 460px;
-    width: 150px;
-    margin-left: 402px;
-    left: 2px;
-    overflow-x: hidden;
-    background-color: #e3e3e3;
-    border: 1px solid rgb(71, 150, 146);
-    border-radius: 6px;
-}
-
-.hiddenUserBox {
-    display: block;
-    position: absolute;
-    height: 480px;
-    width: 200px;
-    text-align: center;
-    line-height: 480px;
-    margin-left: 402px;
-    left: 2px;
-    color: grey;
-    background-color: #d8d8d8;
-    border: 1px solid rgb(71, 150, 146);
-    border-radius: 6px;
 }
 
 #username {
@@ -269,161 +307,12 @@ html, body {
     top: 558px;
 }
 
-#textBox {
-    padding-top: 3px;
-    padding-left: 4px;
-    position: absolute;
-    height: 67px;
-    width: 396px;
-    top: 484px;
-    overflow: auto;
-    outline: 0;
-    background-color: #F2F2F2;
-    border: 1px solid rgb(71, 150, 146);
-    border-radius: 6px;
-}
-
-.hiddenTextBox {
-    position: absolute;
-    top: 484px;
-    height: 70px;
-    width: 400px;
-    text-align: center;
-    line-height: 70px;
-    display: block;
-    color: grey;
-    background-color: #d8d8d8;
-    border: 1px solid rgb(71, 150, 146);
-    border-radius: 6px;
-}
-
 .loginBox {
     position: absolute;
     height: 30px;
     width: 202px;
     top: 484px;
     left: 404px;
-}
-
-#editLoginButton {
-    position: absolute;
-    display: none;
-    height: 30px;
-    width: 100px;
-    left: 102px;
-    cursor: pointer;
-    outline: 0;
-    color: white;
-    background-color: #58a8a4;
-    border-radius: 6px;
-    border: 0;
-    transition-property: "backgroung-color";
-    transition-duration: .1s;
-    transition-timing-function: ease-in-out;
-}
-
-#editLoginButton:hover {
-    background-color: #58b9b4;
-    transition-property: "backgroung-color";
-    transition-duration: .1s;
-    transition-timing-function: ease-in-out;
-}
-
-#editLoginButton:active {
-    background-color: #4a9591;
-    transition-property: "backgroung-color";
-    transition-duration: .1s;
-    transition-timing-function: ease-in-out;
-}
-
-#loginButton {
-    position: absolute;
-    display: block;
-    height: 30px;
-    width: 100px;
-    cursor: pointer;
-    outline: 0;
-    color: white;
-    background-color: #58a8a4;
-    border: 0;
-    border-radius: 6px;
-    transition-property: "backgroung-color";
-    transition-duration: .1s;
-    transition-timing-function: ease-in-out;
-}
-
-#loginButton:hover {
-    background-color: #58b9b4;
-    transition-property: "backgroung-color";
-    transition-duration: .1s;
-    transition-timing-function: ease-in-out;
-}
-
-#loginButton:active {
-    background-color: #4a9591;
-    transition-property: "backgroung-color";
-    transition-duration: .1s;
-    transition-timing-function: ease-in-out;
-}
-
-#logoutButton {
-    position: absolute;
-    display: none;
-    height: 30px;
-    width: 100px;
-    cursor: pointer;
-    outline: 0;
-    color: white;
-    background-color: #58a8a4;
-    border: 0;
-    border-radius: 6px;
-    transition-property: "backgroung-color";
-    transition-duration: .1s;
-    transition-timing-function: ease-in-out;
-}
-
-#logoutButton:hover {
-    background-color: #58b9b4;
-    transition-property: "backgroung-color";
-    transition-duration: .1s;
-    transition-timing-function: ease-in-out;
-}
-
-#logoutButton:active {
-    background-color: #4a9591;
-    transition-property: "backgroung-color";
-    transition-duration: .1s;
-    transition-timing-function: ease-in-out;
-}
-
-#sendButton {
-    position: absolute;
-    display: block;
-    height: 28px;
-    width: 85px;
-    color: white;
-    cursor: pointer;
-    outline: 0;
-    background-color: #58a8a4;
-    border-radius: 6px;
-    border: 0;
-    transition-property: "backgroung-color";
-    transition-duration: .1s;
-    transition-timing-function: ease-in-out;
-}
-
-#sendButton:hover {
-    background-color: #58b9b4;
-    transition-property: "backgroung-color";
-    transition-duration: .1s;
-    transition-timing-function: ease-in-out;
-}
-
-#sendButton:active {
-    background-color: #4a9591;
-    transition-property: "backgroung-color";
-    transition-duration: .1s;
-    transition-timing-function: ease-in-out;
 }
 
 .footer {
