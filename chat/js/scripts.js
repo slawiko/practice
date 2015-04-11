@@ -3,7 +3,6 @@
 var uniqueId = function () {
 	var date = Date.now(),
         random = Math.random() * Math.random();
-
 	return Math.floor(date * random).toString();
 };
 
@@ -19,19 +18,14 @@ var messageList = [];
 
 function updateMessageList(newMessage, messageListI) {
     messageListI.textMessage = newMessage;
-    
-    return;
 }
 
 function addLogin(value) {
     if (!value) {
 		return;
 	}
-    
     var username = document.getElementById("username");
     username.innerHTML = value;
-    username.style.display = "block";
-    
     return;
 }
 
@@ -40,10 +34,7 @@ function store(listToSave) {
 		alert('localStorage is not accessible');
 		return;
 	}
-
 	localStorage.setItem("messages list", JSON.stringify(listToSave));
-    
-    return;
 }
 
 function restore(msName) {
@@ -51,25 +42,20 @@ function restore(msName) {
 		alert('localStorage is not accessible');
 		return;
 	}
-
 	var item = localStorage.getItem(msName);
-
 	return item && JSON.parse(item);
 }
 
 function run() {
-    var chatWindow = document.getElementsByClassName("chatWindow")[0],
-        allMessages = restore("messages list"),
+    var allMessages = restore("messages list"), 
+        chatWindow = document.getElementsByClassName("chatWindow")[0],
         textBox = document.getElementById("textBox"),
-        message = document.getElementById("messageBox"),
-        loginWindowBackground = document.getElementById("loginWindowBackground"),
-        loginWindowInput = document.getElementById("loginWindowInput");
+        loginWindow = document.getElementById("loginWindow");
     
     createAllMessages(allMessages);
     chatWindow.addEventListener("click", delegateEvent);
-    loginWindowBackground.addEventListener("click", delegateEvent);
-    loginWindowInput.addEventListener("keydown", delegateEvent); //does not work
     textBox.addEventListener("keydown", delegateEvent);
+    loginWindow.addEventListener("click", delegateEvent);
 }
 
 function delegateEvent(eventObj) {
@@ -78,8 +64,6 @@ function delegateEvent(eventObj) {
     }
     else if (eventObj.target.getAttribute("id") === "editMessageButton") {
         onEditMessageButtonClick(eventObj);
-    }
-    else if (eventObj.target.getAttribute("id") === "editButton") {
     }
     else if (eventObj.target.getAttribute("id") === "deleteMessageButton") {
         onDeleteMessageButtonClick(eventObj);
@@ -93,7 +77,7 @@ function delegateEvent(eventObj) {
     else if (eventObj.target.getAttribute("id") === "logoutButton") {
         onLogoutButtonClick();
     }
-    else if ((eventObj.target.getAttribute("id") === "loginWindowButton") || (eventObj.keyCode === 13)) { // does not work 13
+    else if (eventObj.target.getAttribute("id") === "loginWindowButton") {
         onLoginWindowButtonClick();
     }
     else if (eventObj.target.getAttribute("id") === "dismissLoginWindowButton") {
@@ -103,14 +87,11 @@ function delegateEvent(eventObj) {
 
 function createAllMessages(allMessages) {
     var i;
-    
     if (allMessages && allMessages.length) {
         for (i = 0; i < allMessages.length; i++) {
             addMessage(allMessages[i]);
         }
     }
-    
-    return;
 }
 
 function onSendButtonClick(value) {
@@ -122,9 +103,7 @@ function onSendButtonClick(value) {
     if (sendButton.innerHTML == "Send") {
         addMessage(messageStruct(messageText.innerText, username.innerText));
         messageText.innerHTML = "";
-
         store(messageList);
-        
         return;
     }
     else {
@@ -132,19 +111,14 @@ function onSendButtonClick(value) {
         
         for (i = 0; i < messageList.length; i++) {
             if (messageList[i].id != id) {
-                continue;
+                editingMessage.childNodes[1].innerText = messageText.innerText;
+                updateMessageList(messageText.innerText, messageList[i]);
+                messageText.innerHTML = "";
+                sendButton.innerHTML = "Send";
+                store(messageList);
+                return;
             }    
-            
-            editingMessage.childNodes[1].innerText = messageText.innerText;
-            updateMessageList(messageText.innerText, messageList[i]);
-            messageText.innerHTML = "";
-            sendButton.innerHTML = "Send";
-            store(messageList);
-
-            return;
         }
-
-        return;
     }
 }
 
@@ -162,20 +136,17 @@ function onEditMessageButtonClick(eventObj) {
         i;
     
     for (i = 0; i < messageList.length; i++) {
-        if (messageList[i].id != id) {
-            continue;
-        }
-        
-        var parentMessage = eventObj.target.parentNode,
+        if (messageList[i].id === id) {
+            var parentMessage = eventObj.target.parentNode,
             oldMessage = parentMessage.getElementsByClassName("text")[0],
             editButton = document.getElementById("sendButton"),
             messageArea = document.getElementById("textBox");
         
-        editingMessage = parentMessage;
-        messageArea.innerText = oldMessage.innerText;
-        editButton.innerHTML = "Edit";
-        
-        return;
+            editingMessage = parentMessage;
+            messageArea.innerText = oldMessage.innerText;
+            editButton.innerHTML = "Edit";
+            return;
+        }
     }
 }
 
@@ -194,14 +165,11 @@ function onDeleteMessageButtonClick(eventObj) {
     messageBox.removeChild(parentMessage);
     
     for (i = 0; i < messageList.length; i++) {
-        if (messageList[i].id != id) {
-            continue;
+        if (messageList[i].id === id) {
+            messageList.splice(i, 1);
+            store(messageList);
+            return;
         }
-    
-        messageList.splice(i, 1);
-        store(messageList);
-        
-        return;
     }
 }
 
@@ -215,8 +183,6 @@ function onLoginButtonClick() {
     hiddenMessageBox.style.display = "block";
     hiddenTextBox.style.display = "block";
     loginWindowBackground.style.display = "block";
-  
-    return;
 }
 
 function onEditLoginButtonClick() {
@@ -225,15 +191,13 @@ function onEditLoginButtonClick() {
 
     loginWindowButton.innerText = "Confirm";
     loginWindowBackground.style.display = "block";
-  
-    return;
 }
 
 function onLogoutButtonClick() {
-    var hiddenUserBox = document.getElementById("hiddenUserBox"),
+    var username = document.getElementById("username"),
+        hiddenUserBox = document.getElementById("hiddenUserBox"),
         hiddenMessageBox = document.getElementById("hiddenMessageBox"),
         hiddenTextBox = document.getElementById("hiddenTextBox"),
-        username = document.getElementById("username"),
         loginButton = document.getElementById("loginButton"),
         editLoginButton = document.getElementById("editLoginButton"),
         logoutButton = document.getElementById("logoutButton"),
@@ -243,7 +207,6 @@ function onLogoutButtonClick() {
     hiddenUserBox.style.display = "block";
     hiddenMessageBox.style.display = "block";
     hiddenTextBox.style.display = "block";
-    
     loginButton.style.display = "block";
     editLoginButton.style.display = "none";
     logoutButton.style.display = "none";
@@ -251,8 +214,7 @@ function onLogoutButtonClick() {
 }
 
 function onLoginWindowButtonClick() {
-    var loginWindowInput = document.getElementById("loginWindowInput"),
-        loginWindowAlert = document.getElementById("loginWindowAlert"),
+    var loginWindowAlert = document.getElementById("loginWindowAlert"),
         hiddenUserBox = document.getElementById("hiddenUserBox"),
         hiddenMessageBox = document.getElementById("hiddenMessageBox"),
         hiddenTextBox = document.getElementById("hiddenTextBox"),
@@ -260,17 +222,14 @@ function onLoginWindowButtonClick() {
         loginButton = document.getElementById("loginButton"),
         logoutButton = document.getElementById("logoutButton"),
         editLoginButton = document.getElementById("editLoginButton"),
-        login;
+        login = document.getElementById("loginWindowInput").innerText;
 
-    login = loginWindowInput.innerText;
-    
     if (!login) {
         loginWindowAlert.style.color = "rgb(181, 64, 64)";
         onLoginWindowButtonClick();
     }
     
     addLogin(login);  
-    
     loginWindowAlert.style.color = "rgb(64, 181, 176)";
     hiddenUserBox.style.display = "none";
     hiddenMessageBox.style.display = "none";
@@ -279,16 +238,14 @@ function onLoginWindowButtonClick() {
     loginButton.style.display = "none";
     logoutButton.style.display = "block";
     editLoginButton.style.display = "block";
-    
-    return;
 }
 
 function onDismissLoginWindowButtonClick () {
-    var loginWindowBackground = document.getElementById("loginWindowBackground");
+    var loginWindowBackground = document.getElementById("loginWindowBackground"),
+        loginWindowAlert = document.getElementById("loginWindowAlert");
     
+    loginWindowAlert.style.color = "rgb(64, 181, 176)";
     loginWindowBackground.style.display = "none";
-    
-    return;
 }
 
 function createMessage(username, textMessage) {
@@ -331,6 +288,4 @@ function addMessage(message) {
     newMessage.id = message.id;
 	messages.appendChild(newMessage);
     messageList.push(message);
-    
-    return;
 }
