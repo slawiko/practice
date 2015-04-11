@@ -26,6 +26,7 @@ function addLogin(value) {
 	}
     var username = document.getElementById("username");
     username.innerHTML = value;
+    username.style.display = "block";
     return;
 }
 
