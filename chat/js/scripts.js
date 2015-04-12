@@ -1,68 +1,56 @@
 "use strict";
 
-var uniqueId = function () {
-	var date = Date.now(),
-        random = Math.random() * Math.random();
-	return Math.floor(date * random).toString();
-};
+var uniqueId      = function () {
+                    var date = Date.now(),
+                        random = Math.random() * Math.random();
+                    return Math.floor(date * random).toString();
+                    },
+    messageStruct = function (text, user) {
+                    return {
+                        textMessage: text,
+                        username: user,
+                        id: uniqueId() };
+                    },
+    appState      = {
+                    mainUrl : 'http://localhost:1555/todos',
+                    messageList: [],
+                    token : 'TE11EN'
+                    },
+    editingMessage;
 
-var messageStruct = function (text, user) {
-	return {
-		textMessage: text,
-		username: user,
-		id: uniqueId()
-	};
-};
-
-var messageList = [];
-
-var appState = {
-	mainUrl : 'http://localhost:1555/todos',
-	messageList: [],
-	token : 'TE11EN'
-};
-
-function updateMessageList(newMessage, messageListI) {
-    messageListI.textMessage = newMessage;
-}
-
-function addLogin(value) {
-    if (!value) {
-		return;
-	}
-    var username = document.getElementById("username");
-    username.innerHTML = value;
-    username.style.display = "block";
-    return;
-}
-
-function store(listToSave) {
-	if (typeof(Storage) === "undefined") {
-		alert('localStorage is not accessible');
-		return;
-	}
-	localStorage.setItem("messages list", JSON.stringify(listToSave));
-}
-
-function restore(msName) {
-	if (typeof(Storage) === "undefined") {
-		alert('localStorage is not accessible');
-		return;
-	}
-	var item = localStorage.getItem(msName);
+function restore(continueWith) {
+	var url = appState.mainUrl + "?token=" + appState.token;
+	
+    Get(url, 
+        function(responseText) {
+            console.assert(responseText != null);
+            var response = JSON.parse(responseText);
+            appState.token = response.token;
+            createAllMessages(response.messageList);
+            continueWith && continueWith();
+        })
 	return item && JSON.parse(item);
 }
 
+function createAllMessages(allMessages) {
+    var i;
+    if (allMessages && allMessages.length) {
+        for (i = 0; i < allMessages.length; i++) {
+            addMessageInternal(allMessages[i]);
+        }
+    }
+}
+
 function run() {
-    var allMessages = restore("messages list"), 
-        chatWindow = document.getElementsByClassName("chatWindow")[0],
+    var chatWindow = document.getElementsByClassName("chatWindow")[0],
         textBox = document.getElementById("textBox"),
         loginWindow = document.getElementById("loginWindow");
     
-    createAllMessages(allMessages);
     chatWindow.addEventListener("click", delegateEvent);
     textBox.addEventListener("keydown", delegateEvent);
     loginWindow.addEventListener("click", delegateEvent);
+    
+    restore();
 }
 
 function delegateEvent(eventObj) {
@@ -92,44 +80,33 @@ function delegateEvent(eventObj) {
     }
 }
 
-function createAllMessages(allMessages) {
-    var i;
-    if (allMessages && allMessages.length) {
-        for (i = 0; i < allMessages.length; i++) {
-            addMessage(allMessages[i]);
-        }
-    }
-}
-
 function onSendButtonClick(value) {
-    var messageText = document.getElementById("textBox"),
+    var messageText = document.getElementById("textBox"), 
+		username = document.getElementById("username"),
+		message = messageStruct(messageText.innerText, username.innerText),
         sendButton = document.getElementById("sendButton"),
-        i,
-        username = document.getElementById("username");
+        i;
 
     if (sendButton.innerHTML == "Send") {
-        addMessage(messageStruct(messageText.innerText, username.innerText));
+        addMessage(message);
         messageText.innerHTML = "";
-        store(messageList);
         return;
     }
     else {
         var id = editingMessage.attributes["id"].value;
         
-        for (i = 0; i < messageList.length; i++) {
-            if (messageList[i].id === id) {
+        for (i = 0; i < appState.messageList.length; i++) {
+            if (appState.messageList[i].id === id) {
                 editingMessage.childNodes[0].childNodes[1].innerHTML = messageText.innerHTML;
-                updateMessageList(messageText.innerHTML, messageList[i]);
+                updateMessageList(messageText.innerHTML, appState.messageList[i]);
                 messageText.innerHTML = "";
                 sendButton.innerHTML = "Send";
-                store(messageList);
+				//edit message
                 return;
             }    
         }
     }
 }
-
-var editingMessage;
 
 function onEditMessageButtonClick(eventObj) {
     var user = document.getElementById("username");
@@ -140,15 +117,14 @@ function onEditMessageButtonClick(eventObj) {
     }
         
     var id = eventObj.target.parentElement.attributes["id"].value,
+		parentMessage = eventObj.target.parentNode,
+		oldMessage = parentMessage.getElementsByClassName("text")[0],
+		editButton = document.getElementById("sendButton"),
+		messageArea = document.getElementById("textBox"),
         i;
     
-    for (i = 0; i < messageList.length; i++) {
-        if (messageList[i].id === id) {
-            var parentMessage = eventObj.target.parentNode,
-            oldMessage = parentMessage.getElementsByClassName("text")[0],
-            editButton = document.getElementById("sendButton"),
-            messageArea = document.getElementById("textBox");
-        
+    for (i = 0; i < appState.messageList.length; i++) {
+        if (appState.messageList[i].id === id) {
             editingMessage = parentMessage;
             messageArea.innerText = oldMessage.innerText;
             editButton.innerHTML = "Edit";
@@ -171,10 +147,9 @@ function onDeleteMessageButtonClick(eventObj) {
     
     messageBox.removeChild(parentMessage);
     
-    for (i = 0; i < messageList.length; i++) {
-        if (messageList[i].id === id) {
-            messageList.splice(i, 1);
-            store(messageList);
+    for (i = 0; i < appState.messageList.length; i++) {
+        if (appState.messageList[i].id === id) {
+            appState.messageList.splice(i, 1);
             return;
         }
     }
@@ -255,6 +230,29 @@ function onDismissLoginWindowButtonClick () {
     loginWindowBackground.style.display = "none";
 }
 
+function addMessage(message, continueWith) {
+    if (!message.textMessage) {
+		return;
+	}
+    
+    Post(appState.mainUrl, JSON.stringify(message), function() {
+                                                        restore();
+                                                    });
+}
+    
+function addMessageInternal(message) {
+    var newMessage = createMessage(message.username, message.textMessage),
+        messages = document.getElementById("messageBox");
+
+    newMessage.id = message.id;
+	messages.appendChild(newMessage);
+    messageList.push(message);
+}
+
+function updateMessageList(newMessage, messageList_) {
+    messageList_.textMessage = newMessage;
+}
+
 function createMessage(username, textMessage) {
     var newMessage = document.createElement("div"),
         message = document.createElement("div"),
@@ -286,30 +284,14 @@ function createMessage(username, textMessage) {
     return newMessage;
 }
 
-function addMessage(message) {
-    if (!message.textMessage) {
+function addLogin(value) {
+    if (!value) {
 		return;
 	}
-    
-    var newMessage = createMessage(message.username, message.textMessage),
-        messages = document.getElementById("messageBox");
-
-    newMessage.id = message.id;
-	messages.appendChild(newMessage);
-    messageList.push(message);
-}
-
-function isError(text) {
-	if(text == "")
-		return false;
-	
-	try {
-		var obj = JSON.parse(text);
-	} catch(ex) {
-		return true;
-	}
-
-	return !!obj.error;
+    var username = document.getElementById("username");
+    username.innerHTML = value;
+    username.style.display = "block";
+    return;
 }
 
 function Get(url, continueWith, continueWithError) {
@@ -366,4 +348,21 @@ function ajax(method, url, data, continueWith, continueWithError) {
     };
 
     xhr.send(data);
+}
+
+function isError(text) {
+	if(text == "")
+		return false;
+	
+	try {
+		var obj = JSON.parse(text);
+	} catch(ex) {
+		return true;
+	}
+
+	return !!obj.error;
+}
+
+function defaultErrorHandler(message) {
+	console.error(message);
 }
