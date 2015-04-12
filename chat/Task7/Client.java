@@ -6,12 +6,14 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.TreeMap;
 
 public class Client implements Runnable {
 
-    private TreeMap<Integer, Message> history = new TreeMap<Integer, Message>();
+    private List<Message> history = new ArrayList<Message>();
     private MessageExchange messageExchange = new MessageExchange();
     private String host;
     private Integer port;
@@ -37,7 +39,6 @@ public class Client implements Runnable {
             Client client = new Client(serverHost, serverPort, currentUser);
             new Thread(client).start();
             System.out.println("Connected to server " + serverHost + ":" + serverPort + " with username \"" + currentUser + "\"");
-
             client.listen();
         }
     }
@@ -47,8 +48,8 @@ public class Client implements Runnable {
         return (HttpURLConnection) url.openConnection();
     }
 
-    public TreeMap<Integer, Message> getMessages() {
-        TreeMap<Integer, Message> map = new TreeMap<Integer, Message>();
+    public ArrayList<Message> getMessages() {
+        ArrayList<Message> list = new ArrayList<Message>();
         HttpURLConnection connection = null;
 
         try {
@@ -64,18 +65,18 @@ public class Client implements Runnable {
                 if (!currentUser.equals(message.getUsername())) {
                     System.out.println(message.getUsername() + ": " + message.getMessage());
                 }
-                map.put(message.getId(), message);
+                list.add(message);
             }
         } catch (IOException e) {
-            System.err.println("ERROR: FUCK1" + e.getMessage());
+            System.err.println("ERROR1: " + e.getMessage());
         } catch (ParseException e) {
-            System.err.println("ERROR: " + e.getMessage());
+            System.err.println("ERROR2: " + e.getMessage());
         } finally {
             if (connection != null) {
                 connection.disconnect();
             }
         }
-        return map;
+        return list;
     }
 
     public void sendMessage(String message) {
@@ -89,14 +90,14 @@ public class Client implements Runnable {
 
                 DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
 
-                byte[] bytes = messageExchange.getClientSendMessageRequest(message, currentUser).getBytes();
+                byte[] bytes = messageExchange.getClientSendMessageRequest(currentUser, message).getBytes();
                 wr.write(bytes, 0, bytes.length);
                 wr.flush();
                 wr.close();
 
                 connection.getInputStream();
             } catch (IOException e) {
-                System.err.println("ERROR: " + e.getMessage());
+                System.err.println("ERROR3: " + e.getMessage());
             } finally {
                 if (connection != null) {
                     connection.disconnect();
@@ -107,15 +108,15 @@ public class Client implements Runnable {
 
     public void listen() {
         while (true) {
-            TreeMap<Integer, Message> map = getMessages();
+            ArrayList<Message> list = getMessages();
 
-            if (map.size() > 0) {
-                history.putAll(map);
+            if (list.size() > 0) {
+                history.addAll(list);
             }
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-                System.err.println("ERROR: " + e.getMessage());
+                System.err.println("ERROR4: " + e.getMessage());
             }
         }
     }
@@ -123,7 +124,7 @@ public class Client implements Runnable {
     private Message JSONObjectToMessage(JSONObject o) {
         Message message = new Message();
 
-        message.setId(Integer.parseInt(o.get("id").toString()));
+        message.setId((o.get("id").toString()));
         message.setUsername(o.get("username").toString());
         message.setMessage(o.get("message").toString());
 

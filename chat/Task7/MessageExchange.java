@@ -3,7 +3,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.awt.*;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -16,45 +18,45 @@ public class MessageExchange {
         return "TN" + number + "EN";
     }
 
-    public JSONArray mapToJSONArray(TreeMap<Integer, Message> messages) {
+    public int getIndex(String token) {
+        return (Integer.valueOf(token.substring(2, token.length() - 2)) - 11) / 8;
+    }
+
+    public JSONArray listToJSONArray(ArrayList<Message> messages) {
         JSONArray jsonArray = new JSONArray();
-        for (Map.Entry o : messages.entrySet()) {
+        for(Map.Entry entry: messages.entrySet()) {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("id", ((Message)o.getValue()).getId());
-            jsonObject.put("username", ((Message)o.getValue()).getUsername());
-            jsonObject.put("message", ((Message)o.getValue()).getMessage());
+            jsonObject.put("id", ((Message)entry.getValue()).getId());
+            jsonObject.put("user", ((Message)entry.getValue()).getUsername());
+            jsonObject.put("text", ((Message)entry.getValue()).getMessage());
             jsonArray.add(jsonObject);
         }
         return jsonArray;
     }
 
-    public int getIndex(String token) {
-        return (Integer.valueOf(token.substring(2, token.length() - 2)) - 11) / 8;
-    }
-
-    public String getServerResponse(TreeMap<Integer, Message> messages) {
+    public String getServerResponse(ArrayList<Message> messages) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("messages", mapToJSONArray(messages));
+        jsonObject.put("messages", listToJSONArray(messages));
         jsonObject.put("token", getToken(messages.size()));
         return jsonObject.toJSONString();
     }
 
-    public String getClientSendMessageRequest(String message, String username) {
+    public String getClientSendMessageRequest(String username, String messageText) {
         JSONObject jsonObject = new JSONObject();
-        JSONArray jsonArray = new JSONArray();
-        jsonArray.add(message);
-        jsonObject.put("username", username);
-        jsonObject.put("message", message);
+        Message message = new Message(username, messageText);
+        jsonObject.put("id", message.getId());
+        jsonObject.put("username", message.getUsername());
+        jsonObject.put("message", message.getMessage());
         return jsonObject.toJSONString();
     }
 
-    public Message getClientMessageAndUsername(InputStream inputStream) throws ParseException {
-        JSONObject jsonObject = getJSONObject(inputStreamToString(inputStream));
-        Message message = new Message(jsonObject.get("username").toString(), jsonObject.get("message").toString());
+    public Message getClientMessage(InputStream inputStream) throws ParseException {
+        JSONObject jsonObject = (JSONObject)getJSONObject(inputStreamToString(inputStream));
+        Message message = new Message(jsonObject.get("id").toString(), jsonObject.get("username").toString(), jsonObject.get("message").toString());
         return message;
     }
 
-    public Message getClientMessageAndId(InputStream inputStream) throws ParseException {
+    /*public Message getClientMessageAndId(InputStream inputStream) throws ParseException {
         JSONObject jsonObject = getJSONObject(inputStreamToString(inputStream));
         Message message = new Message(Integer.parseInt(jsonObject.get("id").toString()), jsonObject.get("message").toString());
         return message;
@@ -64,7 +66,7 @@ public class MessageExchange {
         JSONObject jsonObject = getJSONObject(inputStreamToString(inputStream));
         Message message = new Message(Integer.parseInt(jsonObject.get("id").toString()));
         return message;
-    }
+    }*/
 
     public JSONObject getJSONObject(String json) throws ParseException {
         return (JSONObject) jsonParser.parse(json.trim());
@@ -72,7 +74,7 @@ public class MessageExchange {
 
     public String inputStreamToString(InputStream in) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        byte[] buffer = new byte[1024];
+        byte[] buffer = new byte[2048];
         int length = 0;
 
         try {

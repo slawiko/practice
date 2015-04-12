@@ -12,7 +12,7 @@ var uniqueId      = function () {
                         id: uniqueId() };
                     },
     appState      = {
-                    mainUrl : 'http://localhost:1555/todos',
+                    mainUrl : 'http://localhost:1555/chat',
                     messageList: [],
                     token : 'TE11EN'
                     },
@@ -100,7 +100,6 @@ function onSendButtonClick(value) {
                 updateMessageList(messageText.innerHTML, appState.messageList[i]);
                 messageText.innerHTML = "";
                 sendButton.innerHTML = "Send";
-				//edit message
                 return;
             }    
         }

@@ -12,7 +12,7 @@ import java.util.*;
 
 public class Server implements HttpHandler {
 
-    private TreeMap<Integer, Message> history = new TreeMap<Integer, Message>();
+    private ArrayList<Message> history = new ArrayList<Message>();
     private MessageExchange messageExchange = new MessageExchange();
 
     public static void main(String[] args) {
@@ -28,8 +28,8 @@ public class Server implements HttpHandler {
                 String serverHost = InetAddress.getLocalHost().getHostAddress();
                 System.out.println("Get list of messages: \nGET http://" + serverHost + ":" + port + "/chat?token={token} \n");
                 System.out.println("Send message: \nPOST http://" + serverHost + ":" + port + "/chat provide body json in format {\"username\" : \"username\", \"message\" : \"message\"} \n");
-                System.out.println("Delete message: \nDELETE http://" + serverHost + ":" + port + "/chat provided body json in format {\"id\" : \"id\"} \n");
-                System.out.println("Edit message: \nPUT http://" + serverHost + ":" + port + "/chat provided body json in format {\"id\" : \"id\", \"message\" : \"message\"} \n");
+                //System.out.println("Delete message: \nDELETE http://" + serverHost + ":" + port + "/chat provided body json in format {\"id\" : \"id\"} \n");
+                //System.out.println("Edit message: \nPUT http://" + serverHost + ":" + port + "/chat provided body json in format {\"id\" : \"id\", \"message\" : \"message\"} \n");
 
                 server.createContext("/chat", new Server());
                 server.setExecutor(null);
@@ -51,10 +51,10 @@ public class Server implements HttpHandler {
             doPost(httpExchange);
         }
         else if ("DELETE".equals(httpExchange.getRequestMethod())) {
-            doDelete(httpExchange);
+            //doDelete(httpExchange);
         }
         else if ("PUT".equals(httpExchange.getRequestMethod())) {
-            doPut(httpExchange);
+            //doPut(httpExchange);
         }
         else {
             response = "Unsupported http method: " + httpExchange.getRequestMethod();
@@ -70,7 +70,7 @@ public class Server implements HttpHandler {
 
             if (token != null && !"".equals(token)) {
                 int index = messageExchange.getIndex(token);
-                return messageExchange.getServerResponse(new TreeMap<Integer, Message>(history.subMap(index, history.size())));
+                return messageExchange.getServerResponse(new ArrayList<Message>(history.subList(index, history.size())));
             }
             else {
                 return "Token query parameter is absent in url: " + query;
@@ -81,16 +81,15 @@ public class Server implements HttpHandler {
 
     private void doPost(HttpExchange httpExchange) {
         try {
-            Message message = messageExchange.getClientMessageAndUsername(httpExchange.getRequestBody());
-            message.setId(history.size());
+            Message message = messageExchange.getClientMessage(httpExchange.getRequestBody());
             System.out.println("Get Message from " + message.getUsername() + ": " + message.getMessage());
-            history.put(message.getId(), message);
+            history.add(message);
         } catch (ParseException e) {
             System.err.println("Invalid user message: " + httpExchange.getRequestBody() + " " + e.getMessage());
         }
     }
 
-    private void doDelete(HttpExchange httpExchange) {
+    /*private void doDelete(HttpExchange httpExchange) {
         try {
             Message deleteId = messageExchange.getClientMessageId(httpExchange.getRequestBody());
             Message newMessage = new Message(deleteId.getId(), "Deleted", "Deleted");
@@ -112,7 +111,7 @@ public class Server implements HttpHandler {
         } catch (ParseException e){
             System.err.println("Invalid message: " + httpExchange.getRequestBody() + " " + e.getMessage());
         }
-    }
+    }*/
 
     private void sendResponse(HttpExchange httpExchange, String response) {
         try {
