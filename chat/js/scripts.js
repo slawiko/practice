@@ -28,8 +28,7 @@ function restore(continueWith) {
             appState.token = response.token;
             createAllMessages(response.messageList);
             continueWith && continueWith();
-        })
-	return item && JSON.parse(item);
+        });
 }
 
 function createAllMessages(allMessages) {
