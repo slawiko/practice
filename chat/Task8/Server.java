@@ -12,7 +12,7 @@ import java.util.*;
 
 public class Server implements HttpHandler {
 
-    private TreeMap<Integer, Message> history = new TreeMap<Integer, Message>();
+    private ArrayList<Message> history = new ArrayList<Message>();
     private MessageExchange messageExchange = new MessageExchange();
 
     public static void main(String[] args) {
@@ -44,75 +44,86 @@ public class Server implements HttpHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
         String response = "";
 
-        if ("GET".equals(httpExchange.getRequestMethod())) {
-            response = doGet(httpExchange);
+        try {
+            if ("GET".equals(httpExchange.getRequestMethod())) {
+                response = doGet(httpExchange);
+            } else if ("POST".equals(httpExchange.getRequestMethod())) {
+                doPost(httpExchange);
+            } else if ("DELETE".equals(httpExchange.getRequestMethod())) {
+                //doDelete(httpExchange);
+            } else if ("PUT".equals(httpExchange.getRequestMethod())) {
+                doPut(httpExchange);
+            } else {
+                throw new Exception("Unsupported http method: " + httpExchange.getRequestMethod());
+            }
+        } catch (Exception e){
+            response = messageExchange.getErrorMessage(e.getMessage());
+            e.printStackTrace();
         }
-        else if ("POST".equals(httpExchange.getRequestMethod())) {
-            doPost(httpExchange);
-        }
-        else if ("DELETE".equals(httpExchange.getRequestMethod())) {
-            doDelete(httpExchange);
-        }
-        else if ("PUT".equals(httpExchange.getRequestMethod())) {
-            doPut(httpExchange);
-        }
-        else {
-            response = "Unsupported http method: " + httpExchange.getRequestMethod();
-        }
-        try{
+
+        try {
             sendResponse(httpExchange, response);
-        } catch(Exception e) {
-            System.out.println("Unable to send response !");
+        } catch (Exception e) {
+            System.out.println("Unable to send response!");
+
         }
     }
 
-    private String doGet(HttpExchange httpExchange) {
+    private String doGet(HttpExchange httpExchange) throws Exception{
         String query = httpExchange.getRequestURI().getQuery();
         if (query != null) {
             Map<String, String> map = queryToMap(query);
             String token = map.get("token");
+            System.out.println("Token " + token);
 
             if (token != null && !"".equals(token)) {
                 int index = messageExchange.getIndex(token);
-                return messageExchange.getServerResponse(new TreeMap<Integer, Message>(history.subMap(index, history.size())));
+                System.out.println("Index " + index);
+                return messageExchange.getServerResponse(new ArrayList<Message>(history.subList(index, history.size())), history.size());
             }
-            else {
-                return "Token query parameter is absent in url: " + query;
-            }
+            throw new Exception("Token query parameter is absent in url: " + query);
         }
-        return  "Absent query in url";
+        throw new Exception("Absent query in url");
     }
 
-    private void doPost(HttpExchange httpExchange) {
+    private void doPost(HttpExchange httpExchange) throws Exception{
         try {
-            Message message = messageExchange.getClientMessageAndUsername(httpExchange.getRequestBody());
-            message.setId(history.size());
-            System.out.println("Get Message from " + message.getUsername() + ": " + message.getMessage());
-            history.put(message.getId(), message);
+            Message message = messageExchange.getClientMessage(httpExchange.getRequestBody(), "POST");
+            System.out.println("Get Message with ID {" + message.getId() + "} from " + message.getUsername() + ": " + message.getTextMessage());
+            history.add(message);
         } catch (ParseException e) {
             System.err.println("Invalid user message: " + httpExchange.getRequestBody() + " " + e.getMessage());
         }
     }
 
-    private void doDelete(HttpExchange httpExchange) {
+    /*private void doDelete(HttpExchange httpExchange) throws Exception{
         try {
-            Message deleteId = messageExchange.getClientMessageId(httpExchange.getRequestBody());
-            Message newMessage = new Message(deleteId.getId(), "Deleted", "Deleted");
-            Message oldMessage = new Message(history.get(deleteId.getId()));
-            history.replace(deleteId.getId(), newMessage);
-            System.out.println("Message \"" + oldMessage.getMessage() + "\" of user \"" + oldMessage.getUsername() + "\" was deleted.");
+            String deletedMessageId = messageExchange.getClientMessageId(httpExchange.getRequestBody());
+            for (int i = 0; i < history.size(); i++) {
+                if (history.get(i).getId().equals(deletedMessageId)) {
+                    Message deletedMessage = new Message();
+                    System.out.println("Message \"" + history.get(i).getMessage() + "\" of user \"" + history.get(i).getUsername() + "\" was deleted.");
+                    history.remove(i);
+                    history.add(i, deletedMessage);
+                    return;
+                }
+            }
         } catch (ParseException e) {
             System.err.println("Invalid id message: " + httpExchange.getRequestBody() + " " + e.getMessage());
         }
-    }
+    }*/
 
     private void doPut(HttpExchange httpExchange) {
         try {
-            Message newMessage = messageExchange.getClientMessageAndId(httpExchange.getRequestBody());
-            Message oldMessage = history.get(newMessage.getId());
-            System.out.println("Message \"" + oldMessage.getMessage() + "\" of user \"" + oldMessage.getUsername() + "\" was replaced by message \"" + newMessage.getMessage() + "\".");
-            newMessage.setUsername(oldMessage.getUsername());
-            history.replace(oldMessage.getId(), newMessage);
+            Message newMessage = messageExchange.getClientMessage(httpExchange.getRequestBody(), "PUT");
+            for (int i = 0; i < history.size(); i++) {
+                if (history.get(i).getId().equals(newMessage.getId())) {
+                    newMessage.setUsername(history.get(i).getUsername());
+                    System.out.println("Message \"" + history.get(i).getTextMessage() + "\" of user \"" + history.get(i).getUsername() + "\" was replaced by message \"" + newMessage.getTextMessage() + "\".");
+                    history.remove(i);
+                    history.add(i, newMessage);
+                }
+            }
         } catch (ParseException e){
             System.err.println("Invalid message: " + httpExchange.getRequestBody() + " " + e.getMessage());
         }
@@ -122,18 +133,21 @@ public class Server implements HttpHandler {
         try {
             byte[] bytes = response.getBytes();
             Headers headers = httpExchange.getResponseHeaders();
+
             headers.add("Access-Control-Allow-Origin","*");
-            if ("OPTIONS".equals(httpExchange.getRequestMethod())) {
-                headers.add("Access-Control-Allow-Origin","PUT, DELETE, POST, OPTIONS");
-            }
             httpExchange.sendResponseHeaders(200, bytes.length);
-            OutputStream os = httpExchange.getResponseBody();
-            os.write(bytes);
-            os.flush();
-            os.close();
+            writeBody(httpExchange, bytes);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void writeBody(HttpExchange httpExchange, byte[] bytes) throws IOException {
+        OutputStream os = httpExchange.getResponseBody();
+
+        os.write( bytes);
+        os.flush();
+        os.close();
     }
 
     private Map<String, String> queryToMap(String query) {
@@ -141,7 +155,6 @@ public class Server implements HttpHandler {
 
         for (String param : query.split("&")) {
             String pair[] = param.split("=");
-
             if (pair.length > 1) {
                 result.put(pair[0], pair[1]);
             } else {

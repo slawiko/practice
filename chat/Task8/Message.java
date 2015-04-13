@@ -1,53 +1,52 @@
-import java.util.Date;
+import java.util.UUID;
 
 public class Message {
 
-    private int id;
+    private String ID;
     private String username;
-    private String message;
+    private String textMessage;
 
     public Message() {
-
+        this.ID = "";
+        this.username = "";
+        this.textMessage = "";
     }
 
-    public Message(int id, String username, String message) {
-        this.id = id;
-        this.message = message;
+    public Message(String ID, String username, String textMessage) {
+        this.ID = ID;
         this.username = username;
+        this.textMessage = textMessage;
     }
 
-    public Message(String username, String message) {
-        this.message = message;
+    public Message(String username, String textMessage) {
+        this.textMessage = textMessage;
         this.username = username;
-    }
-
-    public Message(int id, String message) {
-        this.id = id;
-        this.message = message;
-    }
-
-    public Message(int id) {
-        this.id = id;
+        this.ID = uniqueId();
     }
 
     public Message(Message message) {
-        this.id = message.getId();
+        this.ID = message.getId();
         this.username = message.getUsername();
-        this.message = message.getMessage();
+        this.textMessage = message.getTextMessage();
     }
 
-    public int uniqueId() {
-        Date date = new Date();
-        int random = (int)Math.random() * (int)Math.random();
-
-        return date.getSeconds() * random;
+    public Message(Object o) {
+        Message message = (Message)o;
+        this.ID = message.getId();
+        this.textMessage = message.getTextMessage();
+        this.username = message.getUsername();
     }
 
-    public int getId() {
-        return this.id;
+    public String uniqueId() {
+        String ID = UUID.randomUUID().toString();
+        return ID;
     }
-    public void setId(int id) {
-        this.id = id;
+
+    public String getId() {
+        return this.ID;
+    }
+    public void setId(String id) {
+        this.ID = id;
     }
 
     public String getUsername() {
@@ -57,10 +56,10 @@ public class Message {
         this.username = username;
     }
 
-    public String getMessage() {
-        return this.message;
+    public String getTextMessage() {
+        return this.textMessage;
     }
     public void setMessage(String message) {
-        this.message = message;
+        this.textMessage = message;
     }
 }

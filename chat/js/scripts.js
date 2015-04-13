@@ -1,21 +1,16 @@
 "use strict";
 
-var uniqueId      = function () {
-                    var date = Date.now(),
-                        random = Math.random() * Math.random();
-                    return Math.floor(date * random).toString();
-                    },
-    messageStruct = function (text, user) {
+var messageStruct = function (text, user) {
                     return {
                         textMessage: text,
                         username: user,
-                        id: uniqueId() };
+                        id: 0 };
                     },
     appState      = {
                     mainUrl : 'http://localhost:1555/chat',
-                    messageList: [],
-                    token : 'TE11EN'
+                    token : 'TN11EN'
                     },
+	messageList = [],
     editingMessage;
 
 function restore(continueWith) {
@@ -26,9 +21,17 @@ function restore(continueWith) {
             console.assert(responseText != null);
             var response = JSON.parse(responseText);
             appState.token = response.token;
-            createAllMessages(response.messageList);
+            createAllMessages(response.messages);
             continueWith && continueWith();
         });
+}
+
+function restoreInternal() {
+	var i;
+	
+	for (i = 0; i < messageList.length; i++) {
+		
+	}
 }
 
 function createAllMessages(allMessages) {
@@ -42,14 +45,11 @@ function createAllMessages(allMessages) {
 
 function run() {
     var chatWindow = document.getElementsByClassName("chatWindow")[0],
-        textBox = document.getElementById("textBox"),
-        loginWindow = document.getElementById("loginWindow");
+		loginWindow = document.getElementById("loginWindow");
     
     chatWindow.addEventListener("click", delegateEvent);
-    textBox.addEventListener("keydown", delegateEvent);
-    loginWindow.addEventListener("click", delegateEvent);
-    
-    restore();
+    chatWindow.addEventListener("keydown", delegateEvent);
+	loginWindow.addEventListener("click", delegateEvent);
 }
 
 function delegateEvent(eventObj) {
@@ -91,19 +91,19 @@ function onSendButtonClick(value) {
         messageText.innerHTML = "";
         return;
     }
-    else {
+    /*else {
         var id = editingMessage.attributes["id"].value;
         
-        for (i = 0; i < appState.messageList.length; i++) {
-            if (appState.messageList[i].id === id) {
+        for (i = 0; i < messageList.length; i++) {
+            if (messageList[i].id === id) {
                 editingMessage.childNodes[0].childNodes[1].innerHTML = messageText.innerHTML;
-                updateMessageList(messageText.innerHTML, appState.messageList[i]);
+                updateMessageList(messageText.innerHTML, messageList[i]);
                 messageText.innerHTML = "";
                 sendButton.innerHTML = "Send";
                 return;
             }    
         }
-    }
+    }*/
 }
 
 function onEditMessageButtonClick(eventObj) {
@@ -234,8 +234,8 @@ function addMessage(message, continueWith) {
 	}
     
     Post(appState.mainUrl, JSON.stringify(message), function() {
-                                                        restore();
-                                                    });
+														restore();
+													});
 }
     
 function addMessageInternal(message) {
@@ -244,7 +244,7 @@ function addMessageInternal(message) {
 
     newMessage.id = message.id;
 	messages.appendChild(newMessage);
-    messageList.push(message);
+	messageList.push(newMessage);
 }
 
 function updateMessageList(newMessage, messageList_) {
@@ -253,7 +253,8 @@ function updateMessageList(newMessage, messageList_) {
 
 function createMessage(username, textMessage) {
     var newMessage = document.createElement("div"),
-        message = document.createElement("div"),
+        message = document.createElement
+	("div"),
         user = document.createElement("span"),
         text = document.createElement("span"),
         editMessageButton = document.createElement("img"),
@@ -286,6 +287,9 @@ function addLogin(value) {
     if (!value) {
 		return;
 	}
+	    
+    restore();
+	
     var username = document.getElementById("username");
     username.innerHTML = value;
     username.style.display = "block";
@@ -310,10 +314,8 @@ function Delete(url, data, continueWith, continueWithError) {
 
 function ajax(method, url, data, continueWith, continueWithError) {
 	var xhr = new XMLHttpRequest();
-
 	continueWithError = continueWithError || defaultErrorHandler;
-	xhr.open(method || 'GET', url, true);
-
+	xhr.open(method, url, true);
 	xhr.onload = function () {
 		if (xhr.readyState !== 4)
 			return;
@@ -332,7 +334,7 @@ function ajax(method, url, data, continueWith, continueWithError) {
 	};    
 
     xhr.ontimeout = function () {
-    	ontinueWithError('Server timed out !');
+    	continueWithError('Server timed out !');
     }
 
     xhr.onerror = function (e) {
