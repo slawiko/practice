@@ -8,4 +8,4 @@
 
 ####Task 8 
 
-* https://github.com/slawiko/practice/tree/master/chat/Task8
+* https://github.com/slawiko/practice/tree/server/chat/Task8
