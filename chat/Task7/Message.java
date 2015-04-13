@@ -1,7 +1,3 @@
-import org.json.simple.JSONArray;
-
-import java.util.Date;
-import java.util.Objects;
 import java.util.UUID;
 
 public class Message {
@@ -11,7 +7,9 @@ public class Message {
     private String message;
 
     public Message() {
-
+        this.ID = "";
+        this.username = "";
+        this.message = "";
     }
 
     public Message(String ID, String username, String message) {
@@ -24,10 +22,6 @@ public class Message {
         this.message = message;
         this.username = username;
         this.ID = uniqueId();
-    }
-
-    public Message(String ID) {
-        this.ID = ID;
     }
 
     public Message(Message message) {

@@ -9,7 +9,6 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.TreeMap;
 
 public class Client implements Runnable {
 
@@ -68,9 +67,9 @@ public class Client implements Runnable {
                 list.add(message);
             }
         } catch (IOException e) {
-            System.err.println("ERROR1: " + e.getMessage());
+            System.err.println("ERROR: " + e.getMessage());
         } catch (ParseException e) {
-            System.err.println("ERROR2: " + e.getMessage());
+            System.err.println("ERROR: " + e.getMessage());
         } finally {
             if (connection != null) {
                 connection.disconnect();
@@ -97,7 +96,7 @@ public class Client implements Runnable {
 
                 connection.getInputStream();
             } catch (IOException e) {
-                System.err.println("ERROR3: " + e.getMessage());
+                System.err.println("ERROR: " + e.getMessage());
             } finally {
                 if (connection != null) {
                     connection.disconnect();
@@ -116,7 +115,7 @@ public class Client implements Runnable {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-                System.err.println("ERROR4: " + e.getMessage());
+                System.err.println("ERROR: " + e.getMessage());
             }
         }
     }
@@ -124,7 +123,7 @@ public class Client implements Runnable {
     private Message JSONObjectToMessage(JSONObject o) {
         Message message = new Message();
 
-        message.setId((o.get("id").toString()));
+        message.setId(o.get("id").toString());
         message.setUsername(o.get("username").toString());
         message.setMessage(o.get("message").toString());
 

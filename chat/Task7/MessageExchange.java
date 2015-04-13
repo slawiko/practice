@@ -6,8 +6,6 @@ import org.json.simple.parser.ParseException;
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.TreeMap;
 
 public class MessageExchange {
 
@@ -24,11 +22,11 @@ public class MessageExchange {
 
     public JSONArray listToJSONArray(ArrayList<Message> messages) {
         JSONArray jsonArray = new JSONArray();
-        for(Map.Entry entry: messages.entrySet()) {
+        for(int i = 0; i < messages.size(); i++) {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("id", ((Message)entry.getValue()).getId());
-            jsonObject.put("user", ((Message)entry.getValue()).getUsername());
-            jsonObject.put("text", ((Message)entry.getValue()).getMessage());
+            jsonObject.put("id", messages.get(i).getId());
+            jsonObject.put("username", messages.get(i).getUsername());
+            jsonObject.put("message", messages.get(i).getMessage());
             jsonArray.add(jsonObject);
         }
         return jsonArray;
@@ -50,23 +48,23 @@ public class MessageExchange {
         return jsonObject.toJSONString();
     }
 
-    public Message getClientMessage(InputStream inputStream) throws ParseException {
-        JSONObject jsonObject = (JSONObject)getJSONObject(inputStreamToString(inputStream));
-        Message message = new Message(jsonObject.get("id").toString(), jsonObject.get("username").toString(), jsonObject.get("message").toString());
+    public Message getClientMessage(InputStream inputStream, String request) throws ParseException {
+        String user = null;
+        JSONObject jsonObject = getJSONObject(inputStreamToString(inputStream));
+        if (request.equals("POST")) {
+            user = jsonObject.get("username").toString();
+        }
+        else if (request.equals("PUT")) {
+            user = "";
+        }
+        Message message = new Message(jsonObject.get("id").toString(), user, jsonObject.get("message").toString());
         return message;
     }
 
-    /*public Message getClientMessageAndId(InputStream inputStream) throws ParseException {
+    public String getClientMessageId(InputStream inputStream) throws ParseException {
         JSONObject jsonObject = getJSONObject(inputStreamToString(inputStream));
-        Message message = new Message(Integer.parseInt(jsonObject.get("id").toString()), jsonObject.get("message").toString());
-        return message;
+        return jsonObject.get("id").toString();
     }
-
-    public Message getClientMessageId(InputStream inputStream) throws ParseException {
-        JSONObject jsonObject = getJSONObject(inputStreamToString(inputStream));
-        Message message = new Message(Integer.parseInt(jsonObject.get("id").toString()));
-        return message;
-    }*/
 
     public JSONObject getJSONObject(String json) throws ParseException {
         return (JSONObject) jsonParser.parse(json.trim());
