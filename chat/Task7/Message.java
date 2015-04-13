@@ -1,68 +1,64 @@
-import java.util.Date;
+import java.util.UUID;
 
 public class Message {
 
-    private int id;
+    private String ID;
     private String username;
     private String message;
 
     public Message() {
-
+        this.ID = "";
+        this.username = "";
+        this.message = "";
     }
 
-    public Message(int id, String username, String message) {
-        this.id = id;
-        this.message = message;
+    public Message(String ID, String username, String message) {
+        this.ID = ID;
         this.username = username;
+        this.message = message;
     }
 
     public Message(String username, String message) {
         this.message = message;
         this.username = username;
-    }
-
-    public Message(int id, String message) {
-        this.id = id;
-        this.message = message;
-    }
-
-    public Message(int id) {
-        this.id = id;
+        this.ID = uniqueId();
     }
 
     public Message(Message message) {
-        this.id = message.getId();
+        this.ID = message.getId();
         this.username = message.getUsername();
         this.message = message.getMessage();
     }
 
-    public int getId() {
-        return this.id;
+    public Message(Object o) {
+        Message message = (Message)o;
+        this.ID = message.getId();
+        this.message = message.getMessage();
+        this.username = message.getUsername();
     }
 
-    public int uniqueId() {
-        Date date = new Date();
-        int random = (int)Math.random() * (int)Math.random();
+    public String uniqueId() {
+        String ID = UUID.randomUUID().toString();
+        return ID;
+    }
 
-        return date.getSeconds() * random;
+    public String getId() {
+        return this.ID;
+    }
+    public void setId(String id) {
+        this.ID = id;
     }
 
     public String getUsername() {
         return this.username;
     }
-
-    public String getMessage() {
-        return this.message;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public void setUsername(String username) {
         this.username = username;
     }
 
+    public String getMessage() {
+        return this.message;
+    }
     public void setMessage(String message) {
         this.message = message;
     }

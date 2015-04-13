@@ -12,7 +12,7 @@ import java.util.*;
 
 public class Server implements HttpHandler {
 
-    private TreeMap<Integer, Message> history = new TreeMap<Integer, Message>();
+    private ArrayList<Message> history = new ArrayList<Message>();
     private MessageExchange messageExchange = new MessageExchange();
 
     public static void main(String[] args) {
@@ -70,7 +70,7 @@ public class Server implements HttpHandler {
 
             if (token != null && !"".equals(token)) {
                 int index = messageExchange.getIndex(token);
-                return messageExchange.getServerResponse(new TreeMap<Integer, Message>(history.subMap(index, history.size())));
+                return messageExchange.getServerResponse(new ArrayList<Message>(history.subList(index, history.size())));
             }
             else {
                 return "Token query parameter is absent in url: " + query;
@@ -81,10 +81,9 @@ public class Server implements HttpHandler {
 
     private void doPost(HttpExchange httpExchange) {
         try {
-            Message message = messageExchange.getClientMessageAndUsername(httpExchange.getRequestBody());
-            message.setId(history.size());
-            System.out.println("Get Message from " + message.getUsername() + ": " + message.getMessage());
-            history.put(message.getId(), message);
+            Message message = messageExchange.getClientMessage(httpExchange.getRequestBody(), "POST");
+            System.out.println("Get Message with ID {" + message.getId() + "} from " + message.getUsername() + ": " + message.getMessage());
+            history.add(message);
         } catch (ParseException e) {
             System.err.println("Invalid user message: " + httpExchange.getRequestBody() + " " + e.getMessage());
         }
@@ -92,11 +91,16 @@ public class Server implements HttpHandler {
 
     private void doDelete(HttpExchange httpExchange) {
         try {
-            Message deleteId = messageExchange.getClientMessageId(httpExchange.getRequestBody());
-            Message newMessage = new Message(deleteId.getId(), "Deleted", "Deleted");
-            Message oldMessage = new Message(history.get(deleteId.getId()));
-            history.replace(deleteId.getId(), newMessage);
-            System.out.println("Message \"" + oldMessage.getMessage() + "\" of user \"" + oldMessage.getUsername() + "\" was deleted.");
+            String deletedMessageId = messageExchange.getClientMessageId(httpExchange.getRequestBody());
+            for (int i = 0; i < history.size(); i++) {
+                if (history.get(i).getId().equals(deletedMessageId)) {
+                    Message deletedMessage = new Message();
+                    System.out.println("Message \"" + history.get(i).getMessage() + "\" of user \"" + history.get(i).getUsername() + "\" was deleted.");
+                    history.remove(i);
+                    history.add(i, deletedMessage);
+                    return;
+                }
+            }
         } catch (ParseException e) {
             System.err.println("Invalid id message: " + httpExchange.getRequestBody() + " " + e.getMessage());
         }
@@ -104,11 +108,15 @@ public class Server implements HttpHandler {
 
     private void doPut(HttpExchange httpExchange) {
         try {
-            Message newMessage = messageExchange.getClientMessageAndId(httpExchange.getRequestBody());
-            Message oldMessage = history.get(newMessage.getId());
-            System.out.println("Message \"" + oldMessage.getMessage() + "\" of user \"" + oldMessage.getUsername() + "\" was replaced by message \"" + newMessage.getMessage() + "\".");
-            newMessage.setUsername(oldMessage.getUsername());
-            history.replace(oldMessage.getId(), newMessage);
+            Message newMessage = messageExchange.getClientMessage(httpExchange.getRequestBody(), "PUT");
+            for (int i = 0; i < history.size(); i++) {
+                if (history.get(i).getId().equals(newMessage.getId())) {
+                    newMessage.setUsername(history.get(i).getUsername());
+                    System.out.println("Message \"" + history.get(i).getMessage() + "\" of user \"" + history.get(i).getUsername() + "\" was replaced by message \"" + newMessage.getMessage() + "\".");
+                    history.remove(i);
+                    history.add(i, newMessage);
+                }
+            }
         } catch (ParseException e){
             System.err.println("Invalid message: " + httpExchange.getRequestBody() + " " + e.getMessage());
         }
