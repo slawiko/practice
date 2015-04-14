@@ -126,21 +126,21 @@ html, body {
     border: 0;
     border-radius: 6px;
     transition-property: "backgroung-color";
-    transition-duration: .1s;
+    transition-duration: .15s;
     transition-timing-function: ease-in-out;
 }
 
 .buttonNegative:hover {
     background-color: #b95858;
     transition-property: "backgroung-color";
-    transition-duration: .1s;
+    transition-duration: .15s;
     transition-timing-function: ease-in-out;
 }
 
 .buttonNegative:active {
     background-color: #954a4a;
     transition-property: "backgroung-color";
-    transition-duration: .1s;
+    transition-duration: .15s;
     transition-timing-function: ease-in-out;
 }
 
@@ -165,7 +165,7 @@ html, body {
     color: #c2ffe3;
     background-color: #58b98c;
     transition-property: "backgroung-color", "color";
-    transition-duration: .25s;
+    transition-duration: .3s;
     transition-timing-function: ease-in-out;
 }
 
@@ -173,7 +173,7 @@ html, body {
     color: #ffc2c2;
     background-color: #b95c58;
     transition-property: "backgroung-color", "color";
-    transition-duration: .25s;
+    transition-duration: .3s;
     transition-timing-function: ease-in-out;
 }
 
@@ -324,6 +324,127 @@ html, body {
     width: 182px;
     top: 484px;
     left: 424px;
+}
+
+#editLoginButton {
+    position: absolute;
+    display: none;
+    height: 30px;
+    width: 100px;
+    left: 102px;
+    cursor: pointer;
+    outline: 0;
+    color: white;
+    background-color: #58a8a4;
+    border-radius: 6px;
+    border: 0;
+    transition-property: "backgroung-color";
+    transition-duration: .15s;
+    transition-timing-function: ease-in-out;
+}
+
+#editLoginButton:hover {
+    background-color: #58b9b4;
+    transition-property: "backgroung-color";
+    transition-duration: .15s;
+    transition-timing-function: ease-in-out;
+}
+
+#editLoginButton:active {
+    background-color: #4a9591;
+    transition-property: "backgroung-color";
+    transition-duration: .15s;
+    transition-timing-function: ease-in-out;
+}
+
+#loginButton {
+    position: absolute;
+    display: block;
+    height: 30px;
+    width: 100px;
+    cursor: pointer;
+    outline: 0;
+    color: white;
+    background-color: #58a8a4;
+    border: 0;
+    border-radius: 6px;
+    transition-property: "backgroung-color";
+    transition-duration: .15s;
+    transition-timing-function: ease-in-out;
+}
+
+#loginButton:hover {
+    background-color: #58b9b4;
+    transition-property: "backgroung-color";
+    transition-duration: .15s;
+    transition-timing-function: ease-in-out;
+}
+
+#loginButton:active {
+    background-color: #4a9591;
+    transition-property: "backgroung-color";
+    transition-duration: .15s;
+    transition-timing-function: ease-in-out;
+}
+
+#logoutButton {
+    position: absolute;
+    display: none;
+    height: 30px;
+    width: 100px;
+    cursor: pointer;
+    outline: 0;
+    color: white;
+    background-color: #58a8a4;
+    border: 0;
+    border-radius: 6px;
+    transition-property: "backgroung-color";
+    transition-duration: .15s;
+    transition-timing-function: ease-in-out;
+}
+
+#logoutButton:hover {
+    background-color: #58b9b4;
+    transition-property: "backgroung-color";
+    transition-duration: .15s;
+    transition-timing-function: ease-in-out;
+}
+
+#logoutButton:active {
+    background-color: #4a9591;
+    transition-property: "backgroung-color";
+    transition-duration: .15s;
+    transition-timing-function: ease-in-out;
+}
+
+#sendButton {
+    position: absolute;
+    display: block;
+    height: 28px;
+    width: 85px;
+    color: white;
+    cursor: pointer;
+    outline: 0;
+    background-color: #58a8a4;
+    border-radius: 6px;
+    border: 0;
+    transition-property: "backgroung-color";
+    transition-duration: .15s;
+    transition-timing-function: ease-in-out;
+}
+
+#sendButton:hover {
+    background-color: #58b9b4;
+    transition-property: "backgroung-color";
+    transition-duration: .15s;
+    transition-timing-function: ease-in-out;
+}
+
+#sendButton:active {
+    background-color: #4a9591;
+    transition-property: "backgroung-color";
+    transition-duration: .15s;
+    transition-timing-function: ease-in-out;
 }
 
 .footer {
