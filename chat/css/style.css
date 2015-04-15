@@ -239,35 +239,6 @@ html, body {
     background-color: #d8d8d8;
 }
 
-#loginWindow {
-    margin: auto;
-    height: 140px;
-    width: 350px;
-    margin: -70px 0 0 -175px;
-    top: 50%;
-    left: 50%;
-    background-color: #d8d8d8;
-}
-
-#loginWindowAlert {
-    text-align: center;
-    margin-top: 16px;
-    color: rgb(64, 181, 176);
-    font-size: 20px;
-}
-
-#loginWindowInput {
-    height: 30px;
-    width: 80%;
-    padding-left: 6px;
-    line-height: 27px;
-    margin-top: 12px;
-    margin-left: 30px;
-    overflow: auto;
-    outline: 0;
-    background-color: #F2F2F2;
-}
-
 #hiddenMessageBox {
     height: 480px;
     width: 420px;
@@ -276,7 +247,7 @@ html, body {
 
 #hiddenUserBox {
     height: 480px;
-    width: 210px;
+    width: 181px;
     line-height: 480px;
     margin-left: 422px;
     left: 2px;
@@ -315,126 +286,35 @@ html, body {
     left: 424px;
 }
 
-#editLoginButton {
-    position: absolute;
-    display: none;
+#loginWindow {
+    margin: auto;
+    height: 140px;
+    width: 350px;
+    margin: -70px 0 0 -175px;
+    top: 50%;
+    left: 50%;
+    background-color: #d8d8d8;
+}
+
+#loginWindowAlert {
+    text-align: center;
+    margin-top: 16px;
+    color: rgb(64, 181, 176);
+    font-size: 20px;
+}
+
+#loginWindowInput {
     height: 30px;
-    width: 100px;
-    left: 102px;
-    cursor: pointer;
+    width: 80%;
+    padding-left: 6px;
+    line-height: 27px;
+    margin-top: 12px;
+    margin-left: 30px;
+    overflow: auto;
     outline: 0;
-    color: white;
-    background-color: #58a8a4;
-    border-radius: 6px;
-    border: 0;
-    transition-property: "backgroung-color";
-    transition-duration: .15s;
-    transition-timing-function: ease-in-out;
+    background-color: #F2F2F2;
 }
 
-#editLoginButton:hover {
-    background-color: #58b9b4;
-    transition-property: "backgroung-color";
-    transition-duration: .15s;
-    transition-timing-function: ease-in-out;
-}
-
-#editLoginButton:active {
-    background-color: #4a9591;
-    transition-property: "backgroung-color";
-    transition-duration: .15s;
-    transition-timing-function: ease-in-out;
-}
-
-#loginButton {
-    position: absolute;
-    display: block;
-    height: 30px;
-    width: 100px;
-    cursor: pointer;
-    outline: 0;
-    color: white;
-    background-color: #58a8a4;
-    border: 0;
-    border-radius: 6px;
-    transition-property: "backgroung-color";
-    transition-duration: .15s;
-    transition-timing-function: ease-in-out;
-}
-
-#loginButton:hover {
-    background-color: #58b9b4;
-    transition-property: "backgroung-color";
-    transition-duration: .15s;
-    transition-timing-function: ease-in-out;
-}
-
-#loginButton:active {
-    background-color: #4a9591;
-    transition-property: "backgroung-color";
-    transition-duration: .15s;
-    transition-timing-function: ease-in-out;
-}
-
-#logoutButton {
-    position: absolute;
-    display: none;
-    height: 30px;
-    width: 100px;
-    cursor: pointer;
-    outline: 0;
-    color: white;
-    background-color: #58a8a4;
-    border: 0;
-    border-radius: 6px;
-    transition-property: "backgroung-color";
-    transition-duration: .15s;
-    transition-timing-function: ease-in-out;
-}
-
-#logoutButton:hover {
-    background-color: #58b9b4;
-    transition-property: "backgroung-color";
-    transition-duration: .15s;
-    transition-timing-function: ease-in-out;
-}
-
-#logoutButton:active {
-    background-color: #4a9591;
-    transition-property: "backgroung-color";
-    transition-duration: .15s;
-    transition-timing-function: ease-in-out;
-}
-
-#sendButton {
-    position: absolute;
-    display: block;
-    height: 28px;
-    width: 85px;
-    color: white;
-    cursor: pointer;
-    outline: 0;
-    background-color: #58a8a4;
-    border-radius: 6px;
-    border: 0;
-    transition-property: "backgroung-color";
-    transition-duration: .15s;
-    transition-timing-function: ease-in-out;
-}
-
-#sendButton:hover {
-    background-color: #58b9b4;
-    transition-property: "backgroung-color";
-    transition-duration: .15s;
-    transition-timing-function: ease-in-out;
-}
-
-#sendButton:active {
-    background-color: #4a9591;
-    transition-property: "backgroung-color";
-    transition-duration: .15s;
-    transition-timing-function: ease-in-out;
-}
 
 .footer {
     position: fixed;
