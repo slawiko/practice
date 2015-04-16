@@ -57,11 +57,14 @@ function run() {
     chatWindow.addEventListener("click", delegateEvent);
     textBox.addEventListener("keydown", delegateEvent);
     loginWindow.addEventListener("click", delegateEvent);
+	loginWindow.addEventListener("keydown", delegateEvent);
 }
 
 function delegateEvent(eventObj) {
-    if ((eventObj.target.getAttribute("id") === "sendButton") || (eventObj.keyCode === 13)) {
-        onSendButtonClick();
+    if ((eventObj.target.getAttribute("id") === "sendButton") || 
+		((eventObj.keyCode === 13) && (eventObj.target.getAttribute("id") === "textBox"))
+	   ) {
+    	onSendButtonClick();
     }
     else if (eventObj.target.getAttribute("class") === "editMessageButton icon") {
         onEditMessageButtonClick(eventObj);
@@ -78,9 +81,11 @@ function delegateEvent(eventObj) {
     else if (eventObj.target.getAttribute("id") === "logoutButton") {
         onLogoutButtonClick();
     }
-    else if (eventObj.target.getAttribute("id") === "loginWindowButton") {
-        onLoginWindowButtonClick();
-    }
+    else if ((eventObj.target.getAttribute("id") === "loginWindowButton") || 
+			 ((eventObj.keyCode === 13) && (eventObj.target.getAttribute("id") === "loginWindowInput"))
+			) {
+			onLoginWindowButtonClick();
+	}
     else if (eventObj.target.getAttribute("id") === "dismissLoginWindowButton") {
         onDismissLoginWindowButtonClick();
     }
