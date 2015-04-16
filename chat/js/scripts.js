@@ -45,15 +45,18 @@ function createAllMessages(allMessages) {
 
 function run() {
     var chatWindow = document.getElementsByClassName("chatWindow")[0],
-		loginWindow = document.getElementById("loginWindow");
+        loginWindow = document.getElementById("loginWindow");
     
     chatWindow.addEventListener("click", delegateEvent);
     chatWindow.addEventListener("keydown", delegateEvent);
 	loginWindow.addEventListener("click", delegateEvent);
+    loginWindow.addEventListener("keydown", delegateEvent);
 }
 
 function delegateEvent(eventObj) {
-    if ((eventObj.target.getAttribute("id") === "sendButton") || (eventObj.keyCode === 13)) {
+    if ((eventObj.target.getAttribute("id") === "sendButton") || 
+		((eventObj.keyCode === 13) && (eventObj.target.getAttribute("id") === "textBox"))
+	   ) {
         onSendButtonClick();
     }
     else if (eventObj.target.getAttribute("class") === "editMessageButton icon") {
@@ -71,7 +74,9 @@ function delegateEvent(eventObj) {
     else if (eventObj.target.getAttribute("id") === "logoutButton") {
         onLogoutButtonClick();
     }
-    else if (eventObj.target.getAttribute("id") === "loginWindowButton") {
+    else if ((eventObj.target.getAttribute("id") === "loginWindowButton") || 
+			 ((eventObj.keyCode === 13) && (eventObj.target.getAttribute("id") === "loginWindowInput"))
+			) {
         onLoginWindowButtonClick();
     }
     else if (eventObj.target.getAttribute("id") === "dismissLoginWindowButton") {
@@ -229,7 +234,7 @@ function addMessage(message, continueWith) {
     
 	messageList.push(message);
     Post(appState.mainUrl, JSON.stringify(message), function() {
-														restoreInternal;
+														restoreOnServer();
 													});
 }
     
