@@ -39,15 +39,6 @@ public class MessageExchange {
         return jsonObject.toJSONString();
     }
 
-    public String getClientSendMessageRequest(String username, String messageText) {
-        JSONObject jsonObject = new JSONObject();
-        Message message = new Message(username, messageText);
-        jsonObject.put("id", message.getId());
-        jsonObject.put("username", message.getUsername());
-        jsonObject.put("textMessage", message.getTextMessage());
-        return jsonObject.toJSONString();
-    }
-
     public Message getClientMessage(InputStream inputStream, String request) throws ParseException {
         JSONObject jsonObject = getJSONObject(inputStreamToString(inputStream));
         if (request.equals("POST")) {

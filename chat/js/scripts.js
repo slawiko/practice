@@ -66,7 +66,8 @@ function onSendButtonClick(value) {
         return;
     }
     else {
-        var id = editingMessage.attributes["id"].value;
+        var id = editingMessage.attributes["id"].value,
+			message;
         
         for (i = 0; i < messageList.length; i++) {
             if (messageList[i].id === id) {
@@ -94,9 +95,9 @@ function onEditMessageButtonClick(eventObj) {
 		editButton = document.getElementById("sendButton"),
 		messageArea = document.getElementById("textBox"),
         i;
-    
-    for (i = 0; i < appState.messageList.length; i++) {
-        if (appState.messageList[i].id === id) {
+	
+    for (i = 0; i < messageList.length; i++) {
+        if (messageList[i].id === id) {
             editingMessage = parentMessage;
             messageArea.innerText = oldMessage.innerText;
             editButton.innerHTML = "Edit";
@@ -245,6 +246,7 @@ function addMessageInternal(message) {
 
 function updateMessageList(newMessage, messageList_) {
     messageList_.textMessage = newMessage;
+	Put(appState.mainUrl, JSON.stringify(messageList_));
 }
 
 function createMessage(username, textMessage) {
