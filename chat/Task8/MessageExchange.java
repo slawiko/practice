@@ -53,14 +53,12 @@ public class MessageExchange {
         if (request.equals("POST")) {
             return new Message(jsonObject.get("username").toString(), jsonObject.get("textMessage").toString());
         }
-        else {
+        else if (request.equals("PUT")){
             return new Message(jsonObject.get("id").toString(), "", jsonObject.get("textMessage").toString());
         }
-    }
-
-    public String getClientMessageId(InputStream inputStream) throws ParseException {
-        JSONObject jsonObject = getJSONObject(inputStreamToString(inputStream));
-        return jsonObject.get("id").toString();
+        else {
+            return new Message(jsonObject.get("id").toString(), "", "");
+        }
     }
 
     public String getErrorMessage(String text) {

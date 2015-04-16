@@ -65,7 +65,6 @@ public class Server implements HttpHandler {
             sendResponse(httpExchange, response);
         } catch (Exception e) {
             System.out.println("Unable to send response!");
-
         }
     }
 
@@ -98,7 +97,7 @@ public class Server implements HttpHandler {
 
     private void doDelete(HttpExchange httpExchange) throws Exception{
         try {
-            String deletedMessageId = messageExchange.getClientMessageId(httpExchange.getRequestBody());
+            String deletedMessageId = messageExchange.getClientMessage(httpExchange.getRequestBody(), "DELETE").getId();
             for (int i = 0; i < history.size(); i++) {
                 if (history.get(i).getId().equals(deletedMessageId)) {
                     Message deletedMessage = new Message();
@@ -133,14 +132,16 @@ public class Server implements HttpHandler {
         try {
             byte[] bytes = response.getBytes();
             Headers headers = httpExchange.getResponseHeaders();
-
             headers.add("Access-Control-Allow-Origin","*");
+            if("OPTIONS".equals(httpExchange.getRequestMethod())) {
+                headers.add("Access-Control-Allow-Methods","PUT, DELETE, POST, GET, OPTIONS");
+            }
             httpExchange.sendResponseHeaders(200, bytes.length);
             writeBody(httpExchange, bytes);
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+}
 
     private void writeBody(HttpExchange httpExchange, byte[] bytes) throws IOException {
         OutputStream os = httpExchange.getResponseBody();

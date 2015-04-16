@@ -8,45 +8,14 @@ var messageStruct = function (text, user) {
                     },
     appState      = {
                     mainUrl : 'http://localhost:1555/chat',
-                    token : 'TN11EN'
-                    },
-	messageList = [],
+                    token : 'TN11EN' },
+	messageList   = [],
     editingMessage;
-
-function restoreOnServer(continueWith) {
-	var url = appState.mainUrl + "?token=" + appState.token;
-	
-    Get(url, 
-        function(responseText) {
-            console.assert(responseText != null);
-            var response = JSON.parse(responseText);
-            appState.token = response.token;
-            createAllMessages(response.messages);
-            continueWith && continueWith();
-        });
-}
-
-function restoreInternal() {
-	var i;
-	
-	for (i = 0; i < messageList.length; i++) {
-		
-	}
-}
-
-function createAllMessages(allMessages) {
-    var i;
-    if (allMessages && allMessages.length) {
-        for (i = 0; i < allMessages.length; i++) {
-            addMessageInternal(allMessages[i]);
-        }
-    }
-}
 
 function run() {
     var chatWindow = document.getElementsByClassName("chatWindow")[0],
         loginWindow = document.getElementById("loginWindow");
-    
+	
     chatWindow.addEventListener("click", delegateEvent);
     chatWindow.addEventListener("keydown", delegateEvent);
 	loginWindow.addEventListener("click", delegateEvent);
@@ -96,7 +65,7 @@ function onSendButtonClick(value) {
         messageText.innerHTML = "";
         return;
     }
-    /*else {
+    else {
         var id = editingMessage.attributes["id"].value;
         
         for (i = 0; i < messageList.length; i++) {
@@ -108,7 +77,7 @@ function onSendButtonClick(value) {
                 return;
             }    
         }
-    }*/
+    }
 }
 
 function onEditMessageButtonClick(eventObj) {
@@ -150,23 +119,18 @@ function onDeleteMessageButtonClick(eventObj) {
     
     messageBox.removeChild(parentMessage);
     
-    for (i = 0; i < appState.messageList.length; i++) {
-        if (appState.messageList[i].id === id) {
-            appState.messageList.splice(i, 1);
+    for (i = 0; i < messageList.length; i++) {
+        if (messageList[i].id === id) {
+			Delete(appState.mainUrl, JSON.stringify(messageList[i]));
+			messageList.splice(i, 1);
             return;
         }
     }
 }
 
 function onLoginButtonClick() {
-    var hiddenUserBox = document.getElementById("hiddenUserBox"),
-        hiddenMessageBox = document.getElementById("hiddenMessageBox"),
-        hiddenTextBox = document.getElementById("hiddenTextBox"),
-        loginWindowBackground = document.getElementById("loginWindowBackground");
-    
-    hiddenUserBox.style.display = "block";
-    hiddenMessageBox.style.display = "block";
-    hiddenTextBox.style.display = "block";
+    var loginWindowBackground = document.getElementById("loginWindowBackground");
+	
     loginWindowBackground.style.display = "block";
 }
 
@@ -179,45 +143,18 @@ function onEditLoginButtonClick() {
 }
 
 function onLogoutButtonClick() {
-    var username = document.getElementById("username"),
-        hiddenUserBox = document.getElementById("hiddenUserBox"),
-        hiddenMessageBox = document.getElementById("hiddenMessageBox"),
-        hiddenTextBox = document.getElementById("hiddenTextBox"),
-        loginButton = document.getElementById("loginButton"),
-        editLoginButton = document.getElementById("editLoginButton"),
-        logoutButton = document.getElementById("logoutButton"),
-        loginWindowInput = document.getElementById("loginWindowInput");
-    
+    var username = document.getElementById("username");
     username.innerText = "";
-    hiddenUserBox.style.display = "block";
-    hiddenMessageBox.style.display = "block";
-    hiddenTextBox.style.display = "block";
-    loginButton.style.display = "block";
-    editLoginButton.style.display = "none";
-    logoutButton.style.display = "none";
-    loginWindowInput.innerText = "";
+	
+	hideAll();
 }
 
 function onLoginWindowButtonClick() {
-    var hiddenUserBox = document.getElementById("hiddenUserBox"),
-        hiddenMessageBox = document.getElementById("hiddenMessageBox"),
-        hiddenTextBox = document.getElementById("hiddenTextBox"),
-        loginWindowBackground = document.getElementById("loginWindowBackground"),
-        loginButton = document.getElementById("loginButton"),
-        logoutButton = document.getElementById("logoutButton"),
-        editLoginButton = document.getElementById("editLoginButton"),
-        login = document.getElementById("loginWindowInput").innerText;
+    var login = document.getElementById("loginWindowInput").innerText;
 
     if (login) {
         addLogin(login);
-		
-		hiddenUserBox.style.display = "none";
-		hiddenMessageBox.style.display = "none";
-		hiddenTextBox.style.display = "none";
-		loginWindowBackground.style.display = "none";
-		loginButton.style.display = "none";
-		logoutButton.style.display = "block";
-		editLoginButton.style.display = "block";
+		revealAll();
     }
 }
 
@@ -227,14 +164,74 @@ function onDismissLoginWindowButtonClick () {
     loginWindowBackground.style.display = "none";
 }
 
+function restoreFromServer() {
+	var url = appState.mainUrl + "?token=" + appState.token;
+	
+    Get(url, 	function(responseText) {
+					console.assert(responseText != null);
+					var response = JSON.parse(responseText);
+					appState.token = response.token;
+					createAllMessages(response.messages);
+        		});
+	
+	setTimeout(function() {
+					restoreFromServer();
+				}, 1000);
+}
+
+function createAllMessages(allMessages) {
+    var i;
+    if (allMessages && allMessages.length) {
+        for (i = 0; i < allMessages.length; i++) {
+			messageList.push(allMessages[i]);
+            addMessageInternal(allMessages[i]);
+        }
+    }
+}
+
+function revealAll() {
+	var hiddenUserBox = document.getElementById("hiddenUserBox"),
+        hiddenMessageBox = document.getElementById("hiddenMessageBox"),
+        hiddenTextBox = document.getElementById("hiddenTextBox"),
+        loginWindowBackground = document.getElementById("loginWindowBackground"),
+        loginButton = document.getElementById("loginButton"),
+        logoutButton = document.getElementById("logoutButton"),
+        editLoginButton = document.getElementById("editLoginButton");
+	
+	hiddenUserBox.style.display = "none";
+	hiddenMessageBox.style.display = "none";
+	hiddenTextBox.style.display = "none";
+	loginWindowBackground.style.display = "none";
+	loginButton.style.display = "none";
+	logoutButton.style.display = "block";
+	editLoginButton.style.display = "block";
+}
+
+function hideAll() {
+	var hiddenUserBox = document.getElementById("hiddenUserBox"),
+        hiddenMessageBox = document.getElementById("hiddenMessageBox"),
+        hiddenTextBox = document.getElementById("hiddenTextBox"),
+        loginButton = document.getElementById("loginButton"),
+        editLoginButton = document.getElementById("editLoginButton"),
+        logoutButton = document.getElementById("logoutButton"),
+        loginWindowInput = document.getElementById("loginWindowInput");
+	
+	hiddenUserBox.style.display = "block";
+    hiddenMessageBox.style.display = "block";
+    hiddenTextBox.style.display = "block";
+    loginButton.style.display = "block";
+    editLoginButton.style.display = "none";
+    logoutButton.style.display = "none";
+    loginWindowInput.innerText = "";
+}
+
 function addMessage(message, continueWith) {
     if (!message.textMessage) {
 		return;
 	}
     
-	messageList.push(message);
     Post(appState.mainUrl, JSON.stringify(message), function() {
-														restoreOnServer();
+														restoreFromServer();
 													});
 }
     
@@ -244,7 +241,6 @@ function addMessageInternal(message) {
 
     newMessage.id = message.id;
 	messages.appendChild(newMessage);
-	messageList.push(newMessage);
 }
 
 function updateMessageList(newMessage, messageList_) {
@@ -253,8 +249,7 @@ function updateMessageList(newMessage, messageList_) {
 
 function createMessage(username, textMessage) {
     var newMessage = document.createElement("div"),
-        message = document.createElement
-	("div"),
+        message = document.createElement("div"),
         user = document.createElement("span"),
         text = document.createElement("span"),
         editMessageButton = document.createElement("img"),
@@ -288,11 +283,11 @@ function addLogin(value) {
 		return;
 	}
 	    
-    restoreOnServer();
+    restoreFromServer();
 	
     var username = document.getElementById("username");
+	username.style.display = "block";
     username.innerHTML = value;
-    username.style.display = "block";
     return;
 }
 
@@ -314,7 +309,6 @@ function Delete(url, data, continueWith, continueWithError) {
 
 function ajax(method, url, data, continueWith, continueWithError) {
 	var xhr = new XMLHttpRequest();
-	continueWithError = continueWithError || defaultErrorHandler;
 	xhr.open(method, url, true);
 	xhr.onload = function () {
 		if (xhr.readyState !== 4) {
@@ -324,11 +318,13 @@ function ajax(method, url, data, continueWith, continueWithError) {
 
 		if(xhr.status != 200) {
 			continueWithError('Error on the server side, response ' + xhr.status);
+			indicatorOff();
 			return;
 		}
 
 		if(isError(xhr.responseText)) {
 			continueWithError('Error on the server side, response ' + xhr.responseText);
+			indicatorOff();
 			return;
 		}
 
@@ -336,6 +332,7 @@ function ajax(method, url, data, continueWith, continueWithError) {
 	};    
 
     xhr.ontimeout = function () {
+		indicatorOff();
     	continueWithError('Server timed out !');
     }
 
@@ -346,26 +343,36 @@ function ajax(method, url, data, continueWith, continueWithError) {
     	'- server is active\n'+
     	'- server sends header "Access-Control-Allow-Origin:*"';
 
+		indicatorOff();
         continueWithError(errMsg);
     };
 
     xhr.send(data);
 }
 
-function isError() {}
-
-function defaultErrorHandler() {}
-
 function indicatorOn() {
 	var serverIndicator = document.getElementById("serverIndicator");
 	
-	serverIndicator.style("color", "#c2ffe3");
-    serverIndicator.style("background-color", "#58b98c");
+	serverIndicator.style.color = "#c2ffe3";
+    serverIndicator.style.backgroundColor = "#58b98c";
 }
 
 function indicatorOff() {
 	var serverIndicator = document.getElementById("serverIndicator");
 	
-	serverIndicator.style("color", "#ffc2c2");
-    serverIndicator.style("background-color", "#b95c58");
+	serverIndicator.style.color = "#ffc2c2";
+    serverIndicator.style.backgroundColor = "#b95c58";
+}
+
+function isError(text) {
+	if(text == "")
+		return false;
+	
+	try {
+		var obj = JSON.parse(text);
+	} catch(ex) {
+		return true;
+	}
+
+	return !!obj.error;
 }
