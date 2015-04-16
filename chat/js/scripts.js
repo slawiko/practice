@@ -111,12 +111,17 @@ function onDeleteMessageButtonClick(eventObj) {
         messageBox = document.getElementById("messageBox"),
         id = parentMessage.attributes["id"].value,
         i,
+		sendButton = document.getElementById("sendButton"),
         user = document.getElementById("username");
     
     if (user.innerHTML + ":&nbsp;" != eventObj.target.parentNode.childNodes[0].childNodes[0].innerHTML) {
         alert("This is not your message.")
         return;
     }
+	
+	if (sendButton.innerHTML == "Edit") {
+		return;
+	}
     
     messageBox.removeChild(parentMessage);
     
