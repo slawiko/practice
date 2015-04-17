@@ -127,7 +127,10 @@ function onDeleteMessageButtonClick(eventObj) {
     
     for (i = 0; i < messageList.length; i++) {
         if (messageList[i].id === id) {
-			Delete(appState.mainUrl, JSON.stringify(messageList[i]));
+			Delete(appState.mainUrl, JSON.stringify(messageList[i]), function(){}, 	function(message) {
+																						defaultErrorHandler(message);
+																						wait();
+																					});
 			messageList.splice(i, 1);
             return;
         }
@@ -135,17 +138,14 @@ function onDeleteMessageButtonClick(eventObj) {
 }
 
 function onLoginButtonClick() {
-    var loginWindowBackground = document.getElementById("loginWindowBackground");
-	
-    loginWindowBackground.style.display = "block";
+	$("#loginWindowBackground").fadeIn(300);
 }
 
 function onEditLoginButtonClick() {
-    var loginWindowBackground = document.getElementById("loginWindowBackground"),
-        loginWindowButton = document.getElementById("loginWindowButton");
+    var loginWindowButton = document.getElementById("loginWindowButton");
 
     loginWindowButton.innerText = "Confirm";
-    loginWindowBackground.style.display = "block";
+    $("#loginWindowBackground").fadeIn(300);
 }
 
 function onLogoutButtonClick() {
@@ -165,9 +165,7 @@ function onLoginWindowButtonClick() {
 }
 
 function onDismissLoginWindowButtonClick () {
-    var loginWindowBackground = document.getElementById("loginWindowBackground");
-
-    loginWindowBackground.style.display = "none";
+    $("#loginWindowBackground").fadeOut(300);
 }
 
 function restoreFromServer() {
@@ -178,8 +176,12 @@ function restoreFromServer() {
 					var response = JSON.parse(responseText);
 					appState.token = response.token;
 					createAllMessages(response.messages);
-        		});
-	
+        		}, 	
+				function(message) {
+					defaultErrorHandler(message);
+					wait();
+				});
+
 	setTimeout(function() {
 					restoreFromServer();
 				}, 1000);
@@ -196,35 +198,30 @@ function createAllMessages(allMessages) {
 }
 
 function revealAll() {
-	var hiddenUserBox = document.getElementById("hiddenUserBox"),
-        hiddenMessageBox = document.getElementById("hiddenMessageBox"),
-        hiddenTextBox = document.getElementById("hiddenTextBox"),
-        loginWindowBackground = document.getElementById("loginWindowBackground"),
-        loginButton = document.getElementById("loginButton"),
+	var loginButton = document.getElementById("loginButton"),
         logoutButton = document.getElementById("logoutButton"),
         editLoginButton = document.getElementById("editLoginButton");
 	
-	hiddenUserBox.style.display = "none";
-	hiddenMessageBox.style.display = "none";
-	hiddenTextBox.style.display = "none";
-	loginWindowBackground.style.display = "none";
+	$("#hiddenUserBox").fadeOut(300);
+	$("#hiddenMessageBox").fadeOut(300);
+	$("#hiddenTextBox").fadeOut(300);
+    $("#loginWindowBackground").fadeOut(300);
+	
 	loginButton.style.display = "none";
 	logoutButton.style.display = "block";
 	editLoginButton.style.display = "block";
 }
 
 function hideAll() {
-	var hiddenUserBox = document.getElementById("hiddenUserBox"),
-        hiddenMessageBox = document.getElementById("hiddenMessageBox"),
-        hiddenTextBox = document.getElementById("hiddenTextBox"),
-        loginButton = document.getElementById("loginButton"),
+	var loginButton = document.getElementById("loginButton"),
         editLoginButton = document.getElementById("editLoginButton"),
         logoutButton = document.getElementById("logoutButton"),
         loginWindowInput = document.getElementById("loginWindowInput");
 	
-	hiddenUserBox.style.display = "block";
-    hiddenMessageBox.style.display = "block";
-    hiddenTextBox.style.display = "block";
+	$("#hiddenUserBox").fadeIn(300);
+	$("#hiddenMessageBox").fadeIn(300);
+	$("#hiddenTextBox").fadeIn(300);
+	
     loginButton.style.display = "block";
     editLoginButton.style.display = "none";
     logoutButton.style.display = "none";
@@ -236,9 +233,10 @@ function addMessage(message, continueWith) {
 		return;
 	}
     
-    Post(appState.mainUrl, JSON.stringify(message), function() {
-														restoreFromServer();
-													});
+    Post(appState.mainUrl, JSON.stringify(message), function(){}, 	function(message) {
+																		defaultErrorHandler(message);
+																		wait();
+																	});
 }
     
 function addMessageInternal(message) {
@@ -251,7 +249,10 @@ function addMessageInternal(message) {
 
 function updateMessageList(newMessage, messageList_) {
     messageList_.textMessage = newMessage;
-	Put(appState.mainUrl, JSON.stringify(messageList_));
+	Put(appState.mainUrl, JSON.stringify(messageList_), function(){},	function(message) {
+																			defaultErrorHandler(message);
+																			wait();
+																		});
 }
 
 function createMessage(username, textMessage) {
@@ -335,6 +336,7 @@ function ajax(method, url, data, continueWith, continueWithError) {
 			return;
 		}
 
+		indicatorOn();
 		continueWith(xhr.responseText);
 	};    
 
@@ -357,18 +359,12 @@ function ajax(method, url, data, continueWith, continueWithError) {
     xhr.send(data);
 }
 
-function indicatorOn() {
-	var serverIndicator = document.getElementById("serverIndicator");
-	
-	serverIndicator.style.color = "#c2ffe3";
-    serverIndicator.style.backgroundColor = "#58b98c";
+function indicatorOn() {	
+	$("#serverIndicator").animate({"color":"#c2ffe3", "backgroundColor": "#58b98c"}, 350);
 }
 
 function indicatorOff() {
-	var serverIndicator = document.getElementById("serverIndicator");
-	
-	serverIndicator.style.color = "#ffc2c2";
-    serverIndicator.style.backgroundColor = "#b95c58";
+	$("#serverIndicator").animate({"color":"#ffc2c2", "backgroundColor": "#b95c58"}, 350);
 }
 
 function isError(text) {
@@ -382,4 +378,8 @@ function isError(text) {
 	}
 
 	return !!obj.error;
+}
+
+function defaultErrorHandler(message) {
+	//alert(message);
 }

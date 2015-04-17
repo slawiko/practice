@@ -162,8 +162,8 @@ html, body {
     text-align: center;
     height: 30px;
     line-height: 30px;
-    color: #c2ffe3;
-    background-color: #58b98c;
+    color: #ffc2c2;
+    background-color: #b95c58;
 }
 
 #chatName {
@@ -314,7 +314,6 @@ html, body {
     outline: 0;
     background-color: #F2F2F2;
 }
-
 
 .footer {
     position: fixed;
