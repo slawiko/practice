@@ -185,78 +185,34 @@ function onDeleteMessageButtonClick(eventObj) {
 }
 
 function onLoginButtonClick() {
-    var hiddenUserBox = document.getElementById("hiddenUserBox"),
-        hiddenMessageBox = document.getElementById("hiddenMessageBox"),
-        hiddenTextBox = document.getElementById("hiddenTextBox"),
-        loginWindowBackground = document.getElementById("loginWindowBackground");
-    
-    hiddenUserBox.style.display = "block";
-    hiddenMessageBox.style.display = "block";
-    hiddenTextBox.style.display = "block";
-    loginWindowBackground.style.display = "block";
+	$("#loginWindowBackground").fadeIn(300);
 }
 
 function onEditLoginButtonClick() {
-    var loginWindowBackground = document.getElementById("loginWindowBackground"),
-        loginWindowButton = document.getElementById("loginWindowButton");
+    var loginWindowButton = document.getElementById("loginWindowButton");
 
     loginWindowButton.innerText = "Confirm";
-    loginWindowBackground.style.display = "block";
+    $("#loginWindowBackground").fadeIn(300);
 }
 
 function onLogoutButtonClick() {
-    var username = document.getElementById("username"),
-        hiddenUserBox = document.getElementById("hiddenUserBox"),
-        hiddenMessageBox = document.getElementById("hiddenMessageBox"),
-        hiddenTextBox = document.getElementById("hiddenTextBox"),
-        loginButton = document.getElementById("loginButton"),
-        editLoginButton = document.getElementById("editLoginButton"),
-        logoutButton = document.getElementById("logoutButton"),
-        loginWindowInput = document.getElementById("loginWindowInput");
-    
+    var username = document.getElementById("username");
     username.innerText = "";
-    hiddenUserBox.style.display = "block";
-    hiddenMessageBox.style.display = "block";
-    hiddenTextBox.style.display = "block";
-    loginButton.style.display = "block";
-    editLoginButton.style.display = "none";
-    logoutButton.style.display = "none";
-    loginWindowInput.innerText = "";
+	
+	hideAll();
 }
 
 function onLoginWindowButtonClick() {
-    var loginWindowAlert = document.getElementById("loginWindowAlert"),
-        hiddenUserBox = document.getElementById("hiddenUserBox"),
-        hiddenMessageBox = document.getElementById("hiddenMessageBox"),
-        hiddenTextBox = document.getElementById("hiddenTextBox"),
-        loginWindowBackground = document.getElementById("loginWindowBackground"),
-        loginButton = document.getElementById("loginButton"),
-        logoutButton = document.getElementById("logoutButton"),
-        editLoginButton = document.getElementById("editLoginButton"),
-        login = document.getElementById("loginWindowInput").innerText;
+    var login = document.getElementById("loginWindowInput").innerText;
 
-    if (!login) {
-        loginWindowAlert.style.color = "rgb(181, 64, 64)";
-        onLoginWindowButtonClick();
+    if (login) {
+        addLogin(login);
+		revealAll();
     }
-    
-    addLogin(login);  
-    loginWindowAlert.style.color = "rgb(64, 181, 176)";
-    hiddenUserBox.style.display = "none";
-    hiddenMessageBox.style.display = "none";
-    hiddenTextBox.style.display = "none";
-    loginWindowBackground.style.display = "none";
-    loginButton.style.display = "none";
-    logoutButton.style.display = "block";
-    editLoginButton.style.display = "block";
 }
 
 function onDismissLoginWindowButtonClick () {
-    var loginWindowBackground = document.getElementById("loginWindowBackground"),
-        loginWindowAlert = document.getElementById("loginWindowAlert");
-    
-    loginWindowAlert.style.color = "rgb(64, 181, 176)";
-    loginWindowBackground.style.display = "none";
+    $("#loginWindowBackground").fadeOut(300);
 }
 
 function createMessage(username, textMessage) {
@@ -288,6 +244,37 @@ function createMessage(username, textMessage) {
     newMessage.appendChild(deleteMessageButton);
     
     return newMessage;
+}
+
+function revealAll() {
+	var loginButton = document.getElementById("loginButton"),
+        logoutButton = document.getElementById("logoutButton"),
+        editLoginButton = document.getElementById("editLoginButton");
+	
+	$("#hiddenUserBox").fadeOut(300);
+	$("#hiddenMessageBox").fadeOut(300);
+	$("#hiddenTextBox").fadeOut(300);
+    $("#loginWindowBackground").fadeOut(300);
+	
+	loginButton.style.display = "none";
+	logoutButton.style.display = "block";
+	editLoginButton.style.display = "block";
+}
+
+function hideAll() {
+	var loginButton = document.getElementById("loginButton"),
+        editLoginButton = document.getElementById("editLoginButton"),
+        logoutButton = document.getElementById("logoutButton"),
+        loginWindowInput = document.getElementById("loginWindowInput");
+	
+	$("#hiddenUserBox").fadeIn(300);
+	$("#hiddenMessageBox").fadeIn(300);
+	$("#hiddenTextBox").fadeIn(300);
+	
+    loginButton.style.display = "block";
+    editLoginButton.style.display = "none";
+    logoutButton.style.display = "none";
+    loginWindowInput.innerText = "";
 }
 
 function addMessage(message) {
