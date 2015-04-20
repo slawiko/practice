@@ -155,15 +155,15 @@ html, body {
     position: relative;
     height: 150px;
     width: 100%;
-    background-image: url(resources/header_background.png);
+    background-image: url(images/header_background.png);
 }
 
 #serverIndicator {
     text-align: center;
     height: 30px;
     line-height: 30px;
-    color: #c2ffe3;
-    background-color: #58b98c;
+    color: #ffc2c2;
+    background-color: #b95c58;
 }
 
 #chatName {
@@ -315,11 +315,10 @@ html, body {
     background-color: #F2F2F2;
 }
 
-
 .footer {
     position: fixed;
     display: block;
     height: 10%;
     width: 100%;
-    background-image: url(resources/footer_background.png);
+    background-image: url(images/footer_background.png);
 }
