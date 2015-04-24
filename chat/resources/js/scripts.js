@@ -273,9 +273,9 @@ function createMessage(username, textMessage) {
     text.setAttribute("class", "text");
 
     editMessageButton.setAttribute  ("class", "editMessageButton icon");
-    editMessageButton.setAttribute  ("src", "css/resources/edit.png");
+    editMessageButton.setAttribute  ("src", "resources/css/images/edit.png");
     deleteMessageButton.setAttribute("class", "deleteMessageButton icon");
-    deleteMessageButton.setAttribute("src", "css/resources/trash.png");
+    deleteMessageButton.setAttribute("src", "resources/css/images/trash.png");
 
     message.appendChild(user);
     message.appendChild(text);
