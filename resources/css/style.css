@@ -1,0 +1,322 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 900px;
+    font-family: 'Arial Black', 'Arial Bold', sans-serif;
+}
+
+.windowBackground {
+    display: none;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 0;
+    background: -webkit-radial-gradient(rgba(120, 120, 120, 0.5), rgba(120, 120, 120, 0.5) 35%, rgba(0, 0, 0, 0.7));
+}
+
+.button {
+    position: absolute;
+    display: block;
+    color: white;
+    cursor: pointer;
+    outline: 0;
+    background-color: #58a8a4;
+    border-radius: 6px;
+    border: 0;
+    transition-property: backgroung-color;
+    transition-duration: .15s;
+    transition-timing-function: ease-in-out;
+}
+
+.button:hover {
+    background-color: #58b9b4;
+    transition-property: backgroung-color;
+    transition-duration: .15s;
+    transition-timing-function: ease-in-out;
+}
+
+.button:active {
+    background-color: #4a9591;
+    transition-property: backgroung-color;
+    transition-duration: .15s;
+    transition-timing-function: ease-in-out;
+}
+
+#editLoginButton {
+    display: none;
+    height: 30px;
+    width: 90px;
+    left: 92px;
+}
+
+#loginButton {
+    height: 30px;
+    width: 90px;
+}
+
+#logoutButton {
+    display: none;
+    height: 30px;
+    width: 90px;
+}
+
+#sendButton {
+    height: 28px;
+    width: 85px;
+}
+
+#loginWindowButton {
+    height: 30px;
+    width: 130px;
+    margin-top: 53px;
+    margin-left: 36px;
+}
+
+.icon {
+    position: absolute;
+    height: 24px;
+    width: 24px;
+    cursor: pointer;
+}
+
+.editMessageButton {
+    top: 0;
+    left: 310px;
+}
+
+.deleteMessageButton {
+    top: 0;
+    left: 336px;
+}
+
+.message {
+    display: block;
+    position: relative;
+    left: 0;
+    padding-bottom: 3px;
+    width: 360px;
+    word-wrap: break-word;
+}
+
+.message div {
+    display: block;
+    position: relative;
+    width: 309px;
+    line-height: 24px;
+}
+
+.message span {
+    white-space: pre-wrap;
+}
+
+.user {
+    white-space: pre-wrap;
+    color: rgb(61, 134, 130);
+}
+
+.buttonNegative {
+    cursor: pointer;
+    outline: 0;
+    color: white;
+    background-color: #a85858;
+    border: 0;
+    border-radius: 6px;
+    transition-property: backgroung-color;
+    transition-duration: .15s;
+    transition-timing-function: ease-in-out;
+}
+
+.buttonNegative:hover {
+    background-color: #b95858;
+    transition-property: backgroung-color;
+    transition-duration: .15s;
+    transition-timing-function: ease-in-out;
+}
+
+.buttonNegative:active {
+    background-color: #954a4a;
+    transition-property: backgroung-color;
+    transition-duration: .15s;
+    transition-timing-function: ease-in-out;
+}
+
+#dismissLoginWindowButton {
+    height: 30px;
+    width: 130px;
+    margin-top: 53px;
+    margin-left: 176px;
+}
+
+.header {
+    position: relative;
+    height: 150px;
+    width: 100%;
+    background-image: url(images/header_background.png);
+}
+
+#serverIndicator {
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    color: #ffc2c2;
+    background-color: #b95c58;
+}
+
+#chatName {
+    position: absolute;
+    color: rgb(255,255,255);
+    left: 50%;
+    margin-left: -165px;
+    font-size: 60px;
+    height: 100%;
+    line-height: 150px;
+}
+
+.main {
+    position: relative;
+    height: 75%;
+    width: 100%;
+    max-height: none;
+    background-color: #d8d8d8;
+}
+
+.chatWindow {
+    position: relative;
+    margin: auto;
+    top: 30px;
+    height: 600px;
+    width: 606px;
+}
+
+.box {
+    position: absolute;
+    display: block;
+    font-family: 'Times New Roman';
+    border: 1px solid rgb(71, 150, 146);
+    border-radius: 6px;
+}
+
+#messageBox {
+    height: 460px;
+    width: 360px;
+    padding-right: 30px;
+    padding-left: 30px;
+    padding-top: 20px;
+    overflow-x: hidden;
+    background-color: #e3e3e3;
+}
+
+#userBox {
+    height: 460px;
+    width: 130px;
+    padding-right: 25px;
+    padding-left: 25px;
+    padding-top: 20px;
+    margin-left: 422px;
+    left: 2px;
+    overflow-x: hidden;
+    background-color: #e3e3e3;
+}
+
+#textBox {
+    height: 67px;
+    width: 416px;
+    padding-left: 4px;
+    padding-top: 3px;
+    top: 484px;
+    overflow: auto;
+    outline: 0;
+    background-color: #F2F2F2;
+}
+
+.hidden {
+    text-align: center;
+    color: grey;
+    background-color: #d8d8d8;
+}
+
+#hiddenMessageBox {
+    height: 480px;
+    width: 420px;
+    line-height: 480px;
+}
+
+#hiddenUserBox {
+    height: 480px;
+    width: 181px;
+    line-height: 480px;
+    margin-left: 422px;
+    left: 2px;
+}
+
+#hiddenTextBox {
+    height: 70px;
+    width: 420px;
+    line-height: 70px;
+    top: 484px;
+}
+
+#username {
+    padding: 2px;
+    display: none;
+    width: auto;
+    height: auto;
+    color: rgb(61, 134, 130);
+    background-color: #d9d9d9;
+    border: 1px solid rgb(71, 150, 146);
+    border-radius: 6px;
+}
+
+.buttonBox {
+    position: absolute;
+    height: 30px;
+    width: 100%;
+    top: 558px;
+}
+
+.loginBox {
+    position: absolute;
+    height: 30px;
+    width: 182px;
+    top: 484px;
+    left: 424px;
+}
+
+#loginWindow {
+    height: 140px;
+    width: 350px;
+    margin: -70px 0 0 -175px;
+    top: 50%;
+    left: 50%;
+    background-color: #d8d8d8;
+}
+
+#loginWindowAlert {
+    text-align: center;
+    margin-top: 16px;
+    color: rgb(64, 181, 176);
+    font-size: 20px;
+}
+
+#loginWindowInput {
+    height: 30px;
+    width: 80%;
+    padding-left: 6px;
+    line-height: 27px;
+    margin-top: 12px;
+    margin-left: 30px;
+    overflow: auto;
+    outline: 0;
+    background-color: #F2F2F2;
+}
+
+.footer {
+    display: block;
+    height: 86px;
+    width: 100%;
+    background-image: url(images/footer_background.png);
+}
